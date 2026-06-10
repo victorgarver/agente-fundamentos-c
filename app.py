@@ -15,67 +15,126 @@ st.set_page_config(
 )
 
 st.title("🖥️ Agente Fundamentos de Programación en C")
-st.caption("Haz preguntas sobre los apuntes del curso")
+st.caption("Asistente para ejercicios y teoría del curso")
 
-# Inicializar historial en session_state
+with st.expander("📖 Comandos disponibles"):
+    st.markdown("""
+    - **Sin comando** — pregunta teórica sobre los apuntes
+    - **/guiado** — el agente te guía paso a paso sin darte la solución
+    - **/solución** — genera pseudocódigo + código C completo
+    - **/corregir** — pega tu código y el agente lo revisa
+    """)
+
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-# Mostrar historial de mensajes
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-# Input del usuario
-if query := st.chat_input("Escribe tu pregunta..."):
+def detect_mode(query: str) -> tuple[str, str]:
+    """Detecta el modo y devuelve (modo, query_limpia)."""
+    query = query.strip()
+    if query.lower().startswith("/guiado"):
+        return "guiado", query[7:].strip()
+    elif query.lower().startswith("/solución") or query.lower().startswith("/solucion"):
+        return "solucion", query[9:].strip()
+    elif query.lower().startswith("/corregir"):
+        return "corregir", query[9:].strip()
+    return "teorico", query
 
-    # Mostrar mensaje del usuario
+def build_prompt(mode: str, query: str, context: str, historial_text: str) -> str:
+    base = f"""Eres un profesor experto en programación en C.
+IMPORTANTE: Usa ÚNICAMENTE el contenido de los apuntes proporcionados.
+No añadas conocimiento propio. Si algo no está en los apuntes, dilo explícitamente.
+{historial_text}
+Apuntes relevantes:
+{context}
+
+"""
+    if mode == "teorico":
+        return base + f"Pregunta: {query}\nRespuesta:"
+
+    elif mode == "guiado":
+        return base + f"""El alumno quiere resolver este ejercicio con tu ayuda paso a paso: {query}
+
+No des la solución completa. Guía al alumno con preguntas y pistas basadas en los apuntes.
+Empieza identificando qué conceptos de los apuntes son necesarios para resolver el ejercicio.
+Primera pista:"""
+
+    elif mode == "solucion":
+        return base + f"""Resuelve este ejercicio: {query}
+
+Proporciona:
+1. Pseudocódigo siguiendo el estilo de los apuntes
+2. Código en C siguiendo el estilo de los apuntes
+
+Usa solo construcciones y funciones que aparezcan en los apuntes.
+Solución:"""
+
+    elif mode == "corregir":
+        return base + f"""El alumno ha enviado esta solución para corregir:
+
+{query}
+
+Revisa la solución basándote únicamente en los apuntes. Indica:
+1. Si es correcta o tiene errores
+2. Qué errores tiene (si los hay) y en qué apunte se explica la forma correcta
+3. Sugerencias de mejora basadas en los apuntes
+
+Corrección:"""
+
+    return base + f"Pregunta: {query}\nRespuesta:"
+
+if query := st.chat_input("Escribe tu pregunta o usa /guiado, /solución, /corregir..."):
+
     with st.chat_message("user"):
         st.markdown(query)
     st.session_state.messages.append({"role": "user", "content": query})
 
-    # Recuperar contexto
-    chunks = retrieve(query, n_results=3)
+    mode, clean_query = detect_mode(query)
 
-    # Construir contexto
-    context = "\n\n".join([
-        f"[{chunk['source']}]\n{chunk['text']}"
-        for chunk in chunks
-    ])
+    if not clean_query:
+        with st.chat_message("assistant"):
+            st.warning("Por favor escribe el enunciado después del comando.")
+    else:
+        chunks = retrieve(clean_query, n_results=4)
 
-    # Construir historial para el prompt
-    historial_text = ""
-    if len(st.session_state.messages) > 1:
-        historial_text = "\n".join([
-            f"{msg['role'].upper()}: {msg['content']}"
-            for msg in st.session_state.messages[:-1]
+        context = "\n\n".join([
+            f"[{chunk['source']}]\n{chunk['text']}"
+            for chunk in chunks
         ])
-        historial_text = f"\nHistorial de conversación:\n{historial_text}\n"
 
-    prompt = f"""Eres un profesor experto en programación en C.
-Responde de forma clara y precisa basándote únicamente en el contexto proporcionado.
-Si la información no está en el contexto, dilo explícitamente.
-{historial_text}
-Contexto de los apuntes:
-{context}
+        historial_text = ""
+        if len(st.session_state.messages) > 1:
+            historial_text = "\n".join([
+                f"{msg['role'].upper()}: {msg['content']}"
+                for msg in st.session_state.messages[:-1]
+            ])
+            historial_text = f"\nHistorial de conversación:\n{historial_text}\n"
 
-Pregunta actual: {query}
-Respuesta:"""
+        prompt = build_prompt(mode, clean_query, context, historial_text)
 
-    # Generar respuesta
-    with st.chat_message("assistant"):
-        with st.spinner("Pensando..."):
-            response = ollama.chat(
-                model=MODEL,
-                messages=[{"role": "user", "content": prompt}]
-            )
-            answer = response["message"]["content"]
-            st.markdown(answer)
+        mode_labels = {
+            "teorico": "💬 Pregunta teórica",
+            "guiado": "🧭 Modo guiado",
+            "solucion": "✅ Modo solución",
+            "corregir": "🔍 Modo corrección"
+        }
 
-            # Mostrar fuentes
-            sources = list(set([chunk["source"] for chunk in chunks]))
-            with st.expander("📚 Fuentes"):
-                for source in sources:
-                    st.write(f"- {source}")
+        with st.chat_message("assistant"):
+            st.caption(mode_labels[mode])
+            with st.spinner("Pensando..."):
+                response = ollama.chat(
+                    model=MODEL,
+                    messages=[{"role": "user", "content": prompt}]
+                )
+                answer = response["message"]["content"]
+                st.markdown(answer)
 
-    st.session_state.messages.append({"role": "assistant", "content": answer})
+                sources = list(set([chunk["source"] for chunk in chunks]))
+                with st.expander("📚 Fuentes"):
+                    for source in sources:
+                        st.write(f"- {source}")
+
+        st.session_state.messages.append({"role": "assistant", "content": answer})
