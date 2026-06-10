@@ -1,0 +1,175 @@
+7. Cambio de tipo de datos en C
+
+Introducción
+
+Resumen
+
+ 
+
+Introducción
+
+Ahora que ya hemos introducido los diferentes tipos de datos y definido los operadores que podemos utilizar cuando operamos con cada tipo de datos concreto, es importante saber cómo hacer operaciones con variables que son de tipos diferentes.
+
+Por ejemplo, imaginemos que tenemos una empresa en la que trabajan quince personas. Cada persona la podemos representar con un número entero (no tendremos medio trabajador en nómina). Supongamos que todas estas personas cobran el mismo sueldo, 1,800.50 € al mes. La variable sueldo la podemos representar como un valor real, porque tiene decimales. Imaginemos ahora que queremos calcular el coste mensual de los quince trabajadores de la empresa. Para hacerlo, tendremos que multiplicar un número entero por uno real. Como decíamos antes, los operadores solo están definidos para variables del mismo tipo. Así que, ¿cómo lo podemos hacer?
+
+En programación, podemos hacer cambios en el tipo de variables que utilizamos para solucionar este problema. La conversión de un tipo de variable a otra se denomina casting. Aunque la lista de operadores de casting de C es más larga, a continuación mostramos una tabla con los operadores que equivalen a las funciones de cambio de datos que utilizamos en pseudocódigo:
+
+Pseudocódigo
+	
+C
+
+var
+    a: integer;
+    b: real;
+end var
+b := integerToReal(a);	
+int a;
+float b;
+
+b = (float)a;
+
+var
+    a: integer;
+    b: real;
+end var
+a := realToInteger(b);	
+int a;
+float b;
+
+a = (int)b;
+
+El caso de las variables de tipo carácter funciona diferente. Cuando introdujimos las variables de tipo carácter, vimos que estas representan texto por medio de una tabla que relaciona un índice o un número con un carácter. Es la tabla ASCII. Pues bien, el código de un carácter también se puede transformar en un número entero, como se ve en la siguiente tabla:
+
+Pseudocódigo
+	
+C
+
+var
+    a: integer;
+    b: char;
+end var
+
+b := ’q’;
+
+a := charToCode(b);
+
+	
+int a;
+char b;
+
+b = 'q';
+a = (int)b;
+
+var
+    a: integer;
+    b: char;
+end var
+
+a := 25;
+
+b := codeToChar(a);
+
+	
+int a;
+char b;
+
+a = 25;
+b = (char)a;
+
+ 
+
+¡Atención!
+
+Cuando el compilador de C se encuentra con expresiones que son semánticamente incorrectas porque los tipos de variables utilizados no son correctos (por ejemplo, si multiplicamos una variable de tipo entero y una de tipo real), automáticamente se aplican cambios de tipos en algunas variables. Esto se tiene que evitar, porque generalmente no sabremos qué decisión tomará el compilador, lo que puede dar lugar a comportamientos diferentes de los que esperamos.
+
+ 
+
+Ejemplo 01
+Pseudocódigo
+	
+C
+
+algorithm casting
+    var
+        a: integer;
+        b: integer;
+        r: real;
+    end var
+
+    a := 3;
+    b := 2;
+
+    r := integerToReal(a) / integerToReal(b);
+
+    writeReal(r);
+
+end algorithm
+
+	
+#include <stdio.h>
+
+int main() {
+
+    int a;
+    int b;
+    float r;
+
+    a = 3;
+    b = 2;
+
+    r = (float)a / (float)b;
+    printf("%f", r);
+
+    return 0;
+}
+
+ 
+
+Ejemplo 02
+Pseudocódigo
+	
+C
+
+algorithm casting
+    var
+        a: integer;
+    end var
+
+    a := 65;
+
+    writeInteger(a);
+    writeReal(integerToReal(a));
+    writeChar(codeToChar(a));
+
+end algorithm
+
+	
+#include <stdio.h>
+
+int main() {
+
+    int a;
+
+    a = 65;
+    
+    printf("integer: %d, float: %f, char: %c\n", a, (float) a, (char) a);
+
+    return 0;
+}
+
+El resultado de la ejecución será el siguiente:
+
+a = 65, float (a) = 65.000000, char (a)= A
+
+Podemos observar el resultado de mostrar el valor de la variable a en función de si se convierte en real o en carácter. Al convertir el entero a carácter, muestra el carácter según el código ASCII, que es la letra ‘A’.
+
+ 
+
+ 
+
+Resumen
+
+ 
+
+Los operadores requieren que las variables que operan sean de un tipo determinado, y, por lo tanto, en algunos casos hay que cambiar el tipo de una variable. Esta operación se llama casting.
+A veces, el compilador realiza cambios de tipo de manera implícita. Esto puede dar lugar a funcionamientos inesperados, así que se recomienda que siempre se expliciten los castings de variables para evitarlo.

@@ -1,0 +1,154 @@
+13. Operadores de incremento, decremento y asignación compuesta
+
+Introducción
+
+1. Operadores de incremento (++) y decremento (--)
+
+2. Operadores de asignación compuesta (+=, -=)
+
+Resumen
+
+ 
+
+ 
+
+Introducción
+
+En esta unidad introduciremos una serie de operadores que nos serán muy útiles y que usaremos en las siguientes unidades. Se trata de los operadores de incremento y decremento, y de los de asignación compuesta.
+
+Tened en cuenta que estos operadores son específicos de C y no se utilizan en pseudocódigo.
+
+ 
+
+1. Operadores de incremento (++) y decremento (--)
+
+Los operadores de incremento (++) y decremento (--) se utilizan para incrementar y decrementar respectivamente el valor de una variable en una unidad.
+
+Los operadores de incremento y decremento son muy usados en C, especialmente en las estructuras de bucles —por eso los introducimos ahora—. Veremos cómo se utilizan mediante ejemplos que presentaremos más adelante, pero primero nos familiarizaremos con estos.  
+
+#include <stdio.h>
+
+int main () {
+   int n = 0;
+
+   n++; // add 1 to n
+   printf("%d\n", n);
+
+   n--; // susbtract 1 to n
+   printf("%d\n", n);
+}
+
+Como podéis observar, solo mostramos los operadores ++ y -- en código C, ya que estos operadores no se utilizan en pseudocódigo.
+
+Aunque lo más habitual es utilizar los operadores ++ y -- después de la variable que se quiere incrementar o decrementar, también se pueden usar antes:
+
+Preincrementar/Predecrementar: ++i / --i
+En este caso, la variable se incrementa y decrementa, y, luego, se efectúa la operación que corresponda.
+Posincrementar/Posdecrementar: i++ / i--
+En este caso, primero se realiza la operación y, luego, se incrementa o decrementa el valor. 
+
+Lo veremos más claro en el siguiente ejemplo:
+
+Preincrementar
+	
+Posincrementar
+
+#include<stdio.h>
+
+// Main function
+int main(){
+    int a = 5;
+    int b;
+
+    // Use pre-increment on 'a' and assign it to 'b'.
+    b = ++a;
+
+    // Print 'a' and 'b'
+    printf("a = %d\n", a);
+    printf("b = %d\n", b);
+
+    return 0;
+}
+
+	
+#include<stdio.h>
+
+// Main function
+int main(){
+    int a = 5;
+    int b;
+
+    // Use post-increment on 'a' and assign it to 'b'.
+    b = a++;
+
+    // Print 'a' and 'b'
+    printf("a = %d\n", a);
+    printf("b = %d\n", b);
+
+    return 0;
+}
+
+El resultado es el siguiente:
+
+a = 6
+b = 6
+
+	
+
+El resultado es el siguiente:
+
+a = 6
+b = 5
+
+ 
+
+2. Operadores de asignación compuesta (+=, -=)
+
+Hasta ahora, hemos trabajado con el operador de asignación en C, =, que sirve para asignar valores a las variables. En este apartado, definiremos los operadores de asignación compuesta en C, += y -=, que se utilizan para acumular y restar valores a una variable, respectivamente. Estos operadores actualizan el valor de la variable sumándole o restándole un valor específico.
+
+Acumular +=
+	
+Restar -=
+
+#include <stdio.h>
+
+int main () {
+    int i = 0;
+
+    i += 5; // add 5 to i
+
+    printf("i = %d", i);
+}
+	
+#include <stdio.h>
+
+int main () {
+    int i = 0;
+
+    i -= 3; // Subtract 3 to i
+
+    printf("i = %d", i);
+}
+
+El resultado es el siguiente:
+
+i = 5
+
+	
+
+El resultado es el siguiente:
+
+i = -3
+
+Estos operadores son muy útiles cuando se trabaja con bucles —por eso los hemos introducido en este momento.
+
+ 
+
+Resumen
+
+En esta unidad, introducimos una serie de operadores del lenguaje C muy útiles en las estructuras iterativas:
+
+++ : incrementar (en sus variantes pre y pos)
+-- : decrementar (en sus variantes pre y pos)
++= : acumular
+-= : restar

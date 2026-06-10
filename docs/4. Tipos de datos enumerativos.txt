@@ -1,0 +1,119 @@
+4. Tipos de datos enumerativos
+
+1. Tipos enumerativos
+
+1.1.  La asignación de valores en los enumerativos de C
+
+2. Operaciones con tipos enumerativos
+
+Resumen
+
+ 
+
+1. Tipos enumerativos
+
+La mayoría de los lenguajes de programación permite definir nuevos tipos de datos combinando tipos elementales.
+
+Más adelante, veremos de manera generalizada cómo definir estos nuevos tipos, pero hay unos que se utilizan extensamente y que presentaremos a continuación: los tipos de datos enumerativos.
+
+Este tipo de datos se aplica cuando una variable solo puede tomar un conjunto finito de valores, que se enumeran en la propia definición. 
+
+La sintaxis para definirlos es la siguiente:
+
+Pseudocódigo
+	
+C
+
+type
+    daysOfTheWeek = {MONDAY, TUESDAY, WEDNESDAY,
+        THURSDAY, FRIDAY, SATURDAY, SUNDAY}
+end type
+
+var
+    firstDay: daysOfTheWeek;
+end var
+
+firstDay := MONDAY;
+
+	
+typedef enum {MONDAY, TUESDAY, WEDNESDAY, 
+    THURSDAY, FRIDAY, SATURDAY, SUNDAY }
+    daysOfTheWeek;
+
+daysOfTheWeek firstDay;
+
+firstDay = MONDAY;
+
+Como podéis observar, los días de la semana solo pueden ser lunes, martes, etc. Al definir el tipo de datos «días de la semana», se enumeran las opciones en la propia definición.
+
+Los valores de la enumeración son constantes:
+En pseudocódigo, cada value se considera una constante a la que no le asociamos una correspondencia numérica determinada.
+En lenguaje C, cada value se representa internamente con un valor numérico creciente que, por defecto, empieza por 0. Este comportamiento se puede modificar.
+
+La variable firstDay solo podrá tener alguno de los valores definidos en el tipo enumerativo.
+
+ 
+
+1.1. La asignación de valores en los enumerativos de C
+
+A continuación se exponen diferentes maneras de modificar los valores numéricos asignados a los elementos de un enumerativo. Esta modificación únicamente se puede hacer en lenguaje C, no en pseudocódigo.
+
+C
+	
+Descripción
+
+typedef enum {MALE, FEMALE} tGender;
+	
+
+Los valores numéricos asignados a los elementos del enumerativo tGender son los siguientes:
+
+MALE = 0
+FEMALE = 1
+
+Este es el comportamiento que tiene por defecto un enumerativo: el valor 0 se asigna al primer elemento y el resto de elementos incrementarán en +1 su valor respecto al del elemento que le precede.
+
+typedef enum {MONDAY=1, TUESDAY,
+    WEDNESDAY, THURSDAY, FRIDAY,
+    SATURDAY, SUNDAY} tDaysOfTheWeek;
+	
+
+Los valores numéricos asignados a los elementos del enumerativo tDaysOfTheWeek son los siguientes:
+
+MONDAY = 1
+TUESDAY = 2
+WEDNESDAY = 3
+THURSDAY = 4
+FRIDAY = 5
+SATURDAY = 6
+SUNDAY = 7
+
+En este caso, se ha modificado el comportamiento estándar de los enumerativos en C: el primero de los elementos vale 1 en vez de 0, porque manualmente le hemos cambiado su valor asignado con MONDAY = 1. El resto de elementos incrementan en +1 su valor respecto al del elemento que les precede.
+
+typedef enum {MOTORCYCLE = 2, 
+   CAR = 4, VAN, TRUCK} tVehicle;
+	
+
+Los valores numéricos asignados a los elementos del enumerativo tVehicle son los siguientes:
+
+MOTORCYCLE = 2
+CAR = 4
+VAN = 5
+TRUCK = 6
+
+En este último caso, el primero de los elementos del enumerativo vale 2, porque tenemos la asignación MOTORCYCLE = 2. El siguiente elemento tiene un valor de 4, debido a que CAR = 4. Los sucesivos elementos van incrementando su valor en +1 a partir del valor 4.
+
+ 
+
+2. Operaciones con tipos enumerativos
+
+Los únicos operadores que se pueden aplicar a los tipos enumerativos son los relacionales externos ( =, ≠, <, >, ≤, ≥ ). El orden en el que se enumeran los valores es el que se utiliza para establecer las relaciones de menor a mayor. Así pues, siguiendo el mismo ejemplo MONDAY < TUESDAY, podríamos escribir: firstDay < SATURDAY.
+
+ 
+
+Resumen
+
+ 
+
+Los datos enumerativos se usan cuando una variable solo puede tomar un conjunto finito de valores.
+La definición de datos enumerativos enumera los valores que la variable puede tomar. 
+El orden de la definición también impone un orden entre los valores que puede tomar la variable. Los únicos operadores que se pueden usar entre datos enumerativos son los relacionales externos, teniendo en cuenta el orden que se explicita en la definición.

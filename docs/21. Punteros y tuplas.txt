@@ -1,0 +1,119 @@
+Menú de navegación global
+75.554 - Fundamentos de programación - Aula 6
+21. Punteros y tuplas
+21. Punteros y tuplas
+
+1. Puntero a tupla
+
+2. El operador ->
+
+Resumen
+
+ 
+
+1. Puntero a tupla
+
+La variable a la que apunta un puntero puede ser de cualquier tipo, y no hay impedimento para que sea de tipo estructurado, como una tupla (esto, de hecho, será necesario cuando más adelante veamos el paso de tuplas por referencia).
+
+La tupla suele contener un número de variables. El puntero a una tupla apunta a la dirección de la memoria de la primera posición de memoria en la que se guarda la tupla. Esto es similar a lo que sucede en el caso de los vectores, que ya hemos explicado. Lo podemos observar en el siguiente ejemplo:
+
+#include <stdio.h>
+
+/* Type definition */
+typedef struct {
+    float x;
+    float y;
+} tPoint;
+
+int main() {
+    /* Variables definition */
+    tPoint a;
+    tPoint *pPoint;
+
+    /* Variables initialization */
+    a.x = 3;
+    a.y = 5;
+    pPoint = NULL;
+
+    /* Assign the address of a to pPoint */
+    pPoint = &a;
+
+    return 0;
+}
+
+En este caso, si hacemos un esquema de la memoria, observamos que la variable a, que incluye a.x y a.y, está comprendida entre las direcciones 32 y 39. Al guardar la dirección de la variable en el puntero pPoint, nos dice que la dirección de a es 32. 
+
+Address	...	32	33	34	35	36	37	38	39	40	41	42	43	...
+Value		3	5	32	
+Variable		x	y	pPoint	
+a
+
+Recordad que, independientemente del tamaño en memoria de la tupla (si contiene muchos o pocos elementos), el puntero a la tupla ocupa lo mismo que un puntero a un carácter o a un entero. Todas son direcciones de memoria y, por lo tanto, una variable puntero siempre ocupa lo mismo. 
+
+Pero ¿podemos acceder a las variables x e y de a a través del puntero pPoint?
+
+Efectivamente, lo podemos hacer mediante el operador indirección *. Ya hemos explicado que el operador indirección nos devuelve el contenido de la variable a la que apunta el puntero. Así, como hemos asignado a pPoint la dirección de a, entonces (*pPoint) es el contenido de la variable a. Usando este concepto podemos acceder al contenido de a de la siguiente manera:
+
+#include <stdio.h>
+
+/* Type definition */
+typedef struct {
+    float x;
+    float y;
+} tPoint;
+
+int main() {
+    /* Variables definition */
+    tPoint a;
+    tPoint *pPoint;
+
+    /* Variables initialization */
+    a.x = 3;
+    a.y = 5;
+    pPoint = NULL;
+
+    /* Assign the address of a to pPoint*/
+    pPoint = &a;
+
+    /* Print the content of x and y using pPoint */
+    printf("%f %f\n", (*pPoint).x, (*pPoint).y);
+
+    return 0;
+}
+
+Fijaos en la siguiente línea, en la que imprimimos los valores de a.x y a.y por pantalla: 
+
+/* Print the content of x and y using pPoint */
+printf("%f %f\n", (*pPoint).x, (*pPoint).y);
+
+Como ya hemos explicado anteriormente, se realiza una indirección mediante el operador unitario *, que, situado justo antes de un puntero, nos permite acceder al contenido de la variable cuya dirección de memoria está guardada en dicho puntero. En este caso, el puntero es la variable pPoint, que apunta a la variable a, que es una tupla. Una vez hecha la indirección, podemos usar el operador «.» para acceder a los campos internos de la tupla. 
+
+ 
+
+2. El operador ->
+
+El lenguaje C nos propone una alternativa más sencilla y elegante para acceder a los campos internos de una variable si lo hacemos mediante un puntero. Consiste en el operador ->.  Retomando el ejemplo del apartado anterior, usando el operador -> podemos acceder a los campos internos de la siguiente manera: 
+
+Indirección
+	
+Operador ->
+
+
+/* Print the content of x and y using pPoint */
+printf("%f %f\n", (*pPoint).x, (*pPoint).y);
+	
+/* Print the content of x and y using pPoint */
+printf("%f %f\n", pPoint->x, pPoint->y);
+
+Ambos códigos son totalmente equivalentes, pero lo más habitual es encontrarse la segunda opción. 
+
+ 
+
+Resumen
+
+ 
+
+Un puntero a una variable tupla apunta a la primera dirección de memoria que ocupa la variable.
+Para acceder a los campos internos de una variable tupla, cuando disponemos de un puntero, utilizamos el operador ->.
+Anterior
+Siguiente

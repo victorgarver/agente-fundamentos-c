@@ -1,0 +1,302 @@
+1. Pseudocódigo, codificación en C y herramientas para la programación
+
+1. ¿Qué es programar?
+
+1.1. ¿Qué es un algoritmo y cómo se genera? El pensamiento computacional
+1.2. Ejemplo de generación de un algoritmo
+
+2. Diseño de algoritmos: pseudocódigo y diagramas de flujo
+
+2.1. Pseudocódigo
+2.2. Diagramas de flujo
+
+3. Codificación
+
+3.1. Programa en C
+3.2. Codificación, sintaxis, compilación y ejecución
+
+Resumen
+
+ 
+
+ 
+
+1. ¿Qué es programar?
+
+ 
+
+La programación es un proceso en el que se genera una secuencia de instrucciones que un ordenador puede interpretar y ejecutar, y que sirven para que ese ordenador resuelva de manera automática un problema concreto.
+
+A continuación, tenéis un ejemplo de un programa C que escribe en pantalla la frase «Hello, World!».
+
+#include <stdio.h>
+
+int main() {
+   printf("Hello, World!");
+   return 0;
+}
+
+Como veis, un programa no es más que un texto, en el cual hay una serie de palabras clave (int, return) que el ordenador entiende, y que puede procesar para dar un resultado. El texto se muestra en colores para ayudarnos a identificar de un vistazo las palabras clave, pero es solo una ayuda visual, ya que un programa está formado únicamente por texto, nada más.
+
+En esta asignatura, aprenderemos a generar programas que nos permitan utilizar el ordenador para que haga las tareas que nosotros queramos.
+
+El proceso de programar sigue unos pasos muy importantes:
+
+Diseñar un algoritmo que solucione el problema.
+Codificar el algoritmo para que lo entienda el ordenador. 
+Testar el programa.
+
+La programación siempre debería contemplar estos tres pasos, que detallaremos en los siguientes apartados. 
+
+ 
+
+1.1. ¿Qué es un algoritmo y cómo se genera? El pensamiento computacional
+
+Antes de crear un programa, es necesario reflexionar sobre este, tener muy claros los casos que ha de cubrir y asegurarse de que los resultados que proporciona son correctos. Para eso, se diseña un algoritmo. 
+
+Un algoritmo es un conjunto de pasos ordenados que hay que seguir para ejecutar una tarea o resolver un problema. 
+
+Un algoritmo no es algo exclusivo de la programación; de hecho, utilizamos algoritmos continuamente en nuestra vida cotidiana. Por ejemplo, cuando cocinamos siguiendo una receta de un libro de cocina. Una receta es una serie de pasos (cortar y pelar verduras, añadir diferentes ingredientes en una sartén en un orden determinado, etc.) que nos permite llegar a la solución del problema: hacer una tortilla de patatas o una pizza.
+
+Por lo tanto, diseñar un algoritmo no es programar, pero para programar sí que es necesario generar previamente un algoritmo. Un algoritmo no es una solución única a un problema, sino que hay muchas soluciones que se pueden adoptar para un mismo problema. Pero para que un programa sea robusto y no genere errores, es importante que esté bien diseñado. Es decir:
+
+Que se contemplen todas las posibles situaciones que se pueden presentar (por ejemplo, si decimos que para hacer una receta necesitamos dos patatas, ¿qué pasa si son grandes?, ¿y si son pequeñas?). Hay que plantearse siempre todas las posibles opciones.
+Que sea óptimo, es decir, que el resultado sea el esperado, minimizando los recursos.
+Que esté bien estructurado para que sea fácil entender qué hace.
+
+Para generar un algoritmo que contemple todas estas características, se recomienda aplicar lo que se conoce como pensamiento computacional. El pensamiento computacional es un método que se puede usar para generar algoritmos óptimos y robustos. Como hemos dicho, los algoritmos no son exclusivos de la programación, por lo que el pensamiento computacional no solo se aplica a la programación, sino que es una manera de pensar a la que siempre se puede recurrir. Así pues, la programación es el pensamiento computacional aplicado a los ordenadores. 
+
+El pensamiento computacional establece los siguientes pasos para resolver un problema:
+
+Descomponer el problema que queremos solucionar en partes que sean más pequeñas y fáciles de resolver o tratar.
+En el caso de la receta, las diferentes partes podrían ser preparar los ingredientes (pelar y cortar verduras, batir los huevos, calentar el aceite), cocinarlos (freír las verduras, añadir los huevos al fuego, condimentar con sal y pimienta o con otros condimentos, etc.) y servirlos.
+Reconocer los patrones que se manifiestan en el problema y que nos permiten repetir el mismo procedimiento en diferentes ocasiones. Por ejemplo, si hay que pelar y cortar cuatro patatas, tres tomates y dos zanahorias, estaremos repitiendo el mismo patrón varias veces. 
+Abstraer el problema para enfocarnos únicamente en la información relevante para el problema concreto. En el caso de la receta, será importante saber si los ingredientes están en buen estado, pero en el momento de cocinarlos no nos importará qué precio tenían en la tienda o si son orgánicos o no. Eso será decisión del chef, pero no es relevante para ejecutar la receta. 
+Generar el algoritmo con la solución paso a paso para resolver el problema. 
+
+A lo largo de la asignatura practicaremos este ejercicio sobre el pensamiento computacional. Si os interesa aprender más sobre este tema, podéis consultar el siguiente enlace
+Links to an external site.
+.
+
+ 
+
+1.2. Ejemplo de generación de un algoritmo
+
+Volvamos al ejemplo de la receta de la tortilla. Si seguimos los cuatro pasos del pensamiento computacional que hemos descrito antes, nos daremos cuenta de lo siguiente:
+
+Descomponer el problema. La elaboración de una tortilla consiste en preparar los ingredientes (pelar y cortar las patatas, romper y batir los huevos), cocinarlos (cocer las patatas, añadir los huevos, etc.) y servirlos.
+Reconocer los patrones. Cada una de las patatas se procesa de la misma manera, igual que cada uno de los huevos.
+Abstraer el problema. Por cada patata que usemos, necesitaremos un huevo y medio, más o menos. Las cantidades de los ingredientes son esenciales para elaborar una receta y tendremos que trabajar con estas. En cambio, no nos importará si los huevos son rubios o blancos. Por lo tanto, nuestro algoritmo deberá tener en cuenta las cantidades de los ingredientes, pero no el color de los huevos. 
+Generar el algoritmo. Con la información anterior podremos generar el siguiente algoritmo:
+
+Ingredientes y utensilios (variables):
+
+Bol
+Sartén
+Fogón
+Patatas
+4 huevos
+Aceite
+Sal
+Cebolla
+
+Pasos que hay que seguir (algoritmo):
+
+Cascar los huevos y ponerlos en el bol.
+Batir los huevos en el bol hasta que queden uniformes.
+Pelar las patatas.
+Cortar las patatas en trozos no demasiado grandes.
+Si ponemos cebolla, pelarla. 
+Si ponemos cebolla, cortarla en trozos no demasiado grandes.
+Encender el fogón.
+Poner la sartén en el fogón.
+Poner el aceite en la sartén.
+Cuando el aceite esté caliente, freír las patatas.
+Si ponemos cebolla, freírla.
+Poner los huevos y las patatas en un bol.
+Si ponemos cebolla, añadirla al bol.
+Mezclar el contenido del bol.
+Poner el contenido del bol en la sartén.
+Esperar hasta que adquiera una forma consistente.
+Dar la vuelta a la tortilla. 
+Cuando la tortilla esté hecha, apagar el fogón y emplatar.
+
+ 
+
+2. Diseño de algoritmos: pseudocódigo y diagramas de flujo
+
+En el caso de la programación, el proceso de generar un algoritmo es muy parecido al ejemplo de la tortilla, pero el lenguaje que se utiliza suele estar más cerca de los diferentes lenguajes de programación que existen.
+
+Los lenguajes de programación, como C, Java, Python u otros, tienen una «sintaxis» muy estricta. Aunque intentan asemejarse al lenguaje natural, es decir, el que utilizamos las personas cuando nos comunicamos, hay una serie de reglas que se deben seguir y es imprescindible que las líneas de código estén escritas de una manera determinada. En esta asignatura, iremos aprendiendo estas reglas poco a poco y con la práctica. 
+
+Cada lenguaje de programación tiene su sintaxis específica, que se aprende con la práctica. Pero el algoritmo que utilicemos para solucionar un problema puede ser igual o muy parecido, independientemente del lenguaje de programación que utilicemos para implementarlo. Por eso, en la fase de diseño del algoritmo se utiliza lo que se llama pseudocódigo o diagramas de flujo.
+
+ 
+
+2.1. Pseudocódigo
+
+El pseudocódigo es una descripción paso a paso del algoritmo que se ha diseñado.
+
+Se dice que el pseudocódigo es una descripción a muy alto nivel de la estructura de un programa. Con alto nivel queremos decir que las instrucciones o los pasos que se utilizan son fáciles de entender por la persona que lo está generando (o cualquier otra persona que lo lea). Aunque se utilicen estructuras típicas de la programación, se emplea un lenguaje que se entiende de manera más o menos inmediata.
+
+Por otro lado, hay otros lenguajes de programación que se llaman de bajo nivel, en los que las instrucciones se aproximan más a lo que el procesador tiene que hacer para generar la solución al problema.
+
+El pseudocódigo no tiene en cuenta la sintaxis del lenguaje de programación que mencionábamos antes, sino que es mucho más flexible. 
+
+A continuación, os ponemos como ejemplo el pseudocódigo para el código de programa «Hello World!» que hemos visto antes. ¿Podéis ver las diferencias entre los dos? 
+
+Pseudocódigo
+	
+C
+
+algorithm HelloWorld
+
+    writeString("Hello World!");
+
+end algorithm
+
+	
+#include <stdio.h>
+
+int main() {
+   printf("Hello, World!");
+   return 0;
+}
+
+A medida que avance la asignatura, iremos aprendiendo poco a poco cómo se escribe el pseudocódigo. Aunque es más flexible que la sintaxis de un lenguaje de programación, sí que estableceremos unas cuantas reglas que nos ayudarán a que, al generar el algoritmo, ya tengamos en mente la implementación en un lenguaje de programación (en nuestro caso, C). En la PAC 0 - Nomenclátor de notación algorítmica, os presentamos un resumen de las reglas que debéis seguir a la hora de generar un algoritmo usando pseudocódigo. Tenedla a mano, porque seguro que la deberéis utilizar unas cuantas veces en esta asignatura.
+
+ 
+
+Recordad
+
+Un algoritmo en pseudocódigo no es un programa. Es la descripción de la solución que se ha diseñado para resolver el problema planteado. 
+
+Para que esta solución se convierta en un programa, hay que codificarla en el lenguaje escogido (en nuestro caso, C).
+
+ 
+
+2.2. Diagramas de flujo
+
+Como os hemos comentado anteriormente, el pseudocódigo es muy útil a la hora de conceptualizar el algoritmo que soluciona el problema. Además, nos ayuda a plantearlo de una manera que será muy similar al programa final y, por lo tanto, nos facilita el trabajo. 
+
+Aun así, hay veces en las que una herramienta más visual también puede ser útil. Este es el caso de los diagramas de flujo.
+
+Los diagramas de flujo son esquemas en los que se pueden distribuir las instrucciones que forman un algoritmo, de manera que de un vistazo se puede tener una idea de su estructura, lo que facilita la función de las instrucciones descritas. 
+
+Un diagrama de flujo puede ser muy útil como complemento del pseudocódigo. Un algoritmo descrito en un diagrama de flujo es más fácil de interpretar de un vistazo. Aun así, siempre es necesario describirlo usando pseudocódigo, porque nos acerca a la forma final que tendrá el programa, ya que la estructura de las instrucciones —que se ejecutan una detrás de la otra— del algoritmo en pseudocódigo es muy parecida a la de un código en un lenguaje de programación. 
+
+A continuación, os mostramos un diagrama de flujo que describe el proceso que se debe seguir para generar un programa informático:
+
+ 
+
+3. Codificación
+
+ 
+
+La codificación consiste en traducir el algoritmo que hemos diseñado para resolver un problema —ya sea con un diagrama de flujo o en pseudocódigo— y transformarlo en un programa escrito en un lenguaje concreto de programación (en nuestro caso, C).
+
+La principal diferencia entre un algoritmo escrito en pseudocódigo y un programa codificado en C es que el algoritmo es un diseño de los pasos para resolver un problema, pero no puede ejecutarse. En cambio, el programa codificado en lenguaje C sí puede ser ejecutado por un ordenador, y nos da los resultados que estamos buscando para resolver el problema. 
+
+Así pues, para escribir un programa (en nuestro caso, en lenguaje C) únicamente podremos utilizar sus instrucciones básicas y sus normas para que el código pueda ser compilado y ejecutado sin problemas. Por lo tanto, deberemos adaptar el algoritmo al lenguaje C.
+
+Cuando escribimos un algoritmo en pseudocódigo, podemos utilizar un lenguaje que nos resulte más claro para entender cómo será el desarrollo del programa. Aunque seguiremos una serie de reglas para generar algoritmos en pseudocódigo, una de sus ventajas es que el lenguaje es más natural. De hecho, aunque en esta asignatura escribamos los algoritmos en inglés, se podrían escribir perfectamente en castellano. En cambio, si escribimos en lenguaje C (o cualquier otro lenguaje de programación), deberemos observar estrictamente todas las reglas de la sintaxis del lenguaje en cuestión, las palabras clave o reservadas, etc. Si nos olvidamos de alguna de las reglas, cometeremos errores y el programa no se podrá ejecutar. 
+
+ 
+
+3.1. Programa en C
+
+En este punto, haremos un análisis de la estructura de un programa en C. 
+
+Retomamos el ejemplo del programa «Hello World!» que hemos mostrado antes. 
+
+#include <stdio.h>
+
+int main() {
+   printf("Hello, World!");
+   return 0;
+}
+
+Un programa en C siempre ha de tener una función main(). Ya hemos introducido esta función en REC. Preguntas frecuentes, pero ahora la describiremos con más detalle. Esta es la función principal del programa. Más adelante, veremos exactamente lo que es una función, pero en este momento consideraremos una función como una porción de código que realiza unas operaciones determinadas y devuelve un valor como resultado. 
+
+La función se define del siguiente modo:
+
+int main() {}
+
+ 
+
+¡Atención!
+
+Para generar programas utilizaremos CodeLite. Trataremos los detalles de esta herramienta durante el curso, pero, en este punto, solo tenéis que saber que CodeLite es un programa que se usa para crear otros programas, de la misma manera que Word y Google Docs se utilizan para generar documentos de texto, o Excel y Google Sheets se emplean para crear hojas de cálculo.
+
+Cuando CodeLite crea un programa, veréis que la función main tiene más datos entre los paréntesis, parecido a lo siguiente:
+
+int main(int argc, char **argv)
+
+Los llamados «parámetros» de la función main se añaden para que, una vez creado el programa (el fichero ejecutable), se pueda llamar con parámetros para cambiar su funcionalidad.
+
+No os preocupéis si no lo entendéis en este momento. Podéis dejar los parámetros o borrarlos, pero simplemente ignorad esta diferencia entre lo que os explicamos y lo que aparece en CodeLite. 
+
+ 
+
+A continuación, analizamos la línea en detalle:
+
+int: la función main ha de devolver un valor. En este caso, int (integer) informa de que este valor es un número entero (en las siguientes unidades veremos con más detalle lo que esto significa). Normalmente, el valor de retorno de la función main estará asociado con las incidencias que puedan ocurrir en el programa. En otras funciones, el valor de retorno es el resultado de un procesamiento de datos. Por ahora, no le daremos mayor importancia. 
+main(): esta es la función main. Los paréntesis se utilizan para determinar los parámetros con los que se llama la función. En este caso, la función main no tiene parámetros. 
+{}: las líneas del programa se sitúan entre estas llaves.
+
+En este caso, el programa lo forman dos líneas de código:
+
+printf("Hello, World!");
+Esta línea es la que hace que se muestre «¡Hola, mundo!» en la pantalla.
+return 0;
+Como hemos comentado, la función main devuelve un número entero. En este caso, simplemente devuelve 0. En este punto, no es necesario que entendáis por qué lo hacemos así.
+
+Fijaos en que antes de la función main tenemos otra línea, que empieza con #. En C, las líneas que empiezan con # son las que se llaman preprocesadores. Estas líneas tienen diferentes cometidos. En este caso concreto, la línea #include <stdio.h> sirve para que el programa cargue la librería estándar de C, que se llama <stdio.h> (standard input/output). Las librerías estándar de C son conjuntos de funcionalidades que extienden las instrucciones básicas del lenguaje C, facilitando efectuar ciertas tareas. La librería stdio.h contiene la información necesaria para poder utilizar la función printf, que se emplea en este programa. 
+
+ 
+
+3.2. Codificación, sintaxis, compilación y ejecución
+
+Probablemente os estaréis preguntando si, cuando un programa es un fichero de texto y tenéis muchos ficheros de texto en vuestro ordenador, podríais intentar ejecutar uno de esos ficheros de alguna manera.
+
+La respuesta es que podríais intentarlo, pero tenéis que seguir dos pasos en el caso del lenguaje de programación C: compilarlo y enlazarlo.
+
+Compilar (compile): el compilador o compiler analiza el código que hemos escrito y si hemos seguido las reglas del lenguaje de programación (en nuestro caso, C). Estas reglas son lo que se llama sintaxis. Si hay alguna regla de C que no se ha seguido, el compilador nos informará de que existe un error. En cambio, si hemos escrito un programa correcto según las reglas de la sintaxis de C, la compilación será correcta y se generará un fichero .obj por cada fichero de código (.c) que se compile. Este fichero .obj (objeto de código o code object) es una traducción del lenguaje de programación a un lenguaje que el procesador del ordenador puede entender. Tened en cuenta que el resultado de compilar todavía no es un programa. 
+Enlazar (link): es el proceso de crear un único fichero ejecutable a partir de los ficheros .obj que hemos compilado anteriormente. El enlazador o linker utilizará todos los ficheros .obj que necesite para generar el programa. Si hay algún fichero .obj que no se encuentra o alguna incoherencia entre los ficheros .obj (por ejemplo, el mismo código está en dos sitios diferentes o, al revés, ese código no está en ninguno de los ficheros), el enlazador generará un error. Si, al contrario, todo es correcto, el enlazador generará un programa, y esta vez sí lo podremos ejecutar. Los ficheros ejecutables pueden tener varias extensiones, pero normalmente son .exe (en Windows) o .bin (en Linux).
+
+Como siempre se enlaza después de compilar, CodeLite nos da la opción de construir: compilar y enlazar en una única acción.
+
+Ejecutar: el hecho de que el programa compile y enlace (compiles y links) sin errores no quiere decir que funcione correctamente. Solo indica que no hay errores sintácticos en el programa y que se puede ejecutar. Una vez creado el programa, es necesario probarlo o testarlo. El primer test consiste en ejecutarlo y asegurar, rápidamente, que el programa funciona y hace lo que necesitamos que haga.
+Testar: una vez que sabemos que el programa se puede ejecutar, es muy importante que comprobemos que los resultados son correctos. Para eso, tenemos que asegurarnos de que todos los casos posibles estén contemplados en el funcionamiento del programa. Por ejemplo, si creamos un programa que suma dos números enteros, deberíamos probar que funciona en diferentes casos:
+
+cuando los dos números son positivos,
+cuando los dos números son negativos,
+cuando el primero es negativo y el segundo, positivo, y
+cuando el primero es positivo y el segundo, negativo.
+
+Es muy importante hacer este test porque, si no se realiza, puede que hagamos que el programa nos dé resultados equivocados o, incluso, que se «cuelgue» el ordenador. Como podéis comprobar en el caso anterior, incluso algo tan fácil como sumar dos números requiere que se pruebe en diferentes ocasiones. ¿Os parecen suficientes las opciones que hemos planteado anteriormente? ¿Creéis que habría que probar también los casos en los que uno de los dos números sea cero? Seguramente, sí. Es más complicado de lo que parece, ¿verdad?
+Testar un programa es una tarea muy importante y, a veces, para hacerlo se generan lo que se llaman juegos de prueba. Estos juegos de prueba son diferentes casos de entrada, cada uno de los cuales da un resultado de salida. Se hacen tantos casos de entrada como situaciones diferentes encontremos, y para cada conjunto de valores de entrada se guardan los valores de salida. Estos juegos de prueba son muy útiles para asegurar automáticamente que el programa funciona correctamente, especialmente en el caso en el que se haya hecho algún cambio en el programa. Si es así, podemos usar automáticamente el mismo juego de pruebas y ver si los valores de salida son los mismos que antes de la modificación.
+
+Recordad
+
+Superar un juego de pruebas es una manera de asegurarse de que el programa es más robusto que si no lo superara, pero no hay ningún juego de pruebas suficientemente extensivo como para permitir asegurar que el programa vaya a funcionar siempre. Eso no quiere decir que no tengamos que intentar hacer el programa lo más robusto posible.
+
+En esta asignatura, aprenderemos estrategias para hacerlo, y también utilizaremos herramientas externas (en concreto, DSLab) que nos ayudarán a testar que el programa funciona correctamente. 
+
+ 
+
+Resumen
+
+ 
+
+La programación es un proceso en el que se genera un programa, una secuencia de instrucciones que un ordenador puede interpretar y ejecutar, y que sirven para que ese ordenador resuelva de manera automática un problema concreto.
+Al programar, generamos un algoritmo, que es un conjunto de instrucciones que sirven para resolver un problema de una manera general. No todos los algoritmos son programas, pero todos los programas contienen un algoritmo.
+Los algoritmos se suelen escribir en pseudocódigo, que el ordenador no entiende. Los programas se escriben en código (en nuestro caso, C), que el ordenador sí puede entender.
+El pensamiento computacional es un método que se aplica para generar algoritmos. Consiste en seguir estos pasos:
+Descomponer el problema.
+Reconocer los patrones.
+Abstraer el problema.
+Generar el algoritmo.
+Una vez que tenemos un algoritmo, lo codificamos para hacer un programa. En esta asignatura, para codificar el programa utilizaremos CodeLite.
+Una vez creado el programa, hay que compilarlo y enlazarlo para que el procesador del ordenador lo pueda entender. 
+Cuando tengamos el programa finalizado, es necesario testarlo y asegurarse de que funciona como esperamos.

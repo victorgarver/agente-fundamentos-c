@@ -1,0 +1,855 @@
+2. Tipos elementales de datos
+
+1. La información en un ordenador
+
+1.1. Digitalización
+1.2. Memoria de un ordenador: sistema binario
+
+2. Tipos elementales de datos
+
+2.1. Tipo booleano, boolean
+2.2. Tipo booleano en C: bool
+2.3. Tipo entero, integer
+2.4. Tipo entero en C: int
+2.5. Tipo real, real
+2.6. Tipo real en C: float
+2.7. Tipo carácter, char
+2.8. Tipo carácter en C: char
+
+Resumen
+
+ 
+
+1. La información en un ordenador 
+
+Los algoritmos y los programas siempre se pueden pensar como un procesado de información.
+
+Por ejemplo, un programa que calcule el precio de un piso en función de su superficie puede tomar como datos de entrada la superficie del piso en metros cuadrados, datos con los que hará los cálculos necesarios (procesará la información) para calcular el precio del piso. Esos cálculos pueden ser más simples (podría multiplicar las dos cantidades) o más elaborados (podría tener en cuenta el código postal de donde se encuentra el piso para obtener un precio por metro cuadrado realista), pero, el concepto global es el mismo: tenemos unos datos de entrada y otros de salida. 
+
+Esta estructura siempre se repite: se utiliza una serie de datos para manipularlos o procesarlos y obtener un resultado que nos interesa. 
+
+En el caso de los cálculos, utilizaremos números, pero también podríamos hablar de texto (como el propio programa «Hello World!», en el que imprimimos por pantalla una frase). 
+
+Así pues, dependiendo de lo que queramos que haga el programa, deberemos usar unos tipos de datos u otros. 
+
+Pero ¿cuáles son los tipos de datos que podemos utilizar en nuestros programas?
+
+ 
+
+1.1. Digitalización
+
+¿Habéis oído hablar de la era digital? Se refiere, en general, a la época en la que las tecnologías de la información tienen una incidencia más relevante para la humanidad. Pero ¿por qué se llama digital? La digitalización es el proceso por el cual una cantidad es medida y guardada como un número. Digitalizar es transformar una cantidad física en un número. Por ejemplo, la temperatura es una magnitud del calor de las cosas. La podemos medir usando un termómetro y, por lo tanto, le podemos asignar un valor: la temperatura normalizada es de 25 ºC. Así pues, es relativamente fácil medir la temperatura y guardar su valor cada hora, cada día o la temperatura media de cada año.
+
+Pero ¿qué quiere decir digitalizar una imagen? ¿O una canción? El proceso de digitalización de una imagen o de una canción es parecido al de la temperatura: utilizamos un dispositivo que sea capaz de «medir» una imagen (como una cámara, que transforma la cantidad de luz en una señal eléctrica) o un sonido (como un micrófono, que transforma las vibraciones generadas por el sonido en variaciones de una onda eléctrica) y transformar la señal que detecta en un número que codifica esa imagen o canción. Evidentemente, no es tan fácil como medir la temperatura, pero el proceso es análogo. 
+
+En resumen, digitalizar es transformar una cantidad física del mundo real en números.
+
+Hay muchísimos periféricos de un ordenador que permiten transformar en números cantidades físicas. Hemos hablado de la temperatura (termómetro), las imágenes (cámara) o los sonidos (micrófono). Pero hay muchos más:
+
+El campo magnético: brújula.
+El movimiento: giroscopio o acelerómetro.
+La posición: GPS.
+La distancia: telémetro láser.
+Composición química: espectrómetro.
+
+Casi cualquier cantidad física se puede medir, cuantificar y codificar en un número. Y toda esta información se puede guardar en la memoria de un ordenador y procesarla en un programa. 
+
+ 
+
+1.2. Memoria de un ordenador: sistema binario
+
+La digitalización es muy importante en las tecnologías de la información, y también lo es el desarrollo de las tecnologías que permiten guardar los valores de las medidas de la digitalización, esto es, la memoria del ordenador. 
+
+Hay diferentes tipos de memorias de un ordenador, pero todas se basan en el mismo concepto: la capacidad de guardar una gran cantidad de 0 y 1. No entraremos en cómo es la tecnología que hace esto, pero la memoria RAM de un ordenador es capaz de guardar muchísimos de estos 0 y 1, y leerlos y escribirlos de manera muy rápida. Además, los discos duros son capaces de mantener esa información incluso cuando no les llega electricidad (al apagar el ordenador). 
+
+¿Cómo se utilizan estos 0 y 1?
+
+La unidad de almacenamiento que puede guardar un 0 o un 1 se llama bit.
+
+Fijaos en que si tenemos 1 bit podemos contar hasta 2: 1 y 2 (o en realidad, 0 y 1).
+
+Si tenemos 2 bits, podemos contar hasta 4:
+
+1.er bit
+	
+2.o bit
+	
+Número
+
+0	0	0
+1	0	1
+0	1	2
+1	1	3
+
+Si añadimos un bit, podemos doblar los números que podemos codificar, y así sucesivamente.
+
+Número de bits
+	
+Números que podemos codificar
+
+1	2
+2	4 = 2*2 = 22
+3	8 = 2*2*2 = 23
+4	16 = 2*2*2*2 = 24
+
+Así pues, tomando cada vez más y más bits, podemos codificar más y más números, es lo que se llama base 2, o números binarios. De esta manera, los números pueden parecer muy grandes: 100 en binario se escribe 1100100 y, a veces, resulta incómodo. Por eso, y por otras razones que iremos estudiando en esta unidad, en ocasiones se habla de unidades de memoria más grandes:
+
+Nombre
+	
+Símbolo
+	
+Equivalencia
+	
+Valores
+
+Bit 	
+
+bit/b
+
+		0.1
+Byte	B	8 bits	0-255
+Kilobyte	KB	1024 bytes (210 B)	
+Megabyte	MB 	1024 KB (220 B)	
+Gigabyte	GB	1024 MB (230 B)	
+Terabyte	TB	1024 GB (240 B)	
+
+ 
+
+2. Tipos elementales de datos
+
+Ya hemos explicado más arriba que, al escribir un algoritmo y codificarlo finalmente en un programa, es necesario seleccionar los tipos de datos adecuados, es decir, aquellos que describen mejor los datos que utilizamos en la solución del problema. En este apartado, describiremos los distintos tipos elementales de datos que utilizamos al generar un algoritmo en pseudocódigo y, posteriormente, codificarlo en C. 
+
+Los tipos de datos elementales son los siguientes: 
+
+Booleano
+Entero
+Real
+Carácter
+Vector
+Cadena de caracteres (string)
+
+En este apartado, describiremos los cuatro primeros, pero no el quinto ni el sexto, vector y cadena de caracteres (string), ya que aún no dispondremos de los conceptos necesarios para poder entenderlo bien. Lo describiremos con detalle cuando hablemos de los vectores, en 10. Vectores y matrices, y de las cadenas de caracteres, en 11. Tipos elementales de datos: cadenas de caracteres. No obstante, nos parecía necesario que, aunque no pudiéramos tratarlos en profundidad aún, supieseis que las cadenas de caracteres (strings) son también un tipo de dato elemental. 
+
+ 
+
+¡Atención!
+
+Aquí os hablaremos de unos tipos de datos que vamos a usar en el curso, pero en C hay bastantes más, que cubren necesidades específicas que se plantean en programación. En el enlace,
+Links to an external site.
+ podéis ver que la lista es bastante más larga de lo que os presentamos en esta unidad. Si aprendéis los tipos de datos que os proponemos en esta unidad y entendéis bien sus diferencias y usos, no os costará entender todos los demás. Pero no es necesario que aprendáis estos últimos en este curso, simplemente sed conscientes de que existen más tipos de datos en C.
+
+ 
+
+2.1. Tipo booleano, boolean
+
+El tipo booleano es el tipo de datos más simple que existe. Solo admite dos valores: true (cierto) o false (falso). Aunque no sea estrictamente correcto, a veces también se habla de 1 o 0, respectivamente. Esto se hace porque se asocia el valor 1 a true, y el valor 0 a false. Pero en realidad, y aunque en estos materiales a veces se hable de 0 y 1, los datos booleanos solo pueden ser true o false. 
+
+El nombre de estos datos, booleanos, procede del álgebra de Boole, que está estrechamente ligada a la lógica. El álgebra de Boole define operaciones lógicas entre datos de tipo booleano. Se parece a la suma y la resta que conocemos para los números, pero «adaptada» a los datos de tipo booleano, que, como hemos dicho, solo pueden tomar los valores true (cierto o 1) o false (falso o 0).
+
+Imaginemos que tenemos dos valores booleanos, que llamaremos a y b. Cada uno de estos valores puede concretarse en false o true. Las operaciones que se pueden realizar entre dos datos booleanos son las siguientes:
+
+ 
+
+NOT a (operación NEGACIÓN de a)
+
+La operación negación se aplica a un valor booleano, en este caso a. La operación NOT (negación) cambia el valor de a:
+
+si a era true (o 1) pasa a ser false (o 0),
+si a era false (o 0) pasa a ser true (o 1).
+
+Podemos resumir la operación NOT en la siguiente tabla:
+
+a
+	
+NOT a
+
+1	0
+0	1
+
+ 
+
+a AND b (operación a Y b)
+
+Dependiendo de los valores que tomen a y b, la operación a AND b da como resultado true o false. Si a y b son true, la operación a AND b (a y b) da como resultado true. De alguna manera, nos dice que la operación AND da como resultado true si a y b son true. En cambio, si una de las dos, o las dos, son false, la operación da false. 
+
+Lo resumimos en la siguiente tabla:
+
+a
+	
+b
+	
+a AND b
+
+1	1	1
+1	0	0
+0	1	0
+0	0	0
+
+ 
+
+a OR b (operación a O b)
+
+Parecido al caso anterior, la operación a OR b se puede definir según la siguiente tabla:
+
+a
+	
+b
+	
+a OR b
+
+1	1	1
+1	0	1
+0	1	1
+0	0	0
+
+En este caso, el resultado de la operación a OR b es 1 si uno de los dos valores, a o b, es 1. Si los dos son 0, entonces el resultado es 0.
+
+Fijaos en que los operadores booleanos (NOT, AND y OR) están definidos solo entre datos de tipo booleano y, a su vez, dan como resultado un dato de tipo booleano. Veréis por qué insistimos en este punto más adelante.
+
+Los valores booleanos también se pueden comparar entre sí. Si tenemos dos valores booleanos, a y b, podemos ver si:
+
+a y b son iguales: =
+a y b son diferentes: ≠
+a es mayor que b: >
+a es mayor o igual que b: ≥
+a es menor que b: <
+a es menor o igual que b: ≤
+
+Si ponemos estas operaciones en formato de tabla, como hemos visto más arriba, tendremos que:
+
+a
+	
+b
+	
+a=b
+	
+a≠b
+	
+a>b
+	
+a≥b
+	
+a<b
+	
+a≤b
+
+0	0	1	0	0	1	0	1
+0	1	0	1	0	0	1	1
+1	0	0	1	1	1	0	0
+1	1	1	0	0	1	0	1
+
+Como ejercicio, podríais comprobar si la tabla anterior es correcta. 
+
+ 
+
+2.2. Tipo booleano en C: bool
+
+Recordad que la programación implica primero diseñar un programa utilizando pseudocódigo. En un segundo paso, implementaremos este programa; en nuestro caso, lo haremos en C. En el apartado anterior, hablábamos de la definición del tipo de datos booleanos. Ahora, introduciremos cómo ese tipo de datos se implementa en C. 
+
+Cuando estamos escribiendo un programa en C, todo lo que hemos explicado arriba sirve, si bien los nombres de los operadores que hemos definido cambian un poco. En C, se ha convenido que estos operadores se llamen como listamos a continuación:
+
+Pseudocódigo
+	
+C
+	
+ 
+
+NOT	!	!a
+AND	&&	a&&b
+OR	||	a||b
+=	==	a==b
+≠	!=	a!=b
+>	>	a>b
+≥	>=	a>=b
+<	<	a<b
+≤	<=	a<=b
+
+ 
+
+¡Atención!
+
+Lo veremos con más detalle en el momento en el que expliquemos cómo se define una variable, en 3. Variables (y constantes) y su definición, pero en este momento es interesante comentar que las variables tipo bool, tal y como las hemos introducido aquí, no se consideran un tipo elemental de datos. 
+
+Por lo tanto, cuando codificamos en C y queremos usar variables bool, tenemos que añadir la siguiente línea al principio del programa:
+
+#include <stdbool.h> 
+
+ 
+
+2.3. Tipo entero, integer
+
+Los datos de tipo integer son parecidos a los números enteros: son los números 0, 1, 2, etc. Y también los negativos: -1, -2, -3, etc.
+
+Los datos de tipo integer nos permiten realizar operaciones entre ellos. Pero, a diferencia de los datos de tipo booleano, los datos de tipo integer pueden operar entre sí mediante dos tipos de operaciones distintas:
+
+Operaciones internas: son las operaciones entre números enteros que dan como resultado otro número entero.
+Operaciones externas: son las que dan como resultado un valor que no es integer. Como veremos a continuación, las operaciones externas son las que comparan números integer entre sí y dan como resultado un valor booleano. 
+
+Los operadores internos, en el caso de los números enteros, son los siguientes:
+
+Nombre
+	
+Símbolo
+	
+Ejemplos
+
+Cambio de signo
+
+	
+
+- 
+
+	-8
+-(-9)
+
+Suma
+
+Resta
+
+	
+
++
+
+-
+
+	3 + 2, da como resultado 5.
+5 - 8, da como resultado -3.
+
+Multiplicación
+
+División
+
+	
+
+* 
+
+div 
+
+	5 * 8, da como resultado 40.
+9 div 7, da como resultado 1.
+Recordad que el resultado de un operador interno entre integer es un integer; por lo tanto, el resultado no tiene decimales. 
+Si utilizáis la división, puede darse el caso de que el número por el que se divida sea 0 y se produzca un error en el programa.
+Módulo
+	mod	
+
+8 mod 2
+
+Esta operación devuelve el resto de la división del primer número entre el segundo. En este caso, 8 mod 2 da como resultado 0, mientras que 7 mod 2 da como resultado 1.
+
+Los operadores externos, en el caso de los números integer, consisten en operadores de comparación, es decir, comparan dos números bajo una premisa:
+
+¿Son iguales?
+¿Son diferentes?
+¿Es el primero mayor que el segundo?
+Etc.
+
+Parecido al caso de los booleanos, el resultado de comparar dos números integer es true o false.
+
+Fijaos en lo siguiente: ¿es 8 diferente a 9? Cierto. Tenemos dos números enteros, 8 y 9, que comparamos para ver si son diferentes. El resultado de la operación no es un número entero, sino booleano (verdadero o cierto). Por eso, se llaman operadores externos. 
+
+Los operadores externos, en el caso de los números integer, son los siguientes:
+
+Nombre
+	
+Símbolo
+	
+Ejemplos
+
+Igualdad (comparación)
+
+	
+
+= 
+
+	2 = 0: ¿es 2 igual a 0? El resultado es falso.
+5 = 5: ¿es 5 igual a 5? El resultado es cierto.
+
+Desigualdad
+
+	
+
+≠
+
+	
+
+2 = 0: ¿es 2 diferente a 0? El resultado es cierto.
+5 = 5: ¿es 5 diferente a 5? El resultado es falso. 
+
+Fijaos en que estos resultados y los del operador igualdad son justo al revés.
+
+Menor que
+Mayor que 	<
+> 	5 < 0: ¿es 5 menor que 0? El resultado es falso.
+5 > -1: ¿es 5 mayor que -1? El resultado es cierto.
+Menor o igual que
+Mayor o igual que	≤
+≥	
+
+2 ≤ 0: ¿es 2 menor o igual que 0? El resultado es falso.
+5 ≥ 5: ¿es 5 mayor o igual que 5? El resultado es cierto.
+
+ 
+
+2.4. Tipo entero en C: int
+
+Los números integer en C se llaman int.
+
+Los números enteros en matemáticas pueden tomar valores entre -∞ y +∞, pero esto no es posible en la realidad. Como hemos comentado anteriormente, el rango de números enteros que se puede representar puede ser muy grande y depende del número de bits que se utilicen para guardar un número entero. Como la memoria de un ordenador no es infinita, no podemos guardar números con valores que no quepan en esa memoria. 
+
+Cuando se crea un compilador, se decide que los números int ocupen un espacio de memoria determinado. Dependiendo de los criterios que se adoptan al crear un compilador, se decide una cosa u otra. Normalmente, los números int ocupan entre 2 y 4 bytes.
+
+Esta convención, utilizar 2 o 4 bytes para representar un número int, es una de las razones por las que utilizamos una máquina virtual en esta asignatura. Con la máquina virtual, nos aseguramos de que todos trabajamos «en el mismo ordenador» (como mínimo, en el mismo ordenador virtual) y tenemos el mismo compilador. De esta manera, no tendremos diferencias en cuanto al tamaño de los números, porque esa diferencia puede dar lugar a resultados distintos si no se tiene cuidado.
+
+En el caso de CodeLite, en nuestra máquina virtual, los números int ocupan 4 bytes. 
+
+Bytes	1	
+
+2 
+
+	3	4
+Bits	1	2	3	4	5	6	7	8	9	10	11	12	
+
+13
+
+	14	15	16	17	17	19	20	21	22	23	24	25	26	27	28	29	30	31	32
+
+ 
+
+	
+
+Signo
+
+	Número
+
+Según esto, el rango de números enteros que podemos representar con un dato de tipo int es el siguiente:
+
+Mínimo: -231 = -2.147.483.648
+Máximo: 231 = 2.147.483.648
+
+En C, los operadores internos de los números int son los siguientes:
+
+Nombre
+	
+Símbolo
+	
+Ejemplos
+
+Cambio de signo
+
+	
+
+- 
+
+	-8
+-(-9)
+
+Suma
+
+Resta
+
+	
+
++
+
+-
+
+	3 + 2, da como resultado 5.
+5 - 8, da como resultado -3.
+
+Multiplicación
+
+División
+
+	
+
+*
+
+/ 
+
+	5 * 8, da como resultado 40.
+7 / 9, da como resultado 0.
+Recordad que el resultado de un operador interno entre dos números int es un int. Por lo tanto, el resultado de la división entre int no tiene decimales. 
+Si utilizáis la división, puede darse el caso de que el número por el que se divida sea 0 y se produzca un error en el programa.
+Módulo
+	%	
+
+8 % 2
+Esta operación devuelve el resto de la división del primer número entre el segundo. En este caso, 8 mod 2 da como resultado 0, mientras que 7 mod 2 da como resultado 1.
+
+ 
+
+En C, los operadores externos de los números int son los siguientes:
+
+Nombre
+	
+Símbolo
+
+Igualdad (comparación)
+
+	
+
+== 
+
+Desigualdad
+
+	
+
+!=
+
+Menor que
+Mayor que 	<
+> 
+Menor o igual que
+Mayor o igual que	<=
+>=
+
+Fijaos en que, aunque las tablas de operadores que hemos escrito para los tipos de datos integer (en pseudocódigo) y los datos int en C parecen iguales, no lo son. Intentad encontrar cuáles son las diferencias entre las dos tablas. Esto es importante, porque quiere decir que la notación de los operadores en pseudocódigo y en C es diferente en algunos casos. 
+
+ 
+
+2.5. Tipo real, real
+
+Al programar, también interesa poder representar valores numéricos que no sean enteros, sino que tengan decimales. Este es el tipo de datos llamado real. 
+
+Cuando hablamos de números reales en matemáticas, decimos que estos incluyen también los números enteros. Por lo tanto, podemos pensar que son muy parecidos entre sí. Desde un punto de vista informático, los enteros y los reales son dos tipos diferentes de datos y no tienen nada que ver uno con el otro. La manera de representarlos internamente es muy diferente. Esto no quiere decir que no podamos operar con ellos, pero, como veremos más adelante, para hacerlo, será necesario convertir los valores reales en enteros o a la inversa.
+
+Los operadores internos y externos para los números reales son muy parecidos a los de los números enteros.
+
+Los operadores internos son los siguientes:
+
+Nombre
+	
+Símbolo
+	
+Ejemplos
+
+Cambio de signo
+
+	
+
+- 
+
+	-8.1
+-(-10.45)
+
+Suma
+
+Resta
+
+	
+
++
+
+-
+
+	3.6 + 2.4, da como resultado 6.0.
+5.0 - 8.3, da como resultado -3.3.
+
+Multiplicación
+
+División
+
+	
+
+*
+
+/ 
+
+	5.0 * 8.1, da como resultado 40.5.
+5.0 / 2.0, da como resultado 2.5.
+Notad que ahora no hablamos del operador div. Ese operador solo se define entre enteros. Para dividir reales utilizamos /.  
+Si utilizáis la división, puede darse el caso de que el número por el que se divida sea 0 y se produzca un error en el programa.
+
+Fijaos en que entre números reales no se define el operador mod: entre números reales no hay un resto porque la división está bien definida. Por esta razón, no utilizamos el operador div, que es exclusivo de los números integer.
+
+Como en el caso de los tipos de datos integer, también tenemos los operadores externos, que comparan los valores de los datos. En este caso, los operadores externos son:
+
+Nombre
+	
+Símbolo
+	
+Ejemplos
+
+Igualdad (comparación)
+
+	
+
+= 
+
+	2.0 = 0.0: ¿es 2.0 igual a 0.0? El resultado es falso.
+5.0 = 5.0: ¿es 5.0 igual a 5.0? El resultado es cierto.
+
+Desigualdad
+
+	
+
+≠
+
+	
+
+2.0 = 0.0: ¿es 2.0 diferente a 0.0? El resultado es cierto.
+5.0 = 5.0: ¿es 5.0 diferente a 5.0? El resultado es falso. 
+
+Fijaos en que estos resultados y los del operador igualdad son justo al revés.
+
+Menor que
+Mayor que 	<
+> 	5.0 < 0.0: ¿es 5.0 menor que 0.0? El resultado es falso.
+5.0 > -1.0: ¿es 5.0 mayor que -1.0? El resultado es cierto.
+Menor o igual que
+Mayor o igual que	≤
+≥	
+
+2.0 ≤ 0.0: ¿es 2.0 menor o igual que 0.0? El resultado es falso.
+5.0 ≥ 5.0: ¿es 5.0 mayor o igual que 5.0? El resultado es cierto.
+
+ 
+
+2.6. Tipo real en C: float
+
+Como en el caso de los números enteros, existen infinitos números reales, pero nuestro ordenador no puede representarlos todos. Respecto a los números enteros, hemos comentado que existen infinitos números, tanto positivos como negativos. En el caso de los números reales, la cosa se complica aún más, ya que existen infinitos números, incluso entre dos números enteros. Es decir, hay infinitos números entre el 0 y el 1, entre el 0 y el -1, etc. 
+
+Con un ordenador no podemos representar todos estos números, por lo que necesitamos representarlos de una manera que sea eficiente. Para eso, dividimos los números reales en dos partes:
+
+Las cifras significativas (también llamadas mantisa o significando): aquellas que aportan información. Pensemos, por ejemplo, en el número pi, π. Es un número que tiene infinitos decimales. En cualquier caso, cuando lo utilizamos en cálculos reales, no empleamos infinitas cifras, sino que solemos usar unas cuatro o cinco cifras. Esto es porque las cantidades reales suelen tener un error asociado, y el número de cifras que realmente aportan información es relativamente pequeño. Por lo tanto, no tiene mucho sentido trabajar con el número 8.52780928120347809812734, y cometeremos un error bastante pequeño si trabajamos con 8.5278.
+El orden de magnitud: si decidimos utilizar tres cifras significativas para describir un número, estas cifras pueden estar en las unidades (por ejemplo, 1.23), en los millares (1230) o en las centésimas (0.0123). Para trabajar de manera eficaz con estas cifras, podemos utilizar el formato exp o potencia de 10. Así, los números anteriores se pueden escribir como: 
+1.23 = 1.23 x 1 = 1.23 x 100 = 1.23E0
+1230 = 1.23 x 1000 = 1.23 x 103 = 1.23E3
+0.0123 = 1.23 x 0.01 = 1.23 x 10-2 = 1.23E-2
+
+Fijaos en que, como en los ejemplos anteriores, todos los números tienen el mismo número de cifras significativas (tres), pero con órdenes de magnitud diferentes. 
+
+De este modo, los números muy grandes o muy pequeños se pueden representar de una manera más eficiente:
+
+0.00000000000000000000000000000000009235845845 = 9.235845845E-35
+2558846522018200000000000 = 2.5588465220182E24
+
+La denominación float se refiere a la coma flotante, es decir, la coma denota la posición de la primera cifra significativa y puede estar en la magnitud unidades, centésimas o decenas de millar. 
+
+En el caso de CodeLite, los números float están codificados en 4 bytes o, lo que es lo mismo, 4 x 8 = 32 bits. La codificación de estos números se realiza de la siguiente manera:
+
+ 
+
+1	2	3	4	5	6	7	8	9	10	11	12	
+
+13
+
+	14	15	16	17	17	19	20	21	22	23	24	25	26	27	28	29	30	31	32
+
+Signo
+
+	
+
+Magnitud (exponente)
+
+	Cifras significativas 
+
+Es un poco más complicado de calcular que en el caso de los datos int, pero se puede concluir lo siguiente:
+
+Los valores de los tipos de datos float (codificados en 4 bits) van de –3.4 x 1038 a +3.4 x 1038.
+El valor float positivo más pequeño y diferente de cero que se puede representar es 1.7 x 10−38.
+Los tipos de datos float suelen tener unas 6-7 cifras significativas.
+
+Los operadores externos de los datos de tipo float son los siguientes:
+
+Nombre
+	
+Símbolo
+	
+Ejemplos
+
+Igualdad (comparación)
+
+	
+
+== 
+
+	2.0 = 0.0: ¿es 2.0 igual a 0.0? El resultado es falso.
+5.0 = 5.0: ¿es 5.0 igual a 5.0? El resultado es cierto.
+
+Desigualdad
+
+	
+
+!=
+
+	
+
+2.0 = 0.0: ¿es 2.0 diferente a 0.0? El resultado es cierto.
+5.0 = 5.0: ¿es 5.0 diferente a 5.0? El resultado es falso. 
+
+Fijaos en que estos resultados y los del operador igualdad son justo al revés.
+
+Menor que
+Mayor que 	<
+> 	5.0 < 0.0: ¿es 5.0 menor que 0.0? El resultado es falso.
+5.0 > -1.0: ¿es 5.0 mayor que -1.0? El resultado es cierto.
+Menor o igual que
+Mayor o igual que	<=
+>=	
+
+2.0 ≤ 0.0: ¿es 2.0 menor o igual que 0.0? El resultado es falso.
+5.0 ≥ 5.0: ¿es 5.0 mayor o igual que 5.0? El resultado es cierto.
+
+Fijaos en que los operadores externos del tipo de datos float son los mismos que los del tipo de datos int.
+
+ 
+
+2.7. Tipo carácter, char
+
+Otro tipo de dato es el tipo carácter, char, que sirve para representar:
+
+Letras.
+Dígitos (no números, sino dígitos, es decir, los caracteres que representan números).
+Símbolos de puntuación.
+Otros símbolos utilizados normalmente en informática.
+
+Internamente, los caracteres están digitalizados y representados por números. A cada carácter le corresponde un número. Por ejemplo, podríamos inventar una representación de la siguiente manera:
+
+Los dígitos del 0-9 podrían tener los códigos 0-9.
+Las letras del abecedario (a, b, ..., z) podrían tener los códigos desde 10 a 26.
+
+Pero aún nos faltarían las letras acentuadas (á, à, é, è, etc.), las diéresis (ï, ü, etc.), los signos de admiración, los interrogantes, etc. Es más complicado de lo que parece, y hay muchas maneras diferentes de hacerlo. 
+
+El conjunto de correspondencias entre caracteres, números y símbolos se llama código.
+
+Hay diferentes códigos, pero el más utilizado y el que se ha convertido en el estándar es el código ASCII (American Standard Code for Information Interchange), que utiliza un byte para representar cada carácter. Por lo tanto, en el código ASCII se pueden representar hasta 256 caracteres diferentes. Encontraréis la lista completa de códigos ASCII
+Links to an external site.
+ fácilmente.
+
+No hay una manera de operar caracteres entre sí: no podemos calcular «a + b», ni «? * A». Esto no tiene sentido. Por lo tanto, no hay operadores internos entre datos de tipo carácter. 
+
+En cambio, dado que los códigos (como el código ASCII) asignan un número a cada carácter, sí se puede definir un orden entre datos char y realizar operaciones de comparación entre ellos. Recordad que el código ASCII asegura que las letras están ordenadas alfabéticamente, pero hay que tener en cuenta que las mayúsculas y minúsculas no están las unas a continuación de las otras.
+
+Nombre
+	
+Símbolo
+	
+Ejemplos
+
+Igualdad (comparación)
+
+	
+
+=
+
+	a = a: el resultado es cierto.
+A = ?: el resultado es falso.
+
+Desigualdad
+
+	
+
+≠
+
+	
+
+a = a: el resultado es falso.
+A = ?: el resultado es cierto.
+
+Menor que
+Mayor que 	<
+> 	
+
+A < b: el resultado es cierto.
+B < a: el resultado es cierto.
+
+B > A: el resultado es cierto.
+B > a: el resultado es falso.
+
+Revisad la tabla del código ASCII
+Links to an external site.
+ para comprobar estos resultados. 
+
+Menor o igual que
+Mayor o igual que	≤
+≥	
+
+A ≤ b: el resultado es cierto.
+B ≤ B: el resultado es cierto.
+
+B ≥ A: el resultado es cierto.
+a ≥ a: el resultado es cierto.
+
+Un dato de tipo carácter solo guarda un único carácter. Más adelante, ya veremos cómo se pueden representar cadenas de caracteres para poder guardar palabras o frases completas.
+
+ 
+
+2.8. Tipo carácter en C: char
+
+Lo que hemos explicado para los tipos de dato char en el apartado anterior sirve también para los datos tipo char en C. Lo único que es diferente en este caso es que los operadores externos cambian de la misma manera que en los datos de tipo int o float:
+
+Nombre
+	
+Símbolo
+	
+Ejemplos
+
+Igualdad (comparación)
+
+	
+
+== 
+
+	a = a: el resultado es cierto.
+A = ?: el resultado es falso.
+
+Desigualdad
+
+	
+
+!=
+
+	
+
+a = a: el resultado es falso.
+A = ?: el resultado es cierto.
+
+Menor que
+Mayor que 	<
+> 	
+
+A < b: el resultado es cierto.
+B < a: el resultado es cierto.
+
+B > A: el resultado es cierto.
+B > a: el resultado es falso.
+
+Revisad la tabla del código ASCII
+Links to an external site.
+ para comprobar estos resultados. 
+
+Menor o igual que
+Mayor o igual que	<=
+>=	
+
+A ≤ b: el resultado es cierto.
+B ≤ B: el resultado es cierto.
+
+B ≥ A: el resultado es cierto.
+a ≥ a: el resultado es cierto.
+
+ 
+
+Resumen
+
+ 
+
+La información en un ordenador está digitalizada, lo que nos permite guardarla de manera efectiva.
+La información en un ordenador se guarda en la memoria en forma de bits (0 y 1) que se juntan para formar bytes, que a su vez se unen para formar kilobytes, y así sucesivamente.
+Un ordenador puede guardar diferentes tipos de datos. Hay muchos más, pero nosotros trabajaremos con:
+Booleanos: este tipo de dato puede tener solamente dos valores, verdadero o falso. A veces, también se habla de 0 o 1.
+Enteros: se corresponden con los números enteros en matemáticas. 
+Reales (o de coma flotante): se corresponden con los números reales en matemáticas. 
+Caracteres: se corresponden con letras, números y símbolos. Estos caracteres alfanuméricos se guardan como números en el ordenador, de manera que la correspondencia entre el número y el carácter viene dada por una tabla (en nuestro caso, ASCII).
+Estos tipos de datos tienen su correspondencia en pseudocódigo y código C:
+
+Pseudocódigo
+	
+C
+
+boolean	bool
+integer	int
+real	float
+char	char
+Hay una serie de operaciones definidas para cada uno de estos tipos de datos, que dan como resultado un nuevo valor del mismo tipo de dato (operaciones internas), y operaciones entre estos tipos de datos, que dan como resultado una variable booleana (operaciones externas).

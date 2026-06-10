@@ -1,0 +1,905 @@
+6. Expresiones
+
+1. ¿Qué es una expresión?
+
+2. ¿Cómo se forma una expresión?
+
+3. Semántica de una expresión
+
+3.1. Precedencia de los operadores
+3.2. Asociatividad de los operadores
+
+Resumen
+
+ 
+
+1. ¿Qué es una expresión?
+
+De manera similar a las expresiones matemáticas que todos conocemos y estamos acostumbrados a usar, en programación también se utilizan las expresiones para hacer cálculos y obtener nuevos valores a partir de datos conocidos. Como iremos viendo, las expresiones son un elemento básico en la programación.
+
+Una expresión es una combinación finita de operandos (constantes y variables) y operadores (+, -, <, or, and, etc.) que permite calcular un nuevo valor a partir de valores ya conocidos.
+
+El operador indica la acción que hay que hacer, y los operandos son los valores sobre los cuales se realiza la acción. 
+
+Una expresión, para que sea correcta, tiene que cumplir unas normas de sintaxis establecidas.
+
+Las expresiones deben seguir una serie de reglas:
+
+De sintaxis: cómo se escriben. Ya hablamos de la sintaxis cuando introdujimos las variables en 3. Variables (y constantes) y su definición.
+De semántica: cómo se interpretan. 
+
+ 
+
+2. ¿Cómo se forma una expresión?
+
+Igual que en matemáticas hay una serie de normas para escribir operaciones entre números, cuando programamos también hay que seguir unas normas para crear expresiones. 
+
+A continuación, definimos cómo construir expresiones correctamente.
+
+Reglas de sintaxis
+	
+Ejemplos
+	
+Explicación 
+
+Las expresiones más simples están formadas por valores constantes, que pueden ser de tipo entero, real, booleano o carácter.
+
+Según esto, una constante es en sí misma una expresión.
+
+	
+
+5 
+
+	
+
+Constante numérica de tipo entero.
+
+3.1416
+
+	
+
+Constante numérica de tipo real.
+
+TRUE
+
+	
+
+Constante numérica de tipo booleano.
+
+’c’
+
+	
+
+Constante numérica de tipo carácter.
+
+También son expresiones simples las variables de tipo elementales y las constantes declaradas en el algoritmo.	
+
+PI
+
+MAX_STUDENTS
+
+	
+
+Constantes declaradas en el algoritmo.
+
+side1
+numberOfStudents
+
+	
+
+Variables declaradas en el algoritmo.
+
+A partir de las expresiones elementales anteriores, se pueden formar otras más complejas utilizando los operadores binarios.
+
+La regla general es que, si E1 y E2 son expresiones y op es un operador binario, E1 op E2 también lo es.
+
+Fijémonos en que los operadores pueden ser aritméticos o lógicos.
+
+	
+
+5 + 6
+side1 + side2
+
+	
+
+Suma de dos expresiones.
+
+height * 8
+
+	
+
+Producto de dos expresiones.
+
+height * 8 + 9
+
+	
+
+Expresión que multiplica dos números y les suma una constante.
+
+a > b
+
+	
+
+Comparación de dos variables.
+
+a and b
+
+	
+
+Expresión lógica de dos variables booleanas con el operador and.
+
+Dada una expresión, podemos usar paréntesis para formar otra.
+
+La regla general es que, si E1 es una expresión, (E1) también es una expresión.
+
+	
+
+(height * 8) + 9
+
+height * (8 + 9) 
+
+	Los paréntesis ayudan a interpretar cómo hay que evaluar las expresiones.
+
+Dada una expresión, se puede utilizar un operador unario para formar otra.
+
+La regla general es que, si E1 es una expresión y op es un operador unario, op E1 también es una expresión.
+
+	
+
+- (height * 8 + 9)
+
+	
+
+Cambio de signo de una expresión aritmética.
+
+not (a or b)
+
+	
+
+Negación de una expresión lógica.
+
+En este punto, aún no sabemos qué es una función, pero os avanzamos la siguiente regla para formar expresiones:
+
+Si E1, E2, ..., son expresiones y f es una función, f(E1, E2, ..., En) también lo es. Por ejemplo:
+
+sinus(90)
+sqr(25)
+
+Hay diferentes tipos de expresiones:
+
+Tipos de expresiones
+	
+Operadores
+	
+Ejemplos
+
+Aritméticas: cuando los operadores son aritméticos. Dan como resultado valores de tipo numérico (entero o real).	+, -, *, /, div, mod	(a + b * (45 + c)) mod 2
+Relacionales: cuando se utilizan operadores de tipo relacional. Dan como resultado valores de tipo booleano.	=, ≤, ≥, <, >,  ≠ 	a + b = c + d
+Lógicas: cuando se utilizan operadores de tipo lógico. Dan como resultado valores de tipo booleano.	 and, or, not 	 a and b or c
+
+ 
+
+Ejemplo 01. Cálculo del área y del perímetro de una circunferencia
+
+El siguiente ejemplo muestra un algoritmo que lee el radio de una circunferencia y calcula su diámetro y su área utilizando expresiones aritméticas.
+
+Pseudocódigo
+	
+C
+
+const
+    PI : real = 3.1416;
+end const
+
+algorithm circle
+    var
+        radius: real;
+        perimeter: real;
+        area: real;
+    end var
+
+    writeString("Introduce radius:");
+    radius := readReal();
+    perimeter := 2.0 * PI * radius;
+    area := PI * radius * radius;
+
+    writeString("The perimeter is);
+    writeReal(perimeter);
+    writeString("The area is ");
+    writeReal(area)
+;end algorithm
+
+	
+#include <stdio.h>
+
+#define PI 3.1416
+
+int main() {
+    float radius;
+    float perimeter;
+    float area;
+
+    printf("Introduce radius:");
+    scanf("%f", &radius);
+
+    perimeter = 2.0 * PI * radius;
+    area = PI * radius *radius;
+
+    printf("The perimeter is %.2f\n", perimeter);
+    printf("The area is %.2f\n", area);
+
+    return 0;
+}
+
+Se utilizan las siguientes expresiones:
+
+ 2.0 * PI * radius;
+	
+2.0 * PI * radius;
+
+ PI * radius * radius;	
+PI * radius *radius;
+
+ 
+
+Ejemplo 02. Verificación de si un triángulo es equilátero
+
+El siguiente ejemplo lee tres números que corresponden a las longitudes de los tres lados de un triángulo y comprueba si el triángulo es equilátero utilizando una expresión booleana. 
+
+Pseudocódigo
+	
+C
+
+algorithm equilateralTriangle
+    var
+        side1: real;
+        side2: real;
+        side3: real;
+        isEquilateral: boolean;
+    end var
+
+    writeString("Enter side 1:");
+    side1 := readReal();
+    writeString("Enter side 2:");
+    side2 := readReal();
+    writeString("Enter side 3");
+    side3 := readReal();
+    isEquilateral := side1 = side2 and side2 = side3; 
+    writeString("Is equilateral? ");
+    writeBoolean(isEquilateral);
+end algorithm
+
+	
+#include <stdio.h>
+#include <stdbool.h>
+
+int main() {
+    float side1;
+    float side2;
+    float side3;
+    bool isEquilateral;
+
+    printf("Enter side1:");
+    scanf("%f", &side1);
+    printf("Enter side2:");
+    scanf("%f", &side2);
+    printf("Enter side3:");
+    scanf("%f", &side3);
+
+    isEquilateral = (side1 == side2 && side2 == side3);
+
+    printf("Is equilateral? (0=false, 1=true) %d\n", isEquilateral);
+
+    return 0;
+}
+
+Fijaos en que:
+
+Se ha utilizado una expresión lógica que une dos comparaciones con el operador and.
+side1 = side2 and side2 = side3; 
+	
+(side1 == side2 && side2 == side3);
+No es necesario comparar side3 con side1, ya que, si side1 es igual a side2 y side2 es igual a side3, automáticamente se sabe que side1 y side3 son iguales.
+
+ 
+
+Ejemplo 03. Verificación de si un número es par
+
+Una posible solución para verificar si un número es par es la siguiente:
+
+Pseudocódigo
+	
+C
+
+algorithm isEven
+    var
+        number: integer;
+        isEven: boolean;
+    end var
+    writeString("Enter a number : ");
+    number := readInteger();
+    isEven := number mod 2 = 0;
+    writeString("Is the number ");
+    writeInteger(number);
+    writeString(" even? ");
+    writeBoolean(isEven);
+end algorithm	
+#include <stdio.h>
+#include <stdbool.h>
+
+int main() {
+    int number;
+    bool isEven;
+
+    printf("Enter a number : ");
+
+    scanf("%d", &number);
+
+    isEven = (number % 2 == 0);
+
+    printf("Is the number %d even? (0=false, 1=true) : %d\n", number, isEven);
+
+    return 0;
+}
+
+Fijaos en que:
+
+Se ha utilizado el operador mod para calcular el resto de la división de un número entero entre 2. Si el resto de la división es 0, significa que el número es par; en el caso contrario, el número es impar.
+Se ha utilizado una expresión relacional para determinar si el número es par o no. La variable isEven tomará el valor true si el número es par y false en el caso contrario.
+isEven := number mod 2 = 0;
+	
+isEven = (number % 2 == 0);
+
+ 
+
+Ejemplo 04. Verificación de si un carácter es alfabético 
+
+El siguiente es un posible algoritmo que lee un carácter por el canal estándar de lectura y comprueba si es alfabético, tanto si está en minúscula como en mayúscula.
+
+Pseudocódigo
+	
+C
+
+algorithm isAlphabetic
+    var         
+        character: char;
+        isAlphabetical: boolean;
+    end var
+    writeString("Enter a character: "); 
+    character := readChar();
+    isAlphabetical :=
+         (’a’ ≤ character and character ≤ ’z’ ) or
+         (’A’ ≤ character and character ≤ ’Z’);
+    writeString("Is the character  ");   
+    writeChar(character);
+    writeString(" an isAlphabetical: character? ");
+    writeBoolean(isAlphabetical:);
+end algorithm
+
+	
+#include <stdio.h>
+#include <stdbool.h>
+
+int main() {
+    char character;
+    bool isAlphabetical;
+
+    printf("Enter a character: ");
+    scanf("%c", &character);
+
+    isAlphabetical = (
+    ('a' <= character && character <= 'z' ) ||
+    ('A' <= character && character <= 'Z') 
+    );
+
+    printf("Is the character %c alphabetical? (0=false, 1=true) : %d \n", character, isAlphabetical);
+
+    return 0;
+}
+
+Fijaos en que:
+
+Este es un buen ejemplo del uso de operadores de comparación con variables de tipo carácter. 
+Se ha utilizado una expresión lógica para determinar si el carácter es alfabético o no. 
+(’a’ ≤ character and character ≤ ’z’ ) or
+(’A’ ≤ character and character ≤ ’Z’)
+	
+('a' <= character && character <= 'z' ) ||
+('A' <= character && character <= 'Z') 
+    
+
+ 
+
+3. Semántica de una expresión
+
+La semántica de una expresión se refiere a su significado. Una función es semánticamente correcta si está bien formulada, es decir, si el resultado que se obtiene es el que se espera de manera lógica de aquella expresión.
+
+Para poder entender el significado de la expresión (su valor calculado), hay que tener en cuenta los siguientes aspectos: 
+
+La precedencia y la asociatividad de los operadores, que describen en qué orden se evalúan las operaciones de la expresión
+Si los operadores son los adecuados para el tipo de datos de los operandos. Recordad que en 3. Variables (y constantes) y su definición se han definido los operadores que corresponden a cada tipo de datos. 
+
+ 
+
+3.1. Precedencia de los operadores 
+
+Igual que en matemáticas, cuando en una expresión aparece más de un operador, es importante saber la precedencia o prioridad con la que se evalúan. Es decir, si en una expresión aparecen un producto (*) y una suma (+), hay que saber si primero hay que hacer la suma o el producto.
+
+Los operadores con más precedencia se evalúan antes de los que tienen menos prioridad.
+
+A continuación, tenéis una lista de operadores ordenada según su prioridad:
+
+Precedencia	Operadores
+1	Cambio de signo, not
+2	*, /, mod, div
+3	+, -
+4	=, ≠, >, <, ≤, ≥
+5	and
+6	or
+
+Tened en cuenta que hay más operadores, pero todavía no los hemos descrito; por lo tanto, aún no explicitaremos su precedencia en esta tabla. 
+
+A continuación, veremos un ejemplo de aplicación de estas prioridades.
+
+Expresión
+	
+ Resolución
+
+25 + 4 * 3	
+
+Primero hacemos la multiplicación:
+
+    25 + 4 * 3 = 25 + 12
+
+Luego, la suma:
+
+   25 + 12 = 37
+
+ 
+
+3.2. Asociatividad de los operadores 
+
+En general, todos los operadores que utilizaremos tienen una asociatividad de izquierda a derecha. Es decir, en igualdad de prioridad, la expresión se evalúa de izquierda a derecha.
+
+Expresión
+	
+Resolución
+
+25 * 10 / 2 * 5	
+
+Según la tabla de precedencia anterior, los operadores * y / tienen la misma precedencia.
+
+Así pues, hay que efectuar estas operaciones de izquierda a derecha:
+
+La operación más a la izquierda es 25 * 10, por lo tanto: 25 * 10 / 2 * 5 = 250 / 2 * 5
+En la expresión anterior, la operación más a la izquierda es 250 / 2, por lo tanto: 250 / 2 * 5 = 125 * 5
+Finalmente, tenemos: 125 * 5 = 625
+
+Fijaos en que:
+
+En matemáticas, la expresión anterior habría tenido el siguiente resultado (utilizamos el símbolo · para indicar el producto, para que se vea claro que nos referimos a una expresión matemática y no de programación): 25 · 10 / 2 · 5 = (25 · 10) / 2 · 5 = (250 / 2) · 5 = 625.
+
+Esto se debe a que, en matemáticas, el operador producto tiene precedencia respecto al de división. Estas sutiles diferencias pueden generar confusiones. De hecho, en internet se pueden encontrar muchos memes que hablan de este tema. Para evitar estas confusiones, es recomendable explicitar la precedencia con paréntesis. Siguiendo con el ejemplo anterior: ((25 · 10) / 2) · 5 = 125 · 5 = 625.
+
+Esta última línea funciona igual en matemáticas que en programación, porque los paréntesis siempre se solucionan en primer lugar, y, después, se resuelven el resto de operaciones.
+
+En el ejemplo 02 anterior en el que queríamos comprobar si un triángulo era equilátero o no para resolver el problema, se ha utilizado la siguiente expresión: side1 = side2 and side2 = side3. ¿Creéis que sería equivalente utilizar esta otra? side1 = side2 = side3. 
+
+Esta expresión parece más fácil de entender en lenguaje natural, e incluso se podría decir que es más simple que la primera. Pues bien, la respuesta es que la semántica de esta expresión es incorrecta. Como ya hemos indicado, en igualdad de prioridad de los operadores, la expresión se evalúa de izquierda a derecha. Por lo tanto, primero se evalúa side1 = side2, que da como resultado un valor de tipo booleano (true o false), y después este resultado se compara con side3. Aquí es donde se produce un error, ya que comparamos un valor entero con un valor booleano, y esto es semánticamente incorrecto y no tiene sentido.
+
+Por lo tanto, para comparar los tres lados, la expresión correcta es: side1 = side2 and side2 = side3.
+
+ 
+
+Ejemplo 05. Verificación de fin de semana 
+
+Queremos un programa que nos diga si un día determinado que se lee del canal estándar es fin de semana o no. 
+
+Pseudocódigo
+	
+C
+
+type  
+    tDdays = {MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY};
+end type
+
+algorithm weekend
+    var
+        isWeekend: boolean;
+        weekday: tDays;
+    end var
+    writeString("What day is today ?");
+    weekday := readEnum();
+    isWeekend := (weekday = SATURDAY or
+                     weekday = SUNDAY);
+    writeString("Is today a weekend day?");     
+    writeBoolean(isWeekend);
+end algorithm
+
+	
+#include <stdio.h>
+#include <stdbool.h>
+
+typedef enum {MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY} tDays;
+
+int main() {
+    bool isWeekend;
+    tDays weekday;
+    printf("\nWhat day is it today ?\n");
+    printf("Enter 0 for MONDAY\n");
+    printf("Enter 1 for TUESDAY\n");
+    printf("Enter 2 for WEDNESDAY\n");
+    printf("Enter 3 for THURSDAY\n");
+    printf("Enter 4 for FRIDAY\n");
+    printf("Enter 5 for SATURDAY\n");
+    printf("Enter 6 for SUNDAY\n");
+
+    scanf("%u", &weekday);
+    isWeekend = (weekday == SATURDAY ||
+                 weekday == SUNDAY);
+
+    printf("Is today a weekend day (0=false, 1=true) ? %d\n", isWeekend);
+    return 0;
+}
+
+Como en el ejemplo anterior, podemos preguntarnos por qué no podemos utilizar la siguiente expresión para comprobar si el día leído es o no fin de semana: (weekday = SATURDAY or SUNDAY).
+
+Podría parecer correcta si se interpreta en lenguaje natural, pero, en lenguaje de programación, es semánticamente incorrecta: según la precedencia de los operadores, lo primero que se debe evaluar es la expresión SATURDAY or SUNDAY, que no tiene sentido, porque SATURDAY y SUNDAY no son variables de tipo booleano y, por lo tanto, no se puede aplicar el operador or a estos dos operandos. Así pues, la expresión no sería semánticamente correcta. 
+
+ 
+
+Ejemplo 06. Preparación de un gin-tonic
+
+Para preparar un gin-tonic, conocemos el volumen de ginebra y de tónica que se necesita y cuál es la capacidad de la copa de balón que lo contendrá.
+
+El siguiente algoritmo utiliza únicamente expresiones para decirnos si podemos preparar o no el gin-tonic en función del número de cubitos de hielo que queramos poner:
+
+Si el número de cubos de hielo que queremos poner cabe dentro de la copa, resultará true. 
+En caso contrario, resultará false. 
+
+De esta manera, se valida si el volumen de ginebra + tónica + cubitos de hielo * número de cubitos de hielo supera o no la capacidad de la copa.
+
+Pseudocódigo
+	
+C
+
+const   
+    GIN: real = 50.0;           { in ml }   
+    TONIC: real = 200.0;       { in ml }
+    GLASS: real = 620.0;      { in ml }   
+    ICE_CUBE: real = 42.875; { in ml }
+end const
+
+algorithm ginTonicPreparation
+    var
+        numIceCubes: integer;
+        isPossible: boolean;
+    end var
+    writeString("Number of ice cubes ? (integer):");   
+    numIceCubes := readInteger();
+    isPossible := (GLASS ≥ (GIN + TONIC + ICE_CUBE * integerToReal(numIceCubes)));
+    writeString("Can you make a gin & tonic? : ");
+    writeBoolean(isPossible);
+end algorithm
+
+	
+#include <stdio.h>
+#include <stdbool.h>
+
+#define GIN 50.0 /* in ml */
+#define TONIC 200.0 /* in ml */
+#define GLASS 620.0 /* in ml */
+#define ICE_CUBE 42.875 /* in ml */
+
+int main() {
+    int numIceCubes;
+    bool isPossible;
+
+    printf("Number of ice cubes (integer) : ");
+    scanf("%d", &numIceCubes);
+
+    isPossible = GLASS >= (GIN + TONIC + ICE_CUBE * (float) numIceCubes);
+
+    printf("Can you make a gin & tonic? (0=FALSE, 1=TRUE) : %d\n", isPossible);
+    return 0;
+}
+
+Fijaos en que:
+
+En la expresión que calcula el volumen hay que multiplicar una variable de tipo entero, numIceCubes, por una constante de tipo real, ICE_CUBE. Como son de diferente tipo, hay que indicar qué conversión se quiere hacer, ya que existen dos posibilidades y el resultado será diferente en función de la que se escoja. En este caso, como no se quiere perder precisión, es mejor convertir el tipo entero en real con la función integerToReal. En 2. Tipos elementales de datos, podéis ver la lista de funciones de conversión de tipos.
+En lenguaje C, la conversión se hace utilizando lo que se denomina casting, tal como se explica en 7. Cambio de tipo de datos en C.
+
+ 
+
+Ejemplo 07. Cálculo del porcentaje de estudiantes aprobados 
+
+Este programa lee el número de alumnos de Fundamentos de Programación de un aula de la UOC, contabiliza el número de aprobados al final del semestre y calcula su porcentaje.
+
+Primero, reflexionaremos sobre la siguiente propuesta, que ya avanzamos que no es correcta:
+
+Pseudocódigo
+	
+C
+
+algorithm percentage
+    var
+        numStudents: integer;
+        numPassed: integer;
+        percentage: real;
+    end var
+    writeString("Number of students in FP class? ");
+    numStudents := readInteger();
+    writeString("Number of students that passed? ");
+    numPassed := readInteger();
+
+    percentage := numPassed / numStudents * 100; 
+    writeString("The percentage of FP students that passed is ");
+    writeReal(percentage);
+end algorithm
+
+	
+#include <stdio.h>
+
+int main() {
+    int numStudents;
+    int numPassed;
+    float percentage;
+    
+    printf("Number of students in FP class? ");
+    scanf(" %d", &numStudents);
+    printf("Number of students that passed? ");
+    scanf(" %d", &numPassed);
+    
+    percentage = numPassed / numStudents * 100;
+    printf("The percentage of FP students that passed is %.2f\n", percentage);
+    return 0;
+}
+
+¿Sabéis por qué no es correcta? Fijaos en que, si ejecutamos este código para una clase de 90 alumnos con 56 aprobados, veremos que el resultado que da es 0. Probadlo. ¿Por qué es así si la variable percentage es de tipo real?
+
+Analicemos la semántica de la expresión: en el programa C, numPassed y numStudents son de tipo entero, la operación que se realiza es entre números enteros, y el resultado es 0. Después, el compilador guarda este valor en percentage y realiza un casting automático, sin que lo explicitemos nosotros, y transforma el valor de entero a real.
+
+De hecho, en el algoritmo hay un error, ya que dividimos numPassed y numStudents utilizando el operador /. Este operador está definido para números reales, pero lo estamos aplicando a dos valores enteros. Por lo tanto, deberíamos haber utilizado el operador div. Esto ya habría dado una pista de que esta solución no es correcta.
+
+¿Se os ocurre cómo podemos corregir el error? Pensadlo bien antes de mirar la solución que proponemos a continuación:
+
+Pseudocódigo
+	
+C
+
+algorithm percentage
+    var
+        numStudents: integer;
+        numPassed: integer;
+        percentage: real;
+    end var
+    writeString("Number of students in FP class? ");
+    numStudents := readInteger();
+    writeString("Number of students that passed? ");
+    numPassed := readInteger();
+
+    percentage := integerToReal(numPassed) / integerToReal(numStudents) * 100.0; 
+    writeString("The percentage of FP students that passed is ");
+    writeReal(percentage);
+end algorithm
+
+	
+#include <stdio.h>
+
+int main() {
+    int numStudents;
+    int numPassed;
+    float percentage;
+
+    printf("Number of students in FP class? ");
+    scanf(" %d", &numStudents);
+    printf("Number of students that passed? ");
+    scanf(" %d", &numPassed);
+
+    percentage = (float) numPassed / (float) numStudents * 100.0;
+    printf("The percentage of FP students that passed is %.2f\n", percentage);
+    return 0;
+}
+
+Aunque los lenguajes de programación llevan a cabo conversiones automáticas, en esta asignatura siempre explicitaremos las conversiones e indicaremos cómo hay que convertir las variables para asegurar que los cálculos se efectúan como realmente queremos.
+
+ 
+
+Ejemplo 08. Baloncesto
+
+Imaginemos que nos han encargado cubrir alguna de las siguientes tres plazas para los equipos de baloncesto del club en el que trabajamos. Concretamente tenemos que encontrar:
+
+Para el equipo femenino, una pívot que, como mínimo, mida 195 cm de altura y una base cuya altura sea inferior a 170 cm.
+Para el equipo masculino, un base que sea más alto de 175 cm, pero que a la vez no supere los 190 cm.
+
+Nuestro algoritmo preguntará por teclado si la persona que se presenta a la plaza es una jugadora o un jugador y cuál es su altura. A continuación, evaluará mediante expresiones las condiciones introducidas y, si se cumplen para alguna de las tres plazas disponibles, validará la candidatura.
+
+Una posible solución es la siguiente:
+
+Pseudocódigo
+	
+C
+
+type  
+    tGender = {MALE, FEMALE}
+end type
+
+algorithm basquet
+    var
+        isPointGuard: boolean;
+        isCenter: boolean;
+        isDrafted: boolean;
+        height: integer;
+        gender: tGender;
+    end var
+
+    writeString("Gender :");
+    gender := readEnum();
+    writeString("Height (integer value in cms) : ");
+    height := readInteger();
+
+    {First, we check if the female or male point guard position can be covered}
+
+    isPointGuard := (height < 170 and gender = FEMALE) or (height < 190 and height > 175 and gender = MALE; 
+
+    {Then, we check if is the female center we are looking for}
+
+    isCenter := height ≥ 195 and gender = FEMALE;
+
+    {Only if one of the above two expressions is met (whether isPointGuard is true or isCenter is true), the player will be chosen to be part of our basketball sections}
+
+     isDrafted := isPointGuard or isCenter;
+
+    writeString("Is drafted ?  ");
+    writeBoolean(isDrafted);
+end algorithm
+
+	
+#include <stdio.h>
+#include <stdbool.h>
+
+typedef enum {MALE, FEMALE} tGender;
+
+int main() {
+    bool isPointGuard; /* Point Guard */
+    bool isCenter;     /* Center */
+    bool isDrafted;
+    int height;
+    tGender gender;
+
+    printf("Gender (0=MALE, 1=FEMALE) : ");
+    scanf("%u", &gender);
+    printf("Height (integer value in cms) : ");
+    scanf("%d", &height);
+
+    /* First, we check if the female or male point guard position can be covered */
+
+    isPointGuard =
+    (height < 170 && (gender == FEMALE)) ||
+    (height < 190 && height > 175 &&
+    (gender == MALE));
+
+    /* Then, we check if is the female center we are looking for */
+
+    isCenter = (height >= 195 && 
+    (gender == FEMALE));
+
+    /* Only if one of the above two expressions is met (whether isPointGuard is true or isCenter is true), the player will be chosen to be part of our basketball sections. */
+
+    isDrafted = isPointGuard || isCenter;
+
+    printf("\nIs drafted (0=false, 1=true) ? : ");
+    printf("%d\n", isDrafted);
+    return 0;
+}
+
+Fijaos en que:
+
+Se utilizan variables booleanas, ya que todas las expresiones dan como resultado un valor booleano: true o false.
+Más adelante, veremos que las expresiones lógicas sirven para tomar decisiones sobre el flujo de acciones dentro de un algoritmo.
+La solución utiliza tres expresiones y dos variables temporales: isPointGuard e isCenter.
+La solución al problema no es única. Una opción más compacta sería utilizar una única expresión, como la siguiente:
+
+isDrafted := (height < 170 and gender = FEMALE or height < 190 and height > 175 and gender = MALE) or (height ≥ 195 and gender = FEMALE)
+
+ 
+
+Ejemplo 09. Hoteles
+
+Queremos evaluar si un hotel es adecuado o no en función de las condiciones que el cliente pide, que son las siguientes:
+
+Situado a menos de 3 km del centro o a menos de 5 km si tiene estación de metro cerca.
+El precio de la habitación doble no supera los 150 €.
+
+Una posible solución es la siguiente:
+
+Pseudocódigo
+	
+C
+
+const
+    MAX_PRICE_DOUBLE: integer = 150;
+    MAX_DISTANCE1: integer = 3;
+    MAX_DISTANCE2: integer = 5;
+end const
+
+algorithm hotel
+    var
+        inToBool: integer;
+        distance: real;
+        price: real;
+        hasUndergroung: boolean;
+        isElegible: boolean;
+    end var
+
+    writeString("Distance to downtown ?  ");
+    distance := readReal();
+    writeString("Price double room?  ");
+    price := readReal();
+    writeString("Is undergroud near? ");
+    hasUnderground := readBoolean();
+
+    isElegible := ((distance ≤ integerToReal(MAX_DISTANCE1))
+                  or
+                  (distance ≤ integerToReal(MAX_DISTANCE2))) and hasUndergroung
+                  and
+                  (price ≤ integerToReal(MAX_PRICE_DOUBLE));
+
+    writeString("Is drafted ?  ");
+
+    writeBoolean(isDrafted);
+end algorithm
+
+	
+#include <stdio.h>
+#include <stdbool.h>
+
+#define MAX_PRICE_DOUBLE 150
+#define MAX_DISTANCE1 3
+#define MAX_DISTANCE2 5
+
+int main() {
+    int intToBool;
+    float distance;
+    float price;
+    bool hasUndergroung;
+    bool isElegible;
+
+    printf("Distance to downtown (in kms)?");
+    scanf(" %f", &distance);
+    printf("Price double room (in €)?");
+    scanf("%f", &price);
+    printf("Is underground near (0-False, 1-True)?");
+    scanf(" %d", &intToBool);
+    hasUndergroung = (bool)intToBool;
+
+    isElegible = ((distance <= (float) MAX_DISTANCE1 
+        || 
+        (distance <= (float) MAX_DISTANCE2 && hasUndergroung)) 
+        &&
+        (price <= (float) MAX_PRICE_DOUBLE));
+
+    printf("Is the hotel elegible (0 -FALSE, 1- TRUE) %d\n", (int)isElegible);
+
+    return 0;
+}
+
+ 
+
+Resumen
+
+ 
+
+Una expresión es una combinación finita de operandos (constantes y variables) y operadores (+, -, <, or, and, etc.) que permiten calcular un nuevo valor a partir de valores ya conocidos.
+
+El operador indica la acción que hay que hacer, y los operandos son los valores sobre los que se realiza la acción.
+
+Para que una expresión sea correcta tiene que cumplir unas normas de sintaxis establecidas.
+
+Las expresiones pueden tener muchas formas diferentes y estar constituidas por un valor (constante o variable) o una operación entre valores (constantes y/o variables). A pesar de que aún no hemos trabajado las funciones, más adelante veremos que las llamadas a funciones también pueden ser una expresión.
+
+Las expresiones deben ser semánticamente correctas, es decir, los elementos que las forman deben ser adecuados teniendo en cuenta la precedencia y asociatividad de los operadores y el tipo de datos de los operandos.
+Dependiendo de las operaciones que se realizan, las expresiones se pueden clasificar en las siguientes:
+Aritméticas.
+Relacionales.
+Lógicas.

@@ -1,0 +1,450 @@
+16. Tipos de datos estructurados: tuplas
+
+1. Tipos de datos estructurados: tuplas
+
+2. Representación en memoria
+
+Resumen
+
+ 
+
+1. Tipos de datos estructurados: tuplas
+
+Ya hemos visto que las variables son elementos que almacenan un valor de un tipo determinado y que ese valor puede cambiar durante la ejecución de un programa. Además, en 10. Vectores y matrices, vimos que vectores y matrices (arrays unidimensionales y arrays multidimensionales) almacenan colecciones de datos homogéneos. En un solo vector o matriz podemos guardar diversas variables y no solo una. Eso sí, todas las variables tienen que ser del mismo tipo.
+
+Supongamos que estamos trabajando en un programa que procesa los datos mostrados en un carnet de identidad. Esos datos podrían ser los siguientes: nombre y apellido, fecha de nacimiento, número de DNI y su correspondiente letra. Para gestionar toda esta información, deberíamos definir una variable para cada uno de estos datos:
+
+Apellido: string
+Nombre: string
+Fecha de nacimiento: integer (día), integer (mes), integer (año)
+Número de DNI: integer
+Letra correspondiente: char
+
+ 
+
+Ejemplo 01
+
+En el siguiente código, vemos una posible definición de los datos de un carnet de identidad, tal como hemos mencionado anteriormente.
+
+Pseudocódigo
+	
+C
+
+algorithm dni
+    var
+        surname: string;
+        name: string;
+        birthDay: integer;
+        birthMonth: integer;
+        birthYear: integer;
+        idNumber: integer;
+        idChar: char;
+    end var
+end algorithm
+
+	
+#include <stdio.h>
+#define MAX_LEN 25
+
+int main(){
+    /* Variable definition */
+    char surname[MAX_LEN];
+    char name[MAX_LEN];
+    int birthDay;
+    int birthMonth;
+    int birthYear;
+    int idNumber;
+    char idChar;
+}
+
+Trabajar así puede ser complicado, porque tenemos que controlar muchas variables para guardar un único DNI.
+
+Imaginemos qué pasaría si, además, tuviésemos que trabajar con los datos correspondientes a varios carnets de identidad. El código sería prácticamente inmanejable y la posibilidad de cometer errores sería muy elevada.
+
+En estos casos, las tuplas pueden resultarnos muy útiles.
+
+Una tupla es un tipo de variable que puede almacenar variables de distintos tipos de datos. A cada una de estas variables, que se guardan dentro de una tupla, se puede acceder individualmente mediante una etiqueta. Pero lo que es aún más interesante de las tuplas es que se pueden definir en un algoritmo concreto según convenga en función de las necesidades específicas.
+
+Las tuplas son un tipo de datos estructurados, es decir, pueden aglutinar diferentes variables de tipos de datos también diferentes. Las variables que se aglutinan dentro de una tupla se llaman campos internos.
+
+Los tipos de datos estructurados se pueden tratar como variables y pueden definirse específicamente para cada problema.
+
+De esta manera, podemos definir una tupla que contenga todos los datos de un DNI. 
+
+ 
+
+Ejemplo 02
+
+A continuación, mostramos cómo se puede definir una tupla utilizando el ejemplo del DNI.
+
+Pseudocódigo
+	
+C
+
+type
+    tPeople = record
+        surname: string;
+        name:  string;
+        birthDay: integer;
+        birthMonth: integer;
+        birthYear: integer;
+        idNumber: integer;
+        idChar: char;
+    end record
+end type
+
+algorithm dni02
+    var
+        you: tPeople;
+    end var
+end algorithm
+
+	
+#include <stdio.h>
+#define MAX_LEN 25
+
+typedef struct {
+    char surname[MAX_LEN];
+    char name[MAX_LEN];
+    int birthDay;
+    int birthMonth;
+    int birthYear;
+    int idNumber;
+    char idChar;
+} tPeople;
+
+int main() {
+    /* Variable definition */
+    tPeople you;
+}
+
+En el ejemplo 02, se puede observar lo siguiente:
+
+Definimos un nuevo tipo de dato; por lo tanto, creamos un entorno type / end type. Este paso no tiene equivalente en C.
+Usamos un nuevo tipo de dato, denominado record en pseudocódigo y struct en lenguaje C, para definir una tupla. Tenemos que proporcionar un nombre al nuevo tipo de dato, que se crea para poder hacer referencia a este. En el ejemplo, lo hemos llamado tPeople.
+Definimos las diferentes variables que se almacenarán dentro de la tupla (los campos internos), que pueden ser de cualquier tipo de datos de los que ya conocemos. 
+
+Una vez definido el tipo de dato tPeople, ya podemos definir una variable y asociarle este tipo. En este caso, la llamamos you. La definimos de la misma manera que definimos cualquier otra variable, pero ahora usando tPeople como tipo de variable. Por lo tanto, creamos una variable que se llama you, que es del tipo tPeople. 
+
+ 
+
+¡Atención!
+
+Los tipos de datos estructurados se definen al principio del bloque de código y fuera de cualquier función —ya sea la función main() o cualquier otra—. Esto se debe a que los nuevos tipos de datos que definimos como tuplas suelen ser de alcance global para todo un programa y no solo para una función.
+
+Las variables asociadas a las tuplas (o instancias) sí se declararán dentro de las funciones.
+
+ 
+
+Ejemplo 03
+
+En el siguiente ejemplo, creamos una tupla que guarda la información relacionada con un hotel.
+
+Pseudocódigo
+	
+C
+
+type
+    tHotel = record
+        id: integer;
+        brand:  string;
+        price: real;
+    end record
+end type
+
+algorithm algHotel
+    var
+        myHotel: tHotel;
+    end var
+end algorithm
+
+	
+#include <stdio.h>
+#include <stdbool.h>
+
+#define MAX_LEN 25
+
+/* The structured data type is defined outside any function */
+typedef struct{
+    int id;
+    char brand[MAX_LEN];
+    float price;
+} tHotel;
+
+int main() {
+    /* The variable of type tHotel is defined inside the main function */
+    tHotel myHotel;
+    /* ... */
+    return 0;
+}
+
+ 
+
+Tanto en pseudocódigo como en C, se accede a los campos internos de una variable tupla mediante el nombre de la variable seguido por un «.» y el nombre del campo.
+
+ 
+
+Ejemplo 04
+
+En el siguiente ejemplo, mostramos cómo introduciríamos valores en los campos internos de una variable de tipo de datos estructurados tupla:
+
+Pseudocódigo
+	
+Código C
+
+type
+    tPeople = record
+        surname: string;
+        name: string;
+        birthDay: integer;
+        birthMonth: integer;
+        birthYear: integer;
+        idNumber: integer;
+        idChar: char;
+    end record
+end type
+
+algorithm loadData
+
+    var
+        you: tPeople;
+    end var
+
+    {read the data from standard input}
+    writeString("Introduce ID letter:");
+    you.idChar := readChar();
+    writeString("Introduce ID number:");
+    you.idNumber := readInteger();
+    writeString("Introduce Surname:");
+    you.surname := readString();
+    writeString("Introduce Name:");
+    you.name := readString();
+    writeString("Introduce day of birth:");
+    you.birthDay := readInteger();
+    writeString("Introduce month of birth:");
+    you.birthMonth := readInteger();
+    writeString("Introduce year of birth:");
+    you.birthYear := readInteger();
+
+    {write the data on the standard output}
+
+    writeString("Name:");
+    writeString(you.surname);
+    writeString(", :");
+    writeString(you.name);
+
+    writeString("Id:");
+    writeInteger(you.idNumber);
+    writeString("-");
+    writeChar(you.idChar);
+
+    writeString("BirthDay:");
+    writeInteger(you.birthDay);
+    writeString(" - ");
+    writeInteger(you.birthMonth);
+    writeString(" - ");
+    writeInteger(you.birthYear); 
+
+end algorithm	
+#include <stdio.h>
+
+#define MAX_LEN 25
+
+/* Type definition */
+typedef struct {
+    char surname[MAX_LEN];
+    char name[MAX_LEN];
+    int birthDay;
+    int birthMonth;
+    int birthYear;
+    int idNumber;
+    char idChar;
+} tPeople;
+
+int main() {
+    /* Variable definition */
+    tPeople you;
+
+    /* Read the data from standard input */
+    printf("Introduce ID letter:");
+    scanf("%c", &you.idChar);   
+    printf("\nIntroduce ID number:");
+    scanf("%d", &you.idNumber);
+    printf("\nIntroduce Surname:");
+    scanf("%s", you.surname);
+    printf("\nIntroduce Name:");  
+    scanf("%s", you.name);
+    printf("\nIntroduce day of birth:");
+    scanf("%d", &you.birthDay);
+    printf("\nIntroduce month of birth:");
+    scanf("%d", &you.birthMonth);
+    printf("\nIntroduce year of birth:");
+    scanf("%d", &you.birthYear);
+
+    /* Write the data on the standard output */
+    printf("Name: %s, %s \n", you.surname, you.name);
+    printf("Id: %d-%c \n", you.idNumber, you.idChar);
+    printf("BirthDay: %d - %d - %d \n", you.birthDay, you.birthMonth, you.birthYear);
+
+    return 0;
+}
+
+Puede parecer que el uso de tuplas no sea ideal porque genera identificadores muy largos:
+
+nombre_variable.nombre_campo
+
+Sin embargo, aunque quizá esto sea cierto en algunos casos, en general, los simplifica. Por ejemplo, a continuación, proponemos tres casos del mismo programa que, poco a poco, iremos complicando.
+
+ 
+
+2. Representación en memoria
+
+Es interesante comprobar que los datos de una tupla ocupan posiciones de memoria consecutivas.
+
+Veamos qué quiere decir esto con un sencillo ejemplo. 
+
+ 
+
+Ejemplo 05
+
+Representamos una fecha en formato dd-mm-aaaa.
+
+Pseudocódigo
+	
+C
+
+type
+    tDate = record
+        birthDay: integer;
+        birthMonth: integer;
+        birthYear: integer;
+    end record
+end type
+
+algorithm dates
+
+    var
+        today: tDate;
+    end var
+
+end algorithm	
+#include <stdio.h>
+
+/* Types definition */
+typedef struct {
+    int birthDay;
+    int birthMonth;
+    int birthYear;
+} tDate;
+
+int main() {
+    /* Variable definition */
+    tDate today;
+}
+
+Cuando se implementa en C, la variable today contiene tres campos de tipo entero (int). Si cada uno ocupa 4 bytes, la variable today ocupará 12 bytes de memoria consecutivos. Si la variable today se almacena en la posición X, entonces:
+
+...	X	X + 1	X + 2	X + 3	X + 4	X + 5	X + 6	X + 7	X + 8	X + 9	X + 10	X + 11	...
+...	0000
+0000	0000
+0000	0000
+0000	0000
+0000	0000
+0000	0000
+0000	0000
+0000	0000
+0000	0000
+0000	0000
+0000	0000
+0000	0000
+0000	...
+	birthDay	birthMonth	birthYear	
+	today	
+
+El primer campo (birthDay) comienza donde lo hace la tupla today; el segundo campo, birthMonth, comienza 4 bytes después; y el tercero, birthYear, 8 bytes después.
+
+Si la variable today contiene la fecha 31/12/1999, la representación en memoria sería la siguiente:
+
+...	X	X + 1	X + 2	X + 3	X + 4	X + 5	X + 6	X + 7	X + 8	X + 9	X + 10	X + 11	...
+...	0000
+0000	0000
+0000	0000
+0000	0001
+1111	0000
+0000	0000
+0000	0000
+0000	0000
+1100	0000
+0000	0000
+0000	0000
+0111	1100
+1111	...
+	31	12	1999	
+	birthDay	birthMonth	birthYear	
+	today	
+
+Es importante resaltar que la posición dentro de la tupla donde se ubica un cierto campo no depende de su tipo, sino del tipo de los campos previos. Por ejemplo, la ubicación del campo birthYear del ejemplo depende de los campos previos: birthDay y birthMonth. En este caso, está 8 bytes después de comenzar la variable today. Si uno de los tipos previos, birthDay o birthMonth, fuese de otro tipo y tuviese un tamaño diferente al de int, long, por ejemplo (8 bytes), su posición sería distinta, y empezaría en el byte 12 (8 + 4).
+
+Si definimos una tupla para almacenar carnets de identidad (DNI), los dos campos podrían ser de tipos distintos.
+
+ 
+
+Ejemplo 06
+
+Este ejemplo ilustra lo que hemos explicado anteriormente.
+
+Pseudocódigo
+	
+C
+
+type
+    tDni = record
+        idNumber: integer;
+        idChar: char;
+    end record
+end type
+
+algorithm alg1206
+    var
+        identification: tDni;
+    end var
+end algorithm
+
+	
+#include <stdio.h>
+
+/* Type definition*/
+typedef struct {
+    int idNumber;
+    char idChar;
+} tDni;
+
+int main() {
+    /* Variable definition */
+    tDni identification;
+}
+
+Como la variable de tipo carácter ocupa 1 byte de memoria, el diagrama esquemático de este registro sería el siguiente (asumiendo que comienza en la posición X):
+
+...	X	X + 1	X + 2	X + 3	X + 4	...
+...	00000000	00000000	00000000	00000000	00000000	...
+	idNumber	idChar	
+	identification	
+
+Cada campo (idNumber e idChar) estará almacenado en las localizaciones correspondientes a su tipo base. Por ejemplo, para el número de carnet de identidad 1234567-R, su representación en memoria sería la siguiente:
+
+...	X	X + 1	X + 2	X + 3	X + 4	...
+...	00000000	00010010	11010110	10000111	01010010	...
+	1234567	R	
+	idNumber	idChar	
+	identification	
+
+ 
+
+Resumen
+
+En esta unidad hemos visto lo siguiente:
+
+Los tipos de datos estructurados tupla nos permiten crear tipos de datos nuevos que se adaptan a nuestras necesidades y que incluyen datos, o campos internos, que pueden ser de tipos diferentes.
+Los diferentes campos de una tupla se guardan de manera consecutiva en la memoria.
+Para acceder a los campos internos de una tupla utilizaremos el operador «.».

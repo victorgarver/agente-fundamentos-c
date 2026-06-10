@@ -1,0 +1,2340 @@
+Saltar al contenido
+Panel de control
+Usuario
+Panel de control
+Asignaturas
+Calendario
+Bandeja de entrada
+Historial
+Ayuda
+75.554 - Fundamentos de programación - Aula 6Páginas24. Tipos de datos estructurados: tabla
+20252
+Página de inicio
+Plan docente
+Búsqueda de IgniteAI
+Anuncios
+Contenidos
+Foros de discusión
+BigBlueButton
+Notas
+Personas
+Herramientas del aula
+Biblioteca
+24. Tipos de datos estructurados: tabla
+
+Introducción
+
+1. Definición y edición de tablas
+
+1.1. Definición de una tabla y acceso a sus elementos
+1.2. Inicialización de una tabla
+1.3. Carga de datos a partir de una secuencia
+
+2. Funciones asociadas a una tabla
+
+2.1. Recorrido de una tabla
+2.2. Búsqueda de un elemento en una tabla
+
+3. Ordenación de las tablas
+
+3.1. Inserción ordenada
+3.2. Algoritmo de ordenación
+3.3. Búsqueda dicotómica 
+
+4. Tablas de tipos estructurados
+
+4.1. Tablas de tuplas
+4.2. Tablas de tablas
+
+5. Más ejemplos en lenguaje C
+
+Resumen
+
+ 
+
+Introducción
+
+En las unidades anteriores, hemos aprendido que los vectores son estructuras de una sola dimensión que pueden guardar valores de un mismo tipo.
+
+En los ejemplos que ya hemos visto, los vectores se definían de un tamaño determinado, n, y esto permitía guardar un número n de valores del tipo definido, y siempre se guardaba exactamente ese número de valores.
+
+Ahora bien, en muchas ocasiones nos encontramos con que sabemos, por ejemplo, el máximo número de valores que queremos guardar, pero, en cambio, no sabemos cuántos elementos habrá guardados en el vector en un momento dado.
+
+Por ejemplo, supongamos que en una sala caben hasta 250 personas y que a cada persona que entra en la sala se le pide su DNI, que queremos guardar en un vector. Si necesitamos saber si todavía hay espacio y cuántas posiciones libres quedan, un vector con los números de DNI no será suficiente: necesitamos una variable de tipo entero que lo controle.
+
+Una tabla es un tipo estructurado de datos que incluye un vector con la información que se quiere guardar, y un entero que guarda la ocupación del vector.
+
+En esta unidad aprenderemos a:
+
+Definir tablas.
+Acceder a cada uno de los elementos de una tabla.
+Insertar elementos en una tabla.
+Recorrer todos los elementos de una tabla.
+Buscar elementos dentro de la tabla.
+
+También se introducirán algunos algoritmos para el tratamiento de tablas:
+
+Ordenación.
+Lectura ordenada.
+
+ 
+
+1. Definición y edición de tablas
+
+ 
+
+1.1. Definición de una tabla y acceso a sus elementos
+
+Una tabla es un tipo estructurado de datos que requiere dos elementos para ser definido:
+
+Una variable de tipo entero que se utiliza para indicar el número de elementos que existen en cada momento en la tabla (la ocupación de la tabla).
+Un vector con los elementos de la tabla, que se guardarán en un vector. El vector ha de tener una longitud suficiente para albergar todos los elementos de la tabla y ser del tipo más adecuado para los datos que se guardarán. 
+
+Los elementos de una tabla pueden ser de cualquier tipo previamente definido. Por ejemplo, podemos definir tablas de cualquiera de los tipos elementales de datos en el lenguaje algorítmico (integer, real, char, boolean) o bien de tipos estructurados definidos por el usuario.
+
+ 
+
+Ejemplo 01
+
+En el siguiente ejemplo, podemos ver la definición de una tabla de valores enteros que, como máximo, puede albergar diez valores:
+
+Pseudocódigo
+	
+C
+
+
+
+{constant definition}
+const
+    MAX_ELEMENTS: integer = 10;
+end const
+
+{type definition}
+type
+    tExampleTable = record
+        elements: vector[MAX_ELEMENTS] of integer;
+        numElements: integer;
+    end record
+end type
+
+algorithm example1
+
+    {var definition using the type}
+    var
+        aTable: tExampleTable;
+    end var
+
+end algorithm
+
+	
+#include <stdio.h>
+
+/* constant definition */
+#define MAX_ELEMENTS 10
+
+/* type definition */
+typedef struct {
+    int elements[MAX_ELEMENTS];
+    int numElements
+} tExampleTable;
+
+int main() {
+    /* Var definition using the type */
+    tExampleTable aTable;
+}
+
+Como podéis observar en el ejemplo, primero se declara una variable de tipo estructurado (record) que contiene el vector y la variable numElements. Por lo tanto, hablamos de una tupla, pero que es especial, pues tiene la estructura que hemos comentado anteriormente:
+
+Un vector con los datos que se quieren guardar.
+Una variable que indica la ocupación del vector.
+
+Una vez declarado el nuevo tipo de datos, como en el caso de las tuplas, se pueden definir nuevas variables de este tipo.
+
+ 
+
+Ejemplo 02
+
+A continuación, podemos ver otro ejemplo sobre cómo definir una tabla. En este caso, supondremos que queremos definir variables para guardar un cuadro de control para las puertas de un edificio dentro de un complejo de edificios. Cada elemento de la tabla indica si la puerta correspondiente está abierta o cerrada. Sabemos que cada edificio tiene como máximo cuarenta puertas. La declaración de la tabla sería la siguiente:
+
+Pseudocódigo
+	
+C
+
+
+
+{definition of the maximum number of gates}
+const
+    MAX_GATES: integer = 40;
+end const
+
+{definition of the type table}
+type
+    tGates = record
+        stateGates: vector[MAX_GATES] of boolean;
+        numGates: integer;
+    end record
+end type
+
+algorithm example2
+
+    {definition of variables for two buildings}
+    var
+        building1: tGates;
+        building2: tGates;
+    end var
+
+end algorithm
+
+	
+#include <stdio.h>
+#include <stdbool.h>
+
+
+/* definition of the maximum number of gates */
+#define MAX_GATES 40
+
+
+/* definition of the type table */
+typedef struct {
+    bool stateGates[MAX_GATES];
+    int numGates;
+} tGates;
+
+
+int main() {
+    /* definition of variables for two
+    buildings */
+    tGates building1;
+    tGates building2;
+}
+
+El acceso a los diferentes elementos de la tabla se realiza de manera similar a como se hacía con los vectores, pero teniendo en cuenta que se trata de una tupla y que, por lo tanto, se accederá al elemento vector a través de la etiqueta o del nombre que le hayamos dado a los campos internos de la tupla.
+
+ 
+
+Ejemplo 03
+
+Siguiendo con el primer ejemplo que hemos presentado, supongamos que la acción fillTable carga los datos en una tabla de tipos tGates. Podemos acceder a los diferentes elementos de la tabla de manera similar a como lo hacíamos con los vectores, pero teniendo en cuenta que se trata de una tupla.
+
+Pseudocódigo
+	
+C
+
+
+
+const
+     K: integer = 10;
+     MAX_GATES: integer = 40;
+end const
+
+type
+    tGates = record
+        stateGates: vector[MAX_GATES] of boolean;
+        numGates: integer;
+    end record
+end type
+
+{header of fillTable}
+action fillTable(out Building: tGates);
+
+algorithm checkDoors
+    var
+        building1: tGates;
+        p: integer;
+        b: boolean;
+        c: boolean;
+    end var
+
+    c := true;
+
+    fillTable(building1);
+
+    {the following statements treat the element of the table as variables}
+    {assigns the third element of the table building1 to the variable b}
+    b := building1.stateGates[3];
+
+    {assigns the value of the variable c to the Kth gate of building1,  assuming that K is a constant  such  that  1 ≤ K≤ 40}
+    building1.stateGates[K] := c;
+
+    {assigns the value of the first gate of building1 to the gate  2*p +5 as long as 1 ≤ 2*p+5 ≤ 40}
+    building1.stateGates[2*p+5] := building1.stateGates[1];
+
+end algorithm
+
+	
+#include <stdio.h>
+#include <stdbool.h>
+
+#define K 10
+#define MAX_GATES 40
+
+typedef struct {
+    bool stateGates[MAX_GATES];
+    int numGates;
+} tGates;
+
+void fillTable (tGates *Building);
+
+int main() {
+    tGates building1;
+    int p;
+    bool b;
+    bool c;
+
+    c = true;
+
+   /* the following statements treat the elements of the table as variables */
+    fillTable(&building1);
+
+   /* assigns the third element of the table building1 to the variable b */
+    b  = building1.stateGates[2];
+
+   /* assigns the value of the variable c to the kth gate of building1,  assuming that k is a constant  such  that  1 ≤ K ≤ 40 */
+    building1.stateGates[K-1] = c;
+
+   /* assigns the value of the first gate of building1 to the gate  2*p +5 as long as 1 ≤ 2*p+5 ≤ 40 */
+    building1.stateGates[2*p+5-1] = building1.stateGates[0];
+
+   return 0;
+}
+
+Es importante que recordéis que la indexación de los elementos de una tabla puede variar según el lenguaje de programación. Por ejemplo, en C, el primer elemento de la tabla es el de índice 0, mientras que en otros lenguajes puede empezar en 1, o incluso se puede definir un rango específico (por ejemplo, podría ir entre 10 y 60). 
+
+Cuando se genera un algoritmo con pseudocódigo, los elementos se suelen empezar a contar desde 1 (que sería la situación general), mientras que en C se empieza con 0. Esta diferencia puede ser un poco confusa, así que conviene no olvidarla.
+
+Es importante controlar que el valor del índice del número de elementos siempre esté dentro de los límites esperados (que no supere el valor máximo de elementos en el vector) para evitar errores durante la ejecución.
+
+ 
+
+1.2. Inicialización de una tabla
+
+Las variables de tipo tabla, como todas las variables, deben inicializarse antes de usarlas. En el caso de una tabla, la manera de hacerlo es indicando que está vacía. Lo hacemos asignando 0 al número de elementos ocupados en la tabla. Esto será suficiente para inicializarla, porque el atributo que contiene el número de elementos de una tabla siempre es el que se utiliza a la hora de recorrerla, ya que nos indica cuál es el último elemento de la tabla. Del mismo modo, cuando insertamos un elemento, incrementamos su valor en 1.
+
+Cuando hacemos que el número de elementos de la tabla sea 0, estamos indicando que la tabla tiene 0 elementos, de manera que, cuando añadimos uno nuevo, lo hacemos en la primera posición, sobrescribiendo todo lo que previamente pudiera haber en memoria.
+
+ 
+
+Ejemplo 04
+
+Imaginemos una empresa que dispone de varios cines de tipo multisala. Sabemos que el más grande tiene veinte salas, pero otros tienen menos.
+
+Queremos definir una tabla para guardar la recaudación de cada sala y que a la vez sirva para cualquiera de los cines. Por lo tanto, necesitamos definir una tabla que pueda guardar hasta veinte importes reales. La tabla no siempre se llenará, ya que dependerá del número de salas que tenga cada cine. 
+
+Añadimos que queremos que, inicialmente, los cines Santaló y Sants no tengan recaudación de ninguna sala. Lo haremos así: 
+
+Pseudocódigo
+	
+C
+
+
+
+const
+    MAX_THEATERS: integer = 20;
+end const
+
+type
+    tTheater = record 
+        collect: vector[MAX_THEATERS] of real;
+        numTheaters: integer;
+    end record
+end type
+
+algorithm movieTheater
+    var 
+        santalo: tTheater;
+        sants: tTheater;
+    end var
+
+    {table initialitation, setting the number of theater to 0}
+    santalo.numTheaters := 0;
+    sants.numTheaters := 0;
+end algorithm
+
+	
+#include <stdio.h>
+
+#define MAX_THEATERS 20
+
+typedef struct {
+    float collect[MAX_THEATERS];
+    int numTheaters;
+} tTheater;
+
+int main() {
+    /*var declaration*/
+    tTheater santalo;
+    tTheater sants;
+
+    /* table initialitation, setting the number of theather to 0 */
+    santalo.numTheaters = 0;
+    sants.numTheaters = 0;
+
+    return 0;
+}
+
+ 
+
+1.3. Carga de datos a partir de una secuencia
+
+Una de las operaciones más típicas con tablas es cargarlas con información mediante la lectura de datos del canal estándar de entrada. 
+
+ 
+
+Ejemplo 05
+
+Supongamos que queremos leer las recaudaciones de las salas del cine Santaló. Los datos vienen dados como una serie de reales (una secuencia de reales), que leemos del canal estándar, y el valor -1.0 indica que es el final de los datos (fin de la secuencia de entrada).
+
+Para ir estructurando un posible algoritmo más completo que además de leer datos haga otras operaciones, aislaremos la lectura de la información en una acción:
+
+Pseudocódigo
+	
+C
+
+
+
+const
+    MAX_THEATERS: integer = 20;
+    END_SEQ: real = -1.0;
+end const
+
+type
+    tTheater = record
+        collect: vector[MAX_THEATERS] of real;
+        numTheaters: integer;
+    end record
+end type
+
+ 
+
+action fillTable(out movieTheater: tTheater)
+    var
+        temp: real;
+    end var
+
+    {table initialization}
+    movieTheater.numTheaters := 0;
+    temp := readReal();  {read the first number}
+
+    {iteration while the read number is not -1}
+    while temp ≠ END_SEQ do
+        {Save the read number in the table.}
+        movieTheater.collect[movieTheater.numTheaters+1] := temp;
+        movieTheater.numTheaters := movieTheater.numTheaters + 1;
+        temp := readReal();
+    end while
+end action
+
+	
+#include <stdio.h>
+
+#define MAX_THEATERS 20
+#define END_SEQ -1.0
+
+typedef struct {
+    float collect[MAX_THEATERS];
+    int numTheaters;
+} tTheater;
+
+void fillTable(tTheater *movieTheater) {
+    /* var definition */
+    float temp;
+
+    /* table initialization */
+    movieTheater->numTheaters = 0;
+    scanf("%f", &temp);  /* read the first number */
+
+    /* iteration while the read number is not -1 */
+    while  (temp != END_SEQ) {
+        /*Save the read number in the table*/
+        movieTheater->collect[movieTheater->numTheaters] = temp;
+        movieTheater->numTheaters = movieTheater->numTheaters + 1;
+        scanf("%f", &temp);
+    }
+}
+
+Comentarios:
+
+Fijaos en que cada elemento del vector de la tabla se trata como una variable y, por lo tanto, podemos asignarle un valor o utilizarlo en una expresión. Podéis observarlo en las líneas de código que hay dentro de la iteración de la acción fillTable.
+Antes de entrar en la iteración, leemos el primer elemento. De esta manera, cuando entremos en la iteración ya podremos comprobar si el elemento es el -1.0 que indica el final de los datos (final de secuencia) o no.
+Después iteramos hasta encontrar el final de la secuencia. En cada iteración, incrementamos el campo que controla el número de elementos que hay en la tabla, de tal manera que apunte a la primera casilla libre de la tabla, y llenamos dicha casilla con el valor leído.
+A la acción le pasamos un parámetro de salida de tipo tabla. La acción la rellena con los datos leídos, y la devuelve rellena. 
+En la traducción a C, debemos tener en cuenta que el índice de la tabla empieza en 0. 
+También en la traducción a C, cuando se pasa una estructura como parámetro de salida o de entrada/salida, para acceder a los campos de la tupla (record), en lugar de usar el punto (.) se utiliza la notación ->.
+
+ 
+
+2. Funciones asociadas a una tabla
+
+ 
+
+2.1. Recorrido de una tabla
+
+Algo habitual con las tablas es que se tenga que efectuar algún tipo de operación con cada uno de los elementos que contiene, lo que implica realizar un recorrido sobre todos sus elementos. Veamos con un par de ejemplos cómo se estructura un recorrido.
+
+ 
+
+Ejemplo 06
+
+Seguimos con el ejemplo de los cines. Supongamos que, ahora que ya tenemos la recaudación de cada sala del cine Santaló cargada en la tabla, queremos hacer una simulación de cómo quedaría la recaudación si aumentáramos el precio un 20 %. Es decir, se quiere una acción que actualice la tabla añadiendo a cada elemento un 20 %.
+
+Como hemos hecho anteriormente, aislamos en una acción la operación de recorrer la tabla para multiplicar cada uno de sus elementos por 1,20. 
+
+Pseudocódigo
+	
+C
+
+
+
+const
+    MAX_THEATERS: integer = 20;
+    END_SEQ: real = -1.0;
+end const
+
+type
+    tTheater = record 
+        collect: vector[MAX_THEATERS] of real;
+        numTheaters: integer;
+    end record
+end type
+
+action update(inout movieTheater: tTheater)
+
+    var
+        i: integer;
+    end var
+
+    {iteration. We can use a for ... do iteration because we know the exact number of element of the table}
+    for i:=1 to movieTheater.numTheaters do
+        movieTheater.collect[i] := movieTheater.collect[i] *1.20;
+    end for
+
+end action
+
+	
+#include <stdio.h>
+
+#define MAX_THEATERS 20
+#define END_SEQ -1.0
+
+typedef struct {
+    float collect[MAX_THEATERS];
+    int numTheaters;
+} tTheater;
+
+void update(tTheater *movieTheater) {
+   /* var definition */
+   int i;
+
+    /* iteration. We can use a for ... do iteration because we know the exact number of element of the table */
+    for (i = 0; i < movieTheater->numTheaters; i++) {
+        movieTheater->collect[i] = movieTheater->collect[i] *1.20; 
+    }
+}
+
+Comentarios:
+
+Para hacer un recorrido completo, podemos utilizar for ... do para iterar sobre todos los elementos de la tabla, ya que sabemos exactamente cuántos elementos hay presentes.
+En la traducción a C, la iteración se hace de 0 a (movieTheater.numTheaters-1), ya que, recordémoslo nuevamente, el índice de las tablas empieza en 0.
+
+ 
+
+Ejemplo 07
+
+Con las acciones definidas en los apartados anteriores, ahora podemos escribir un algoritmo que lea la secuencia con la recaudación de las salas del cine para que la muestre por el canal estándar, calcule el porcentaje indicado de sus elementos y la vuelva a mostrar por el canal estándar de salida.
+
+Para completar el algoritmo, también hace falta una acción que muestre el contenido de la tabla.  
+
+El algoritmo completo quedaría de la siguiente manera:
+
+Pseudocódigo
+	
+C
+
+
+
+const
+    MAX_THEATERS: integer = 20;
+    END_SEQ: real = -1.0;
+end const
+
+type
+    tTheater = record 
+        collect: vector[MAX_THEATERS] of real;
+        numTheaters: integer;
+    end record
+end type
+
+action fillTable(out movieTheater: tTheater)
+
+    var
+        temp: real;
+    end var
+
+    {table initialization}
+    movieTheater.numTheaters := 0;
+    temp := readReal();  {we read the first digit}
+
+    {iteration while the read number is not -1}
+    while temp ≠ END_SEQ do
+        {Save the read number in the table}
+        movieTheater.numTheaters := movieTheater.numTheaters + 1;   
+        movieTheater.collect[movieTheater.numTheaters] := temp;
+        temp := readReal();
+    end while
+
+end action
+
+action update(inout movieTheater: tTheater)
+
+    var
+        i: integer;
+    end var
+
+    {iteration. We can use a for ... do iteration because we know the exact number of element of the table}
+    for i:=1 to movieTheater.numTheaters do
+        movieTheater.collect[i] := movieTheater.collect[i] * 1.20;
+    end for
+
+end action
+
+action printTable(in movieTheater: tTheater)
+
+    var
+        i: integer;
+    end var
+
+    {iteration. We can use a for ... do iteration because we know the exact number of element of the table}
+
+    for i:=1 to movieTheater.numTheaters do
+        writeReal(movieTheater.collect[i]);
+    end for
+end action
+
+algorithm simulation
+
+    var
+        santalo: tTheaters;
+    end var
+
+    fillTable(santalo);
+    printTable(santalo);
+    update(santalo);
+    printTable(santalo);
+
+end algorithm
+
+	
+#include <stdio.h>
+
+#define MAX_THEATERS 20
+#define END_SEQ -1.0
+
+typedef struct {
+    float collect[MAX_THEATERS];
+    int numTheaters;
+} tTheater;
+
+void fillTable(tTheater *movieTheater) {
+    /* var definition */
+    float temp;
+
+    /* table initialization */
+    movieTheater->numTheaters = 0;
+    scanf("%f", &temp);  /* read the first dígit */
+
+    /* iteration while the read number is not -1 */
+
+    while (temp != END_SEQ) {
+
+        /* Save the read number in the table */
+        movieTheater->collect[movieTheater->numTheaters] = temp;
+        movieTheater->numTheaters = movieTheater->numTheaters + 1; 
+        scanf("%f", &temp);
+    }
+}
+
+void update(tTheater *movieTheater) {
+    /* var definition */
+    int i;
+
+    /* iteration. We can use a for ... do iteration because we know the exact number of element of the table */
+    for (i = 0; i < movieTheater->numTheaters; i++) {
+        movieTheater->collect[i] = movieTheater->collect[i] *1.20 ;  
+    }
+}
+
+void printTable(tTheater movieTheater) {
+    /* var definition */
+    int i;
+
+    /* iteration. We can use a for ... do iteration because we know the exact number of element of the table */
+
+    for (i=0; i< movieTheater.numTheaters; i++) {
+        printf("%f ",  movieTheater.collect[i]);
+    }
+}
+
+int main() {
+    tTheater santalo;
+    fillTable(&santalo);
+    printTable(santalo);
+    update(&santalo);
+    printTable(santalo);
+
+    return 0;
+}
+
+Comentarios:
+
+Hemos escrito un algoritmo completo que hemos estructurado con acciones y en el que cada acción efectúa una operación concreta sobre una tabla de valores de tipo real. 
+Las acciones incluyen la inserción de elementos en la tabla y el control de cuántos se han insertado, un recorrido para aumentar la recaudación y otro para mostrar, por el canal estándar de salida, los valores guardados en la tabla.
+En la acción de escritura, la tabla se pasa como parámetro solamente de entrada. Fijaos en que, en C, la notación utilizada para acceder a los campos de la tupla (record) es el punto (.).
+
+ 
+
+2.2. Búsqueda de un elemento en una tabla
+
+Otra operación habitual que se lleva a cabo sobre tablas es buscar si en estas hay algún elemento en concreto. Es decir, se realiza una búsqueda de un valor dado.
+
+Vamos a ver cómo se enfocaría dicha búsqueda. Para ello, debemos hacer un recorrido de todos los elementos de la tabla, pero, a diferencia del algoritmo de recorrido que hemos visto antes, en la búsqueda, cuando encontramos el elemento buscado, podemos parar la iteración y no hace falta continuar buscando. Por lo tanto, en la búsqueda vamos a cambiar el tipo de iteración que utilizamos.
+
+ 
+
+Ejemplo 08
+
+Siguiendo con el ejemplo de los cines, escribimos una acción que busque en la tabla de recaudaciones si ha habido alguna sala con una recaudación superior a un valor dado. Dicho valor lo leeremos del canal estándar de entrada y devolveremos su posición en la tabla. En el caso de no encontrarlo, retornaremos un -1. Tendríamos lo siguiente:
+
+Pseudocódigo
+	
+C
+
+
+
+const
+    MAX_THEATERS: integer = 20;
+    END_SEQ: real = -1.0;
+end const
+
+type
+    tTheater = record 
+        collect: vector[MAX_THEATERS] of real;
+        numTheaters: integer;
+    end record
+end type
+
+action fillTable(out movieTheater: tTheater)
+
+    var
+        temp: real;
+    end var
+
+    {table initialization}
+    movieTheater.numTheaters := 0;
+    temp := readReal();  {we read the first digit}
+
+    {iteration while the read number is not -1}
+    while temp ≠ END_SEQ do
+
+        {Save the read number in the table}
+        movieTheater.numTheaters := movieTheater.numTheaters + 1;
+        movieTheater.collect[movieTheater.numTheaters] := temp;
+        temp := readReal();
+    end while
+
+end action
+
+action searchValue(in movieTheater: tTheater, in value: real, out position: integer)
+
+   var
+        i: integer;
+        found: boolean;
+   end var
+
+    {variable initialization. i is set to 1 to start searching in the table at postion 1 and found to false to indicate that so far value has not been found. The out parameter position  is set to -1 by default}
+
+    i := 1;
+    found := false;
+    position := -1;
+
+    {iteration while there still are elements in the table and the value has not been found}
+    while i ≤ movieTheater.numTheaters and not found do
+        if movieTheater.collect[i] ≥ value then
+            found := true;
+        else
+            i := i + 1;
+        end if
+    end while
+
+    if found then
+        position := i;
+    end if
+end action
+
+algorithm simulation
+
+    var
+        movieTheater: tTheaters;
+        value: real;
+        position: integer;
+    end var
+
+    fillTable(movieTheater);
+    value := readReal();
+    searchValue(movieTheater, value, position);
+    writeInteger(postion);
+end algorithm
+
+	
+
+ 
+
+#include <stdio.h>
+#include <stdbool.h>
+
+#define MAX_THEATERS 20
+#define END_SEQ -1.0
+
+typedef struct {
+    float collect[MAX_THEATERS];
+    int numTheaters;
+} tTheater;
+
+void fillTable(tTheater *movieTheater) {
+    /* var definition */
+    float temp;
+
+    /* table initialization */
+    movieTheater->numTheaters = 0;
+    scanf("%f", &temp);  /* read the first digit */
+
+    /* iteration while the read number is not -1 */
+    while  (temp != END_SEQ)  {
+
+        /*Save the read number in the table*/
+        movieTheater->collect[movieTheater->numTheaters] = temp;
+        movieTheater->numTheaters = movieTheater->numTheaters + 1;
+        scanf("%f", &temp);
+    }
+}
+
+void searchValue(tTheater movieTheater, float value, int *position) {
+    int i;
+    bool found;
+
+    /*variable initialization. i is set to 1 to start searching in the table at postion 1 and found to false to indicate that so far value has not been found. The out parameter position  is set to -1 by default */
+    i = 0;
+    found = false;
+    *position = -1;
+
+    /* iteration while there are still elements in the table and the value has not been found */
+    while (i < movieTheater.numTheaters && !found)  {
+        if (movieTheater.collect[i] >= value) {
+            found = true;
+        } else {
+            i++;
+        }
+    }
+
+    if (found) {
+        *position = i;
+    }
+}
+
+int main () {
+    tTheater movieTheater;
+    float value;
+    int position;
+
+    fillTable(&movieTheater);
+    scanf("%f", &value);
+    searchValue(movieTheater, value, &position);
+    printf("%d", position);
+
+    return 0;
+}
+
+Comentarios:
+
+Se inicializa el valor de la variable position a -1, que es el valor que se debe retornar si no encontramos el valor buscado.
+Para buscar el elemento, hemos hecho una iteración sobre los elementos de la tabla, pero controlando si se encuentra o no el valor buscado. Si se encuentra, se acaba la iteración y no hace falta llegar al final de la tabla. Para hacer este control, hemos declarado una variable booleana y hemos utilizado una iteración de tipo while… end while, que nos permite finalizar la iteración cuando se cumpla alguna de las condiciones. No podemos usar un for... end for, ya que no sabemos en qué momento podemos encontrar el valor buscado.
+Recordemos nuevamente que en C debemos empezar en la posición 0.
+Fijaos en que el parámetro position es de salida; por lo tanto, en C, se debe indicar utilizando el carácter * delante del nombre del parámetro.
+
+ 
+
+3. Ordenación de las tablas
+
+Ordenar una tabla significa que los elementos que la constituyen siguen un orden específico según algún criterio concreto. En función del tipo de elemento que forme parte de la tabla, se podrá ordenar por un campo u otro, de manera ascendente o descendente, etc. 
+
+Para conseguir que la tabla esté ordenada, se puede optar por insertar los elementos de manera ordenada (de este modo, siempre estará ordenada), o bien por insertarlos sin mantener un orden y, cuando se quiera ordenar, aplicar un algoritmo de ordenación. En los siguientes apartados, exploraremos las distintas opciones existentes.
+
+ 
+
+3.1. Inserción ordenada
+
+En los ejemplos anteriores, se ha leído la información de las recaudaciones y se ha insertado en la tabla en el mismo orden en el que se leía. Pero, como veremos en el siguiente apartado, hay casos en los que es importante disponer de una tabla ordenada por algún concepto para conseguir algoritmos más eficientes, sobre todo si hay que realizar muchas búsquedas sobre los elementos de la tabla.
+
+ 
+
+Ejemplo 09
+
+Siguiendo con el ejemplo de los cines, ahora modificamos la acción de lectura de las recaudaciones, de manera que la tabla siempre se mantenga ordenada.
+
+Pseudocódigo
+	
+C
+
+
+
+const
+    MAX_THEATERS: integer = 20;
+    END_SEQ: real = -1.0;
+end const
+
+type
+    tTheater = record 
+        collect: vector[MAX_THEATERS] of real;
+        numTheaters: integer;
+    end record
+end type
+
+action fillTable(out movieTheater: tTheater)
+
+    var
+        i, j: integer;
+        found: boolean;
+        temp: real;
+    end var
+
+    {table initialization}
+    movieTheater.numTheaters := 0;
+    temp := readReal();  {we read the first digit}
+
+    {iteration while the read number is not -1}
+
+    while temp ≠ END_SEQ do
+
+        {find the right location}
+        i := 1;
+        found := false;
+
+        {search for the right position}
+        while i ≤ movieTheater.numTheaters and not found do
+            if movieTheater.collect[i] ≤ temp then
+                i := i+1;
+            else
+                found := true;
+            end if
+        end while
+
+        {all the values to the right of the position found must be moved to one position to the right}
+        if movieTheater.numTheaters > 0 then
+            for j:=movieTheaters.numTheaters to i step -1 do
+                movieTheater.collect[j+1] := movieTheater.collect[j];
+            end for
+        end if
+
+        {insert new value}
+        movieTheater.collect[i] := temp;
+        movieTheaters.numTheaters := movieTheaters.numTheaters+1;
+        temp := readReal();
+    end while
+
+end action
+
+algorithm simulation
+
+    var
+        santalo: tTheaters;
+        i: integer;
+    end var
+
+    fillTable(santalo);
+    for i := 1 to santalo.numTheaters do
+         writeReal(movieTheater.collect[i]);
+    end for
+end algorithm
+
+	
+#include <stdio.h>
+#include <stdbool.h>
+
+#define MAX_THEATERS 20
+#define END_SEQ -1.0
+
+typedef struct {
+    float collect[MAX_THEATERS];
+    int numTheaters;
+} tTheater;
+
+void fillTable(tTheater *movieTheater) {
+    /* var definition */
+    float temp;
+    int i, j;
+    bool found;
+
+    /* table initialization */
+    movieTheater->numTheaters =0;
+    scanf("%f", &temp);  /* read the first digit */
+
+    /* iteration while the read number is not -1 */
+    while (temp !=END_SEQ)  {
+        i = 0;
+        found = false;
+
+        while (i < movieTheater->numTheaters && ! found)  {
+            if (movieTheater->collect[i] <= temp)  {
+                i++;
+            } else {
+                found = true;
+            }
+        }
+
+        /* move values to the right */
+        if (movieTheather->numTheaters > 0) {
+            for (j = movieTheater->numTheaters; j >= i ;  j--) {
+                movieTheater->collect[j] = movieTheater->collect[j-1];
+            }
+        }
+
+        /* insert new value */
+        movieTheater->collect[i] = temp;
+        movieTheater->numTheaters = movieTheater->numTheaters + 1  ;
+        scanf("%f", &temp);
+    }
+}
+
+int main () {
+    tTheater santalo;
+    int i;
+
+    fillTable(&santalo);
+
+    for (i = 0; i < santalo.numTheaters; i++) {
+        printf("%f ", santalo.collect[i]); 
+    }
+
+    return 0;
+}
+
+Comentarios:
+
+Para mantener la tabla ordenada, cada vez que se inserte un valor nuevo, primero es necesario buscar el lugar adecuado que le corresponde, según los valores que ya haya en la tabla y el que queramos insertar. Para encontrarlo, aplicamos una búsqueda, que corresponde al while más interno. 
+Una vez encontrado el sitio correcto, es necesario desplazar una casilla hacia la derecha todos los elementos que quedan a la derecha del punto donde se debe insertar. Para hacerlo, usamos una iteración de tipo for, ya que sabemos cuántos elementos se deben mover.
+En el algoritmo, hemos supuesto que en la secuencia de entrada nunca habrá más números de los permitidos. Si no lo sabemos con seguridad, sería necesario añadir un control al algoritmo para evitar que se intente insertar un elemento fuera del rango de la tabla.
+
+ 
+
+3.2. Algoritmo de ordenación
+
+La ordenación de las tablas es un tema que requeriría toda una unidad para tratarlo en profundidad, ya que hay diversos algoritmos de ordenación, algunos de ellos muy sofisticados. Presentarlos, entenderlos y compararlos queda fuera del alcance de esta asignatura.
+
+Pero presentaremos uno fácil de entender, aunque no sea de los más eficientes.
+
+Si la tabla tiene n elementos, el algoritmo consiste en iterar n veces de la siguiente manera:
+
+La primera iteración es un recorrido por toda la tabla para encontrar el elemento menor. Cuando se ha identificado, se intercambian los elementos de la posición 1 y la posición del más pequeño, de tal manera que, al acabar la primera iteración, sabemos que el primer elemento de la tabla es el menor de todos.
+En la segunda iteración ya no es necesario recorrer toda la tabla, sino que podemos empezar en el segundo elemento y realizar el mismo proceso que hemos aplicado en la iteración anterior, pero intercambiando el nuevo valor más pequeño por el que hay en la posición 2.
+En la tercera iteración se repite el procedimiento, pero empezando en la tercera posición de la tabla.
+Y así se repite el procedimiento hasta la última iteración, en la que solamente nos queda un elemento. 
+
+El estado de la tabla después de cada iteración sería el que podéis observar en el siguiente gráfico, en el que se han marcado en azul los valores que se intercambian en cada iteración:
+
+Iter.	Pos. 1	Pos. 2	Pos. 3	Pos. 4	Pos. 5	Pos. 6	Pos. 7	Pos. 8	Pos. 9	P. 10	
+0	45	23	67	2	33	56	47	100	765	12	Estado inicial.
+1	2	23	67	45	33	56	47	100	765	12	Se intercambian las posiciones 1 y 4.
+2	2	12	67	45	33	56	47	100	765	23	Se intercambian las posiciones 2 y 10.
+3	2	12	23	45	33	56	47	100	765	67	Se intercambian las posiciones 3 y 10.
+4	2	12	23	33	45	56	47	100	765	67	Se intercambian las posiciones 4 y 5.
+5	2	12	23	33	45	56	47	100	765	67	No hay intercambio de posiciones.
+6	2	12	23	33	45	47	56	100	765	67	Se intercambian las posiciones 6 y 7.
+7	2	12	23	33	45	47	56	100	765	67	No hay intercambio de posiciones.
+8	2	12	23	33	45	47	56	67	765	100	Se intercambian las posiciones 8 y 10.
+9	2	12	23	33	45	47	56	67	100	765	Se intercambian las posiciones 9 y 10.
+
+ 
+
+Pseudocódigo
+	
+C
+
+
+
+const
+    MAX_THEATERS: integer = 20;  
+    END_SEQ: real = -1.0;
+end const
+
+type
+    tTheater = record
+        collect: vector[MAX_THEATERS] of real;
+        numTheaters: integer;
+    end record
+end type
+
+action fillTable(out movieTheater:tTheater)
+
+    var
+        i: integer;
+        temp: real;
+    end var
+
+    {table initialization}
+    movieTheater.numTheater := 0;
+    temp := readReal();  {we read the first dígit}
+
+    {iteration while the read number is not -1}
+
+    while temp ≠ END_SEQ do
+
+        {Save the read number in the table}
+        movieTheater.numTheater := movieTheater.numTheater + 1;   
+        movieTheater.collect[movieTheater.numTheater] := temp;
+        temp := readReal();
+    end while
+end action
+
+action sort(inout movieTheater: tTheater)
+
+    var
+        i, j, posMin: integer;
+        aux: integer;
+    end var
+
+    i := 1;
+    while i < movieTheater.numTheaters do
+        posMin := i;
+        j := i + 1;
+        while j ≤ movieTheater.numTheaters do
+            if movieTheaters.collect[j] < 
+
+                movieTheaters.collect[posMin] then
+                posMin := j;
+            end if
+            j := j + 1;
+        end while
+        aux := movieTheaters.collect[posMin];
+        movieTheaters.collect[posMin] := movieTheaters.collect[i];
+        movieTheaters.collect[i] := aux;
+        i := i + 1;
+    end while
+end action
+
+algorithm simulation
+
+    var
+        santalo: tTheater;
+
+        i: integer;
+    end var
+
+    fillTable(santalo);
+    sort(santalo);
+
+    for i := 1 to santalo.numTheaters do
+        writeReal(santalo.collect[i]);
+    end for 
+
+end algorithm
+
+	
+#include <stdio.h>
+
+#define MAX_THEATERS 20
+#define END_SEQ -1.0
+
+typedef struct {
+    float collect[MAX_THEATERS];
+    int numTheaters;
+} tTheater;
+
+void fillTable(tTheater *movieTheater) {
+    /* var definition */
+    int i;
+    float temp;
+
+    /* table initialization */
+    movieTheater->numTheaters = 0;
+    scanf("%f", &temp);  /* read the first digit */
+
+    /* iteration while the read number is not -1 */
+    while  (temp !=END_SEQ)  {
+        /*Save the read number in the table*/
+        movieTheater->collect[movieTheater->numTheaters] = temp;
+        movieTheater->numTheaters = movieTheater->numTheaters + 1; 
+        scanf("%f", &temp);  
+    }
+}
+
+void sort(tTheater *movieTheater) {
+    /* var definition */
+    int i, j, posMin;
+    int aux;
+
+    i  =0;
+    while (i < movieTheater->numTheaters)  {
+        posMin = i;
+        j = i + 1;
+        while  (j < movieTheater->numTheaters)  {
+            if (movieTheater->collect[j] < 
+movieTheater->collect[posMin]) {
+                posMin=j;
+            }
+            j = j + 1;
+        }
+        aux = movieTheater->collect[posMin];
+        movieTheater->collect[posMin] = movieTheater->collect[i];
+        movieTheater->collect[i] = aux;
+        i = i + 1;
+    }
+}
+
+int main () {
+    tTheater santalo;
+    int i;
+
+    fillTable(&santalo);
+    sort(&santalo);
+
+    for (i = 0; i < santalo.numTheaters; i++) {
+        printf("%f ", santalo.collect[i]);
+    }
+
+    return 0;
+}
+
+ 
+
+3.3. Búsqueda dicotómica
+
+Hemos visto cómo se pueden buscar valores dentro de una tabla. Si analizamos el algoritmo de búsqueda que hemos usado, podemos observar que, en el peor de los casos, cuando el elemento buscado no se encuentra en la tabla, se debe recorrer entera para saber si el elemento está o no presente. Respecto a este tipo de búsqueda, se dice que tiene un orden lineal, ya que lo que hace es recorrer uno a uno todos los elementos de la tabla.
+
+Hay mejores maneras de buscar elementos dentro de una tabla, pero requieren que la tabla esté ordenada, cosa que podemos asegurar ya sea insertando los elementos en esta de manera ordenada o bien ordenando la tabla posteriormente.
+
+Si la tabla está ordenada, la búsqueda se puede plantear de otra manera. No empezamos la búsqueda en la primera posición de la tabla, sino por la mitad. El proceso es el siguiente:
+
+Calculamos la posición que está en medio de la tabla.
+Comparamos su contenido con el valor buscado.
+Si el contenido es el valor buscado, se acaba la búsqueda. Si no, hacemos lo siguiente:
+Si el elemento del medio es mayor que el buscado, podemos descartar la segunda mitad de la tabla. Si el elemento está, lo buscaremos en la primera mitad (parte izquierda).
+En caso contrario, descartamos la primera mitad, ya que, si el elemento está, lo encontraremos en la segunda mitad.
+Aplicamos el mismo procedimiento (volvemos al punto 1), pero trabajando solamente con la parte de la tabla que no hemos descartado.
+
+Esta manera de buscar elementos en una tabla ordenada recibe el nombre de búsqueda dicotómica o búsqueda binaria.
+
+Supongamos, por ejemplo, que buscamos el valor 400 en la siguiente tabla ordenada:
+
+Posición	1	2	3	4	5	6	7	8	9	10	11
+Valor	02	07	45	78	123	200	320	456	457	500	899
+Buscamos la posición que queda en medio de la tabla. En este caso será la posición 6.
+Comparamos su contenido con el valor buscado; en este caso sería comparar el valor 200 con el 400.
+Dado que el valor buscado es mayor que el contenido de la posición 6, sabemos con certeza que, si el valor buscado está en la tabla, debe estar en la parte derecha (es decir, entre las posiciones 7 y 11).
+Posición	1	2	3	4	5	6	7	8	9	10	11
+Valor	02	07	45	78	123	200	320	456	457	500	899
+Repetimos el proceso, pero solamente con la parte derecha de la tabla.
+Calculamos la posición central entre las posiciones 7 y 11, que será la posición 9.
+Volvemos a repetir la comparación. Es decir, comparamos el contenido de la posición 9 con el valor buscado. En este caso, sería comparar el valor de la posición 9, que es 457, con el buscado, que es 400.
+Como el valor buscado es menor que el de la casilla 9, sabemos que, si el valor buscado está en la tabla, debe estar en la parte izquierda del trozo donde hemos buscado. Es decir, entre las posiciones 7 y 8. 
+Posición	1	2	3	4	5	6	7	8	9	10	11
+Valor	02	07	45	78	123	200	320	456	457	500	899
+Volvemos a calcular el punto medio. Como no hay media exacta, cogemos la más próxima, que será la posición 7.
+Comparamos con el contenido de la posición 7.
+Como el valor buscado es mayor, tenemos que coger la otra mitad de la tabla, que se limita a la posición 8.
+Comparamos los valores y, como tampoco son iguales y ya no quedan casillas por mirar, podemos asegurar que el valor buscado no se encuentra en la tabla.
+
+Podemos observar que, en lugar de tener que hacer once comparaciones para decidir que el valor buscado no está en la tabla, solamente han sido necesarias cuatro. En este ejemplo, teníamos pocos elementos, pero cuando las tablas son muy grandes, este tipo de búsqueda dicotómica es mucho más eficiente.
+
+ 
+
+Ejemplo 10
+
+Siguiendo con el ejemplo de los cines, supongamos que tenemos un cine y queremos buscar si ha habido alguna sala con una recaudación de 100 euros. En el ejemplo, imaginaremos que la tabla está ordenada:
+
+Pseudocódigo
+	
+C
+
+
+
+const
+    MAX_THEATERS: integer = 20;
+end const
+
+type
+    tTheater = record
+        collect: vector[MAX_THEATERS] of real;
+        numTheaters: integer;
+    end record
+end type
+
+action searchValue(in movieTheater:tTheater, in value: real, out position: integer)
+    var
+        i: integer;
+        first, last, middle: integer;
+    end var    
+
+    first := 1;
+    position := -1;
+    last := movieTheater.numTheaters;
+    while first ≠ last do
+        middle := (first + last) div 2;
+        if movieTheater.collect[middle] < value then
+            first := middle + 1;
+        else
+            last := middle;
+        end if
+    end while    
+
+    if movieTheater.collect[first] = value then
+        position := first;
+    end if
+end action
+
+	
+#include <stdio.h>
+
+/* type definition for a table of 20 elements */
+#define MAX_THEATERS 20
+
+typedef struct {
+    float collect[MAX_THEATERS];
+    int numTheaters;
+} tTheater;
+
+void searchValue(tTheater movieTheater, float value, int *position) {
+
+    int i;
+    int first, last, middle;
+    first = 0;
+    *position = -1;
+    last = movieTheater.numTheaters-1;
+    while (first != last)  {
+        middle = (first + last) / 2;
+        if (movieTheater.collect[middle] < value) {
+            first = middle + 1;
+        } else {
+            last = middle;
+        }
+    }
+    if (movieTheater.collect[first] == value)  {
+        *position = first;
+    }
+}
+
+ 
+
+ 
+
+4. Tablas de tipos estructurados
+
+ 
+
+4.1. Tablas de tuplas
+
+A lo largo de toda la unidad, hemos estado utilizando una tabla de valores reales, pero las tablas pueden ser de cualquier tipo de datos, ya sean tipos básicos del lenguaje de programación o tipos estructurados definidos por el usuario.
+
+ 
+
+Ejemplo 11
+
+Siguiendo con el ejemplo de los cines, podemos suponer que, además de la recaudación, queremos guardar más información de cada sala.
+
+Tal como hemos trabajado hasta ahora, podríamos imaginar que la recaudación de la posición 1 correspondía a la sala 1, la de la 2 a la sala 2, etc. Pero cuando hemos ordenado los importes, hemos perdido esta información. Ya no sabemos a qué salas corresponde cada uno de los importes. Ahora bien, si definimos primero una tupla con la información de la sala, por ejemplo, una tupla que tenga un entero para la capacidad de la sala, una cadena de caracteres para identificar el nombre de la sala, un real para la recaudación y la fecha de la recaudación, podremos definir una tabla de este tipo, de modo que, si movemos los elementos dentro de la tabla, no perderemos información, ya que la recaudación irá siempre ligada al nombre de la sala.
+
+Veamos cómo quedarían la definición (declaración) y el acceso a los elementos de la nueva tabla.
+
+Pseudocódigo
+	
+C
+
+
+
+const
+    MAX_THEATERS: integer = 20;
+end const
+
+type
+
+    {declaration of a type for dates}
+    tDate = record
+        day: integer;
+        month: integer;
+        year: integer;
+    end record;
+
+    {declaration of type for theater information}
+    tTheaterDescription = record
+        name: string;
+        capacity: integer;
+        collect: real;
+        date: tDate;
+    end record
+
+    {table with the information of each theater}
+    tTheater = record
+        movieTheaters: vector[MAX_THEATERS] of tTheaterDescription;
+        numTheaters: integer;
+    end record
+
+end type
+
+algorithm movieTheater
+
+    var
+        santalo: tTheater;
+        k: integer;
+    end var
+
+    {we can access the information in the folowing way}
+
+    {to access to the name of the third theater in santalo}
+    santalo.movieTheater[3].name;
+
+    {to access to the field collect of the k th theater in santalo}
+    santalo.movieTheaters[k].collect;
+
+    {to access to the capacity of the last theater stored in the table santalo}
+    santalo.movieTheaters[santalo.numTheaters].capacity;
+
+end algorithm
+
+	
+#include <stdio.h>
+
+#define MAX_THEATERS 20
+#define MAX_NAME 50
+
+typedef struct {
+    int day;
+    int month;
+    int year;
+} tDate;
+
+typedef struct {
+    char name[MAX_NAME];
+    int capacity;
+    float collect;
+    tDate date;
+} tTheaterDescription;
+
+typedef struct {
+    tTheaterDescription movieTheathers[MAX_THEATERS];
+    int numTheaters;
+} tTheater;
+
+int main () {
+    tTheater santalo;
+    int k;
+
+    /* we can access to be information in the folowing way */
+
+    /* to access to the name of the third theater in santalo */
+    santalo.movieTheater[2].name;
+
+    /* to access to the field collect of the  k th.  theater in santalo */
+    santalo.movieTheaters[k-1].collect;
+
+    /* to access to the capacity of the last theater stored in the table santalo */
+    santalo.movieTheaters[santalo.numTheaters-1].capacity;
+
+    return 0;
+}
+
+Comentarios:
+
+Podemos observar que se ha definido una tabla como se había hecho anteriormente, pero ahora cada elemento de la tabla es una estructura con varios campos.
+Dada una variable del tipo tTheater, podemos acceder a toda la información siguiendo la notación utilizada en las unidades anteriores para las tablas y las tuplas.
+
+ 
+
+4.2. Tablas de tablas
+
+Un caso concreto de tablas de tipos estructurados se da cuando el tipo definido es otra tabla.
+
+ 
+
+Ejemplo 12
+
+Siguiendo con el ejemplo de los cines, hasta ahora hemos declarado y utilizado una variable de tipo tTheater de manera individual, pero lo más normal es que se quiera mantener la información de todos los cines en una única variable para facilitar su uso. Podemos definir un nuevo tipo de tabla en la que cada elemento sea una tabla con la recaudación de las salas de cada cine.
+
+Para declararlo, supondremos que, como máximo, la empresa tendrá quince cines. La declaración sería la siguiente:
+
+Pseudocódigo
+	
+C
+
+
+
+const
+     MAX_THEATERS: integer = 20;  
+     MAX_MOVIES: integer = 15;
+end const
+
+type
+
+    {declaration of a type for dates}
+    tDate = record
+        day: integer;
+        month: integer;
+        year: integer;
+    end record
+
+    {declaration of type for theater information}
+    tTheaterDescription = record
+        name: string;
+        capacity: integer;
+        collect: real;
+        date: tDate;
+    end record
+
+    {table with the information of each theater}
+    tTheater = record
+        movieTheaters: vector[MAX_THEATERS] of tTheaterDescription;
+        numTheaters: integer;
+    end record
+
+    {declaration of a table of tTheater}
+    tCompany = record
+        movies: vector[MAX_MOVIES] of tTheater;
+        numMovies: integer;
+    end record
+end type
+
+algorithm movieTheater
+    var
+        theMovieCompany: tCompany;
+        m, k: integer;
+
+        lmovie, ltheater: integer;
+
+
+    end var
+
+    {to access to the name of the third theater of the first movie}
+    theMovieCompany.movies[1].movieTheaters[3].name;
+
+    {to access to the filed collect of the k th theater of the mth movie}
+    theMovieCompany.movies[m].movieTheaters[k].collect;
+
+    {to access to the capacity of the last theater of the last movie}
+
+    lmovie := theMovieCompany.numMovies;
+
+    ltheater := theMovieCompany.movies[lmovie].numTheaters;
+theMovieCompany.movies[lmovie].movieTheaters[ltheater].capacity;
+
+end algorithm
+
+	
+#include <stdio.h>
+
+#define MAX_THEATERS 20
+#define MAX_MOVIES 15
+
+typedef struct {
+    int day;
+    int month;
+    int year; 
+} tDate; 
+
+typedef struct {
+    tString name;
+    int capacity;
+    float collect;
+    tDate date;
+} tTheaterDescription;
+
+typedef struct {
+    tTheaterDescription movieTheathers[MAX_THEATERS];
+    int numTheaters;
+} tTheater;
+
+/* declaration of a table of tTheater */
+typedef struct { 
+    tTheater movies[MAX_MOVIES];
+    int numMovies;
+ } tCompany;
+
+int main () {
+    tCompany theMovieCompany;
+    int m, k;
+    int lmovie, ltheater;
+
+    /* we can access to be information in the folowing way */
+
+    /* to access to the name of the third theater of the 
+first movie */
+    theMovieCompany.movies[0].movieTheaters[2].name;
+
+    /* to access to the filed collect of the  k th  theater 
+of the m th movie */
+    theMovieCompany.movies[m-1].movieTheaters[k-1].collect;
+
+    /* to access to the capacity of the last theater of 
+the last movie */
+    lmovie = theMovieCompany.numMovies-1;
+    ltheater = theMovieCompany.movies[lmovie].numTheaters-1;
+        theMovieCompany.movies[lmovie].movieTheaters[ltheater].capacity;
+
+    return 0;
+}
+
+ 
+
+ 
+
+5. Más ejemplos en lenguaje C
+
+A continuación, os presentamos algunos ejemplos más sobre el uso de tablas, poniendo el foco en la sintaxis C.
+
+ 
+
+Ejemplo 13. calculateMark
+
+Se debe entender una tabla como un conjunto de elementos y que en todo momento sabemos cuántos tenemos.
+
+Imaginemos que queremos un programa que calcule la nota media de las PEC de una asignatura (sus siglas en inglés son CAA). Podríamos plantearlo como un simple array de enteros, pero, como pretendemos ofrecer más funcionalidades en nuestro programa en un futuro, tendremos el siguiente escenario:
+
+tCaa: tipo de datos básico que tratará nuestro programa. Esta tupla estará formada, por un lado, por un número descriptivo de la PEC y, por otro, por su nota numérica con decimales.
+tSubject: tabla que contendrá los elementos de tipo tCaa. Aparte del array de tCaa, también tendrá un contador interno de elementos: numCaas.
+
+Sobre esta base realizaremos dos acciones:
+
+addCaa(): se trata de una acción que incluye un elemento de tipo tCaa dentro de la tabla tSubject. Es una operación similar a la acción de llenar una tabla, expuesta en los ejemplos anteriores.
+calculateMark(): es una función que revisa todos los elementos tCaa de la tabla tSubject y calcula su nota promedio. Se trata de una operación equivalente a la de los recorridos de tabla de los ejemplos que hemos visto anteriormente, ya que estamos recorriendo uno a uno todos los elementos tCaa para obtener su nota.
+
+Una posible manera de implementarlo sería la siguiente:
+
+Pseudocódigo
+	
+C
+
+
+
+{Definition of the constants}
+const
+    MAX_CAAS : integer := 10;
+end const
+
+type
+    {Definition of the record tCaa}
+    tCaa = record
+        name: string;
+        mark: real;
+    end record
+
+    {Definition of the table tSubject}
+    tSubject = record 
+        caa: vector[MAX_CAAS] of tCaa;
+        numCaas: integer;
+    end record
+end type
+
+
+
+{Action that adds an element of type tCaa to the tSubject table}
+action addCaa(in subject tSubject, inout caa tCaa)
+    {Add caa as the last element in subject}
+    subject.caa[subject.numCaas] := caa;
+
+    {Increase the value of numCaas}
+    subject.numCaas := subject.numCaas + 1;
+end action
+
+ 
+
+{Function that calculates the average of all tCaa in tSubject}
+function calculateMark(tSubject subject)
+
+    var
+        {sum is the summation of all the marks in tCaa that are in tSubject}
+        sum: real;
+        i: integer;
+
+    end var
+
+    sum := 0.0;
+
+    { Traverse through all tCaa elements in tSubject and accumulate the marks}
+    for i := 0 to i < subject.numCaas do
+        sum := sum + subject.caa[i].mark;
+    end for
+
+    { Calculate the average of grades}
+    return sum / subject.numCaas;
+end function
+
+ 
+
+algorithm calcMarkExample
+    var
+        fp: tSubject;
+        caa1, caa2, caa3: tCaa;
+        mark: real;
+    end var
+
+    mark := 0.0;
+
+    caa1.name := "CAA01";
+    caa1.mark := 10;
+    caa2.name := "CAA02";
+    caa2.mark := 8.5;
+    caa3.name := "CAA03";
+    caa3.mark := 7.5;
+    fp.numCaas := 0;
+
+
+
+    { Add CAAs to the subject }
+    addCaa(fp, caa1);
+    addCaa(fp, caa2);
+    addCaa(fp, caa3);
+
+    { Calculate the mark using calculateMark}
+    mark := calculateMark(fp);
+    writeString("The average mark of CAA is");
+    writeReal(mark);
+end algorithm
+
+	
+#include <stdio.h>
+#include <string.h>
+
+/* Definition of the contants */
+#define MAX_CAAS 5
+#define MAX_NAME 5+1
+
+/* Definition of the record tCaa */
+typedef struct {
+    char name[MAX_NAME];
+    float mark;
+} tCaa;
+
+/* Definition of the table tSubject */
+typedef struct {
+    tCaa caa[MAX_CAAS];
+    int numCaas;
+} tSubject;
+
+
+/* Predeclaration of the functions/actions */
+void addCaa(tSubject *subject, tCaa caa);
+float calculateMark(tSubject subject);
+
+
+/* Main program */
+int main(int argc, char **argv) {
+
+    /* Variables definition */
+    tSubject fp;
+    tCaa caa1, caa2, caa3;
+    float mark;
+
+    /* Variables initialization */
+    mark = 0;
+    strcpy(caa1.name,"CAA01");
+    caa1.mark = 10;
+    strcpy(caa2.name,"CAA02");
+    caa2.mark = 8.5;
+    strcpy(caa3.name,"CAA03");
+    caa3.mark = 7.5;
+
+    fp.numCaas = 0;
+
+    /* Add CAAs to the subject */
+    addCaa(&fp, caa1);
+    addCaa(&fp, caa2);
+    addCaa(&fp, caa3);
+
+    /* Calculate the mark */
+    mark = calculateMark(fp);
+    printf("The average mark of the %d CAA is %f\n", fp.numCaas, mark);
+
+    return 0;
+}
+
+
+/* Implementation of the functions/actions */
+
+/* Action that adds an element of type tCaa to tSubject table */
+void addCaa(tSubject *subject, tCaa caa) {
+    /* Add caa as the last element in subject */
+    subject->caa[subject->numCaas] = caa;
+
+    /* Increase the value of numCaas */
+    subject->numCaas = subject->numCaas + 1;
+}
+
+/* Function that calculates the average of all tCaa contained in tSubject*/
+float calculateMark(tSubject subject) {
+    /* sum contains the sum of all the marks in tCaa that are in tSubject */
+    float sum;
+    int i;
+    sum = 0.0;
+
+    /* Traverse through all tCaa elements in tSubject and accumulate the marks */
+
+    for (i = 0; i < subject.numCaas; i++) {
+        sum = sum + subject.caa[i].mark;
+    }
+
+    /* Calculate the average of grades */
+    return sum / subject.numCaas;
+}
+
+Para facilitar la lectura, se ha unido todo el programa en un único bloque de código (un único archivo).
+
+ 
+
+Ejemplo 14. calculateMark con iteración
+
+El siguiente ejemplo adapta el caso anterior para que pida los valores iterativamente:
+
+Pseudocódigo
+	
+C
+
+
+
+{Definition of the constants}
+const
+    MAX_CAAS: integer := 10;
+end const
+
+type
+    {Definition of the record tCaa}
+    tCaa = record
+        name: string;
+        mark: real;
+    end record
+
+    {Definition of the table tSubject}
+    tSubject = record 
+        caa: vector[MAX_CAAS] of tCaa;
+        numCaas: integer;
+    end record
+end type
+
+ 
+
+{Action that adds an element of type tCaa to the tSubject table}
+action addCaa(in subject tSubject , inout caa tCaa)
+    {Add caa as the last element in subject}
+    subject.caa[subject.numCaas] := caa;
+
+    {Increase the value of numCaas}
+    subject.numCaas := subject.numCaas + 1;
+end action
+
+ 
+
+{Function that calculates the average of all tCaa in tSubject}
+function calculateMark(tSubject subject)
+    {sum is the summation of all the marks in tCaa that are in tSubject}
+
+    var
+        sum: real;
+        i: integer;
+
+    end var
+
+    sum = 0.0;
+
+    { Traverse through all tCaa elements in tSubject and accumulate the marks}
+    for i := 1 to subject.numCaas do
+        sum := sum + subject.caa[i].mark;
+    end for
+
+    { Calculate the average of grades}
+    return sum / subject.numCaas;
+end function
+
+ 
+
+algorithm calcMarkExample
+    var
+        fp: tSubject;
+        mark: real;
+        numCaas, i: integer;
+
+        caaAux: tCaa;
+    end var
+
+    mark := 0.0;
+    numCaas := 0;
+
+    fp.numCaas := 0;
+
+    { Enter CAA data from the keyboard}
+    writeString("Number of CAAs to enter, below");
+
+    writeInteger(MAX_CAAS);
+    numCaas := readInteger();
+
+    for i := 1 to numCaas do
+        writeString("Data for the CAA:");
+        writeInteger(i);
+        writeString("name : ");
+        caaAux.name := readString();
+        writeString("mark : ");
+        caaAux.mark := readReal();
+
+        {Add caaAux to the table. In each iteration a different tCaa will be added}
+        addCaa(fp, caaAux);
+    end for
+
+    { Calculate the mark using calculateMark}
+    mark := calculateMark(fp);
+    writeString("The average mark of CAA is");
+    writeReal(mark);
+end algorithm
+
+	
+
+#include <stdio.h>
+#include <string.h>
+
+/* Definition of the constants */
+#define MAX_CAAS 10
+#define MAX_NAME 10+1
+
+/* Definition of the record tCaa */
+typedef struct {
+    char name[MAX_NAME];
+    float mark;
+} tCaa;
+
+/* Definition of the table tSubject */
+typedef struct {
+    tCaa caa[MAX_CAAS];
+    int numCaas;
+} tSubject;
+
+/* Predeclaration of the functions/actions */
+
+void addCaa(tSubject *subject, tCaa caa);
+float calculateMark(tSubject subject);
+
+/* Main program */
+int main() {
+    /* Define variables */
+    tSubject fp;
+    float mark;
+    int numCaas, i;
+    tCaa caaAux;
+
+    /* Initialize variables */
+    mark = 0;
+    numCaas = 0;
+    i = 0;
+ 
+    /* Initialize the table */
+    fp.numCaas = 0;
+
+    /* Enter CAA data from keyboard */
+    printf("Number of CAAs to enter (<%d): ", MAX_CAAS);
+    scanf("%d", &numCaas);
+
+    for (i = 0; i < numCaas; i++) {   
+        printf("Data for the CAA0%d : \n", i+1);
+        printf("\tname : ");
+        scanf("%s", caaAux.name);
+        printf("\tmark : ");
+        scanf("%f", &caaAux.mark);
+
+        /* Add the auxiliary tCaa to the table */
+        addCaa(&fp, caaAux);
+    }
+
+    /* We calculate the mark with the calculateMark function */
+    mark = calculateMark(fp);
+    printf("The average mark of the %d CAA is %f\n", fp.numCaas, mark);
+    return 0;
+}
+
+/* Implementation of the functions/actions */
+/* Action that adds an element of type tCaa to the tSubject table */
+void addCaa(tSubject *subject, tCaa caa) {
+
+    /* numCaas contains the number of elements of type tCaa
+    * in the table
+    */
+    subject->caa[subject->numCaas] = caa;
+
+    /* Once we have assigned a new element tCaa
+    * to the table we increase the value of numCaas
+    */
+    subject->numCaas = subject->numCaas + 1;
+}
+
+/* Function that calculates the average of all tCaa contained in the tSubject table
+*/
+float calculateMark(tSubject subject) {
+
+    /* Add caaAux to the table. In each iteration a different tCaa will be added */
+    float sum;
+    int i;
+    sum = 0.0;
+
+    /* Traverse through all tCaa elements in tSubject and accumulate the marks */
+    for (i = 0; i < subject.numCaas; i++) {
+        sum = sum + subject.caa[i].mark;
+    }
+
+    /* Calculate the average of grades */
+    return sum / subject.numCaas;
+}
+
+ 
+
+Ejemplo 15. Recorrido frente a búsqueda
+
+En el siguiente ejemplo, se tratan los conceptos de recorrido y de búsqueda de los elementos de una tabla. 
+
+Se nos pide un programa que permita registrar jugadores de baloncesto en una tabla. En la misma tabla tendremos jugadores tanto locales como visitantes.
+
+Los recorreremos para mostrarlos todos en la pantalla, y también haremos una búsqueda en la que mostraremos a un jugador que buscamos en función del equipo y su número, si es que lo encontramos.
+
+Tendremos que implementar las siguientes acciones:
+
+initializeTable: para inicializar la tabla de jugadores.
+addPlayer: para añadir un jugador a la tabla.
+showPlayers: para mostrar todos los jugadores en la tabla.
+searchPlayer: para buscar en la tabla al jugador que tiene un equipo y un número concreto.
+
+Para esto, generaremos una serie de estructuras y tablas:
+
+tPlayer: estructura que guarda la información del jugador (nombre, apellido, número y equipo).
+tTablePlayer: tabla de jugadores. Consta de un vector de jugadores y un contador de los jugadores que contiene.
+
+Finalmente, definiremos las siguientes acciones:
+
+readPlayer: lee la información del jugador y la guarda en la estructura.
+showPlayer: muestra los datos del jugador.
+copyPlayer: copia la información del jugador a una nueva estructura.
+initializeTable: inicializa la tabla, poniendo el contador a 0. Si existe información, se sobrescribirá.
+addPlayer: añade un jugador a la tabla.
+showPlayers: muestra todos los jugadores, recorriendo todos los elementos de la tabla.
+searchPlayer: busca un jugador por número y equipo. El resultado se muestra en la pantalla. Si no se encuentra ningún elemento, se devuelve un mensaje que lo explica.
+Pseudocódigo
+	
+C
+
+
+
+const
+    MAX_PLAYERS: integer = 10;
+end const
+
+type
+
+    tTeam = {LOCAL, VISITING};
+
+    {This is a tuple to store each player}
+    tPlayer = record 
+        name: string;
+        surname: string;
+        number: integer;
+        team: tTeam; 
+    end record
+
+    {This is a table to store all of the players}
+    tTablePlayers = record 
+        players: vector[MAX_PLAYERS] of tPlayer ;
+        numPlayers: integer;
+    end record
+end type
+
+
+action readPlayer(out p: tPlayer)
+    writeString("Enter the data of the new player:");
+    writeString("Name:");
+    p.name := readString();
+    writeString("Surname:");
+    p.surname := readString();
+    writeString("Team:");
+    p.team := readEnum();
+    writeString("Number");
+    p.number := readInteger();
+end action
+
+
+
+action showPlayer(in p: tPlayer)
+    if p.team = LOCAL then
+        writeString("LOCAL: ");
+    else
+        writeString("VISITING: ");
+    end if
+
+    writeInteger(p.number);
+    writeString(p.surname);
+    writeString(p.name);
+
+
+end action
+
+
+action initializeTable(out table: tTablePlayers)
+    table.numPlayers := 0;
+end action
+
+
+action addPlayer(in p: tPlayer, inout table: tTablePlayers)
+    if table.numPlayers ≥ MAX_PLAYERS then
+         writeString("Error adding player to the table");
+    else
+         table.players[table.numPlayers] := p;
+         table.numPlayers := table.numPlayers + 1;
+    end if
+end action
+
+
+action showPlayers(in table: tTablePlayers)
+    var
+        i : integer ;
+    end var
+
+    i := 1;
+    while i ≤ table.numPlayers do
+        showPlayer(table.players[i]);
+        i := i + 1;
+    end while
+end action
+
+
+action searchPlayer(in table: tTablePlayers, in number: integer, in team: tTeam)
+    var
+        i: integer;
+        isFound: boolean;
+    end var
+
+    {Initialize variables}
+    i := 0;
+    isFound := false;
+
+
+    {Inform the user}
+    if team = LOCAL then
+        writeString("Search local player with number:");
+    else 
+        writeString("Search visiting player with number:");
+    end if
+    writeInteger(number);
+
+    {Search the player}
+    while i < table.numPlayers and not isFound do
+        if table.players[i].number = number and
+            table.players[i].team = team then
+            isFound := true;
+        end if
+        i := i+1;
+    end while
+
+    {Show the results}
+    if not isFound then
+        writeString("No player found.");
+    else
+        writeString("Player found:");
+        showPlayer(table.players[i-1]);
+    end if
+end action
+
+algorithm searchPlayer
+
+    var
+        player: tPlayer;
+        table: tTablePlayers;
+        team: tTeam;
+        number, i: integer;
+
+    end var
+
+    {Initialize table}
+    initializeTable(table);
+
+    {Record player info through keyboard}
+    for i := 1 to MAX_PLAYERS do
+        readPlayer(player);
+        addPlayer(table, player);
+    end for
+
+    {Print the list of p`layers}
+    showPlayers(table);
+
+    writeString("Which player do you want to search for? : ");
+    writeString("Team : ");
+    team := readEnum();
+    writeString("Number : ");
+    number := readInteger();
+
+    {Search a player and display the result}
+    searchPlayer(table, number, team);
+
+end algorithm
+
+	
+#include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
+
+#define MAX_NAME 20+1
+#define MAX_SURNAME 20+1
+#define MAX_PLAYERS 10
+
+typedef enum {LOCAL, VISITING} tTeam;
+
+/* Definition of the player struct */
+typedef struct {
+    char name[MAX_NAME];
+    char surname[MAX_SURNAME];
+    int number;
+    tTeam team;
+} tPlayer;
+
+/* Definition of the player table type */
+typedef struct {
+    tPlayer players[MAX_PLAYERS];
+    int numPlayers;
+} tTablePlayers;
+
+/* Actions declaration */
+void readPlayer(tPlayer *p);
+void showPlayer(tPlayer p);
+void initializeTable(tTablePlayers *table);
+void addPlayer(tTablePlayers *table, tPlayer p);
+void showPlayers(tTablePlayers table);
+void searchPlayer(tTablePlayers table, int number, tTeam team);
+
+/* Main program */
+int main(int argc, char **argv) {
+    tPlayer player;
+    tTablePlayers table;
+    tTeam team;
+    int number, i;
+
+   initializeTable(&table);
+
+    /* Introduce the players data */
+    for (i=0; i<MAX_PLAYERS; i++) {
+        readPlayer(&player);
+        addPlayer(&table, player);
+    }
+
+    /* Show all the players */
+    showPlayers(table);
+
+    /* Search for a player */
+    /* Ask for the information to be introduced
+     * through the keyboard */
+    printf("\nWhich player do you want to search for? : ");
+    printf("\n>> Team (0=LOCAL, 1=VISITING) : ");
+    scanf("%u", &team);
+    printf(">> Number : ");
+    scanf("%d", &number);
+
+    /* Search for the player */ 
+    searchPlayer(table, number, team);
+
+    return 0;
+}
+
+/* Implementation of the actions */
+
+void readPlayer(tPlayer *p) {
+    printf("Enter the data of the new player: \n");
+    printf("\tName: ");
+    scanf("%s", p->name);
+    printf("\tSurname: ");
+    scanf("%s", p->surname);
+    printf("\tTeam (0=LOCAL, 1=VISITING): ");
+    scanf("%u", &p->team);
+    printf("\tNumber: ");
+    scanf("%d", &p->number);
+}
+
+void showPlayer(tPlayer p) {
+    if (p.team == LOCAL) {
+        printf("LOCAL   : %d %s,%s\n", p.number, p.surname, p.name);
+    } else {
+        printf("VISITING: %d %s,%s\n", p.number, p.surname, p.name);
+    }
+}
+
+void initializeTable(tTablePlayers *table) {    
+    table->numPlayers= 0;
+}
+
+void addPlayer(tTablePlayers *table, tPlayer p) {
+    /* It is checked first that the table is not full! */
+    if(table->numPlayers >= MAX_PLAYERS) {
+        printf("Error adding player to the table\n");
+    } else {
+        /* The player is added to the table, and the
+        * table's element counter is incremented */
+        table->players[table->numPlayers] = p;
+
+        /* Important! After adding a player, we must not
+        * forget to increase the counter! */
+        table->numPlayers++;
+    }
+}
+
+void showPlayers(tTablePlayers table) {
+    int i;
+    i = 0;
+    printf("\nTraverse: players added to the table ...\n");
+    while (i < table.numPlayers) {
+        showPlayer(table.players[i]);
+        i = i+1;
+    }
+}
+
+void searchPlayer(tTablePlayers table, int number, tTeam team) {
+    int i;
+    bool isFound; /* This is used to exit the loop, if the player is found */
+
+   i=0;
+   isFound = false;
+   
+    if (team == LOCAL) {
+        printf("\nSearch: local player with number %d ...", number);
+    } else {
+        printf("\nSearch: visiting player with number %d ...", number);
+    }
+
+    while (i<table.numPlayers && !isFound) {
+        if (table.players[i].number == number &&
+            table.players[i].team == team) {
+            isFound = true;
+        }
+        i++;
+    }
+
+    /* The results obtained are shown on the screen.
+    */
+    if (!isFound) {
+        printf("\n>> No player found. \n");
+    } else {
+        printf("\n>> Player found : \n");
+        showPlayer(table.players[i-1]);
+    }
+}
+
+ 
+
+Resumen
+
+La unidad presenta el concepto de tabla como una extensión del vector en el que se mantiene la información sobre la ocupación de la tabla.
+
+Mediante ejemplos tanto en pseudocódigo como en C, hemos visto cómo podemos utilizar las tablas:
+
+La inicialización de una tabla.
+La lectura de datos y su inserción en la tabla.
+El recorrido sobre todos los elementos de una tabla.
+La búsqueda de elementos en una tabla.
+Un algoritmo para la ordenación de una tabla.
+La importancia del orden en las tablas para optimizar operaciones de búsqueda.
+Tablas de tipos estructurados.
+Anterior
+Siguiente

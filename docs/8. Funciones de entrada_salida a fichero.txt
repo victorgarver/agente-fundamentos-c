@@ -1,0 +1,435 @@
+8. Funciones de entrada/salida a fichero
+
+Introducción
+
+1. El proceso de leer y escribir a fichero
+
+1.1. Abrir un fichero
+1.2. Cerrar un fichero
+
+2. Leer y escribir de un fichero y a un fichero
+
+Resumen
+
+ 
+
+Introducción
+
+De la misma manera que hablábamos de la entrada y la salida estándar de datos en 5. Funciones de entrada/salida: stdin, stdout, a veces puede ser muy recomendable leer y escribir datos de un fichero y a un fichero.
+
+Por ejemplo, imaginemos que estamos escribiendo un programa en el que el usuario ha de introducir el título de tres libros que le gustan. Para probar el programa y ver si funciona correctamente, tendremos que ejecutarlo y nos pedirá que escribamos los títulos de los tres libros. Los introduciremos por teclado, y, si encontramos un error en la lectura de datos, pararemos el programa, lo editaremos, corregiremos el error y lo volveremos a ejecutar para comprobar si ya funciona correctamente. Nos volverá a pedir que introduzcamos los títulos. Es probable que nos encontremos con otro error en el programa. Lo detendremos de nuevo... Este puede ser un proceso tedioso, porque cada vez que probemos el código tendremos que introducir de nuevo los datos de los tres libros.
+
+En cambio, si creamos un fichero y escribimos una vez los nombres de los libros, guardamos el fichero en el directorio en el que está el programa que queremos probar, y conseguimos que el programa abra el fichero y lea el contenido con los títulos de los tres libros que necesitamos, ya no tendremos que escribirlos cada vez. De esta manera, probar el programa será mucho más eficiente y rápido. 
+
+Podemos encontrarnos con muchas otras situaciones similares en las que sea útil leer y escribir datos a través de un fichero en lugar de usar el canal estándar de E/S, por ejemplo:
+
+Cuando necesitamos tantos datos que introducirlos uno a uno por el canal estándar no es factible.
+Cuando nos interesa poder disponer de los datos que se han calculado en otro programa. Por ejemplo, si hacemos un programa que calcula las temperaturas medias de cada día durante un año y después queremos hacer una gráfica con esos datos en una hoja de cálculo. 
+Cuando necesitamos cambiar parámetros del algoritmo. Imaginemos que tenemos un programa que lee los datos de un dispositivo, como una cámara web, pero el formato de esos datos depende de la cámara que tenga el usuario. Podemos grabar el tipo de cámara en un fichero de configuración y que se lea cuando el programa se ejecute, para que contemple el formato concreto de los datos de ese dispositivo.
+
+Hay muchísimas situaciones en las que podemos necesitar leer o escribir datos desde un fichero o a un fichero. En esta unidad, aprenderemos a expresarlo en pseudocódigo en un algoritmo y a codificarlo después en lenguaje C.
+
+A continuación, explicaremos el proceso que hay que seguir para leer o escribir datos de un fichero y a un fichero. Introduciremos las funciones necesarias para hacerlo y, al final, ilustraremos todo el proceso con unos ejemplos con los que podréis experimentar. 
+
+ 
+
+1. El proceso de leer y escribir a fichero
+
+El proceso de leer y escribir información de un fichero y a un fichero es más complicado que hacerlo por la entrada o salida estándar. En este caso, sabemos que la entrada estándar es el teclado, mientras que la salida estándar es la pantalla. Cuando leemos o escribimos de un fichero y a un fichero, primero tenemos que saber de qué fichero o a qué fichero queremos leer o escribir.
+
+Pensad que la entrada y la salida se pueden estar haciendo en ficheros diferentes (es muy común leer datos de un fichero para guardarlos después de procesarlos en otro).
+
+Por lo tanto, el proceso de leer o escribir datos en un fichero y de un fichero es el siguiente:
+
+Abrir un fichero. El fichero puede ser:
+Nuevo: no existe y lo creamos. En caso de que se quieran guardar nuevos datos en un fichero que aún no existe.
+Existente: ya existe y normalmente contiene datos. En caso de que haya que leer datos o, incluso, añadir otros nuevos a un fichero que ya contenga datos.
+Leer o escribir los datos.
+Cerrar el fichero. 
+
+A continuación, describiremos cada uno de estos pasos. 
+
+ 
+
+1.1. Abrir un fichero
+
+Cuando trabajamos con un fichero, tenemos que asegurarnos de que el sistema operativo no lo modifica mientras nosotros lo estamos leyendo o modificando.
+
+Imaginemos que estamos leyendo un fichero que contiene los datos de la temperatura del procesador del ordenador en el que se ejecuta el programa, y, mientras lo estamos leyendo, el sistema operativo lo abre y añade nuevos datos. Eso puede afectar al proceso de lectura del fichero e, incluso, puede hacer que se corrompan los datos que están guardados (es decir, que dejen de tener el formato necesario para poder interpretarlos correctamente). 
+
+Por eso, cuando se lee o escribe en un fichero, el sistema operativo tiene que bloquearlo temporalmente, y solo el programa que lo abre podrá leerlo. 
+
+Para hacerlo, utilizaremos las siguientes funciones en pseudocódigo y en C:
+
+ 
+
+Ejemplo 01
+Pseudocódigo
+	
+C
+
+var
+     fileToRead : file;
+end var
+
+algorithm openCloseFile
+     fileToRead := openFile("file_name.txt");
+     closeFile(fileToRead);
+end algorithm
+
+	
+#include <stdio.h>
+
+int main() {
+    FILE* fileToRead; // File to open
+
+    fileToRead = fopen("file_name.txt","r");
+    fclose(fileToRead);
+    
+    return 0;
+}
+
+ 
+
+	Recordad: para que este programa funcione tiene que existir el fichero file_name.txt.
+
+Analicemos estos códigos en detalle:
+
+Creamos una variable de tipo file, que en este caso llamaremos fileToRead, que servirá para identificar el fichero que se abre.
+El tipo de datos file no es un tipo de dato básico, sino un tipo que ha sido creado específicamente para trabajar con ficheros.
+Cuando veamos los tipos estructurados de datos tupla más adelante, se entenderá mejor cómo se hace esto.
+Por ahora, recordad solo que, para definir una variable de tipo file, tenemos que hacer lo siguiente:
+var
+     fileToRead : file;
+end var	
+
+#include <stdio.h>
+
+FILE* fileToRead; // File to open
+
+Definimos una variable de tipo file.	
+
+Añadimos la línea #include <stdio.h> al principio del código. Esto nos permite utilizar la funcionalidad de ficheros en C.
+
+Definimos una variable de tipo FILE para almacenar la información del fichero. Al hacerlo, antes del nombre que le queremos poner a la variable fichero, añadiremos también un asterisco, «*».
+
+ 
+
+Abrimos el fichero y le asignamos la variable que hemos creado.
+     fileToRead := openFile("file_name.txt");
+	
+fileToRead = fopen("file_name.txt","r");
+
+Para abrir el fichero "file_name.txt" llamamos a la función openFile, utilizando como argumento de la llamada el nombre del fichero. 
+
+Asignamos (usamos el operador de asignación, :=) a la variable fileToRead el resultado de llamar a la función. La función buscará el fichero, lo bloqueará y lo abrirá, y guardará información en la variable (no sabemos qué información) para poder utilizarla más adelante. 
+
+	
+
+Para abrir el fichero "file_name.txt" usamos la función fopen (file open). La función se llama con dos parámetros:
+
+El nombre del fichero entre comillas.
+El modo en el cual queremos abrirlo. Hay varias opciones: r, w, a, etc. Veremos qué significa esto enseguida. 
+
+El resultado de la llamada se guardará en la variable fileToRead. 
+
+Podemos revisar si la operación se ha realizado con éxito o ha habido algún problema. Si el valor de fileToRead después de la llamada es igual a NULL, entonces ha habido un error y no podremos leer el fichero. 
+
+En lenguaje C, hay varias maneras de abrir un fichero, que se invocan usando el segundo parámetro de la llamada a la función fopen:
+
+"r", para leer. Si queremos leer un fichero, este debe existir. La función fopen devuelve NULL si el fichero no existe o no se encuentra.
+"w", para escribir. Se creará un fichero nuevo y podremos escribir en este, pero, ¡cuidado!, si el fichero ya tiene contenido, se borrará.
+"a", para añadir contenido en el fichero. Lo que escribamos al fichero, se añadirá al final. Si el fichero que queremos abrir no existe, entonces se creará uno nuevo con ese nombre.
+
+ 
+
+1.2. Cerrar un fichero
+
+En el apartado anterior, hemos explicado que, al abrir el fichero, este queda bloqueado para que no haya problemas al leerlo o escribir sobre él. Por eso, al acabar de usar el fichero o al final del programa, debemos recordar cerrarlo. En caso contrario, es posible que no lo podamos utilizar. 
+
+Para cerrar un fichero, como vemos en el ejemplo del apartado anterior, tenemos que usar la siguiente expresión:
+
+ closeFile(fileToRead);
+	
+fclose(fileToRead);
+
+Llamamos a la función closeFile utilizando como argumento la variable a la que asignamos el valor de salida de la función openFile, en este caso fileToRead. 
+
+	
+
+Similar al pseudocódigo, para cerrar el fichero llamamos a la función fclose (file close) usando como parámetro la variable a la que hemos asignado el resultado de la función fopen, en este caso, fileToRead. 
+
+¡Atención!
+
+Si observáis la documentación, veréis que la función fclose devuelve un valor, un entero. El resultado de la llamada puede ser el siguiente:
+
+0: si el fichero se ha cerrado correctamente.
+EOF (end of file): si ha habido algún error.
+
+Este valor nos puede ayudar a gestionar errores cuando se llama la función. Nosotros no lo utilizaremos, pero sed conscientes de que se puede hacer.
+
+ 
+
+ 
+
+ 
+
+2. Leer y escribir de un fichero y a un fichero
+
+Ahora que ya sabemos cómo abrir y cerrar un fichero, veamos cómo podemos leer y escribir de un fichero y a un fichero.
+
+El proceso es muy similar al de leer o escribir por pantalla o teclado. Hay que tener en cuenta el tipo de dato del que se trata. Esto es muy importante: al leer de un fichero, los datos estarán guardados en un formato concreto, y tendremos que asegurarnos de que lo leemos exactamente en ese formato. 
+
+A continuación, describiremos algunas funciones que podemos utilizar para escribir datos en un fichero:
+
+Pseudocódigo
+	
+C
+
+ writeCharToFile(fileToWrite, ch);	
+fprintf(fileToWrite, "%c", ch);
+
+ writeIntegerToFile(fileToWrite, in);	
+fprintf(fileToWrite, "%d", in);
+
+ writeBooleanToFile(fileToWrite, bo);	
+fprintf(fileToWrite, "%d", bo);
+
+ writeRealToFile(fileToWrite, re);	
+fprintf(fileToWrite, "%f", re);
+
+ writeEnumToFile(fileToWrite, en);	
+fprintf(fileToWrite, "%d", en);
+
+ writeStringToFile(fileToWrite, "String of characters");	
+fprintf(fileToWrite, "String of characters");
+
+Como podéis observar, son muy parecidas a las funciones de salida por pantalla, pero en este caso especificamos el fichero como uno de los parámetros de entrada. 
+
+Para leer de un fichero, utilizaremos las siguientes funciones:
+
+Pseudocódigo
+	
+C
+
+ ch := readCharFromFile(fileToRead);	
+fscanf(fileToRead, "%c", &ch);
+
+ bo := readBooleanFromFile(fileToRead);	
+fscanf(fileToRead, "%d", &bo);
+
+ in := readIntegerFromFile(fileToRead);	
+fscanf(fileToRead, "%d", &in);
+
+ re := readRealFromFile(fileToRead);	
+fscanf(fileToRead, "%f", &re);
+
+ en := readEnumFromFile(fileToRead);	
+fscanf(fileToRead, "%u", en);
+
+En este caso, se lee un entero que corresponde al índice del enum. Es decir, no leemos el enum directamente, sino a través de su índice.
+
+ st := readStringFromFile(fileToRead);	
+fscanf(fileToRead, "%s", st);
+
+En pseudocódigo, la lectura de valores siempre se realiza uno a uno, incluso si están en la misma línea del fichero de lectura. En el lenguaje C, en cambio, se pueden leer múltiples valores a la vez siempre que estén en la misma línea:
+
+Pseudocódigo
+	
+C
+
+ in1 := readIntegerFromFile(fileToRead);
+
+ in2 := readIntegerFromFile(fileToRead);
+
+ in3 := readIntegerFromFile(fileToRead);
+
+	
+fscanf(fileToRead, "%d %d %d", &in1, &in2, &in3);
+
+Se puede dar el caso de que tengamos que leer muchas líneas de un fichero cuyo número exacto desconocemos inicialmente. En esta situación usaremos la siguiente función, que devuelve un booleano que indica si se han leído o no todas las líneas de un fichero.
+
+Pseudocódigo
+	
+C
+
+ bo := isEndOfFile(fileToRead);
+
+	
+bo = feof(fileToRead);
+
+ 
+
+Ejemplo 02
+
+Escribimos diferentes variables en un fichero. 
+
+Pseudocódigo
+	
+C
+
+algorithm sumStdout
+
+    var 
+        ch: char;
+        bo: boolean;
+        in1, in2: integer;
+        re: real;
+        fileToWrite: file;
+    end var
+
+    {Initialize variables}
+    fileToWrite := openFile("file_name.txt");
+
+    ch := 'a';
+    bo := true;
+    in1 := 2;
+    in2 := 3;
+    re := 2.0;
+
+    {Write variables to file}
+    writeCharToFile(fileToWrite, ch);
+    writeBooleanToFile(fileToWrite, bo);
+    writeIntegerToFile(fileToWrite, in1);
+    writeIntegerToFile(fileToWrite, in2);
+    writeIntegerToFile(fileToWrite, in1 + in2);
+    writeRealToFile(fileToWrite, re);
+
+    closeFile(fileToWrite);
+
+end algorithm
+
+	
+#include <stdbool.h>
+#include <stdio.h>
+
+int main() {
+    char ch;
+    bool bo;
+    int in1, in2;
+    float re;
+    FILE* fileToWrite;
+
+    fileToWrite = fopen("file_name.txt", "w");
+    ch = 'a';
+    bo = true;
+    in1 = 2;
+    in2 = 3;
+    re = 2.0;
+
+    fprintf(fileToWrite, "%c \n", ch);
+    fprintf(fileToWrite, "%d \n", bo);
+    fprintf(fileToWrite, "%d \t %d \t %d \n", in1, in2, in1 + in2);
+    fprintf(fileToWrite, "%f \n", re);
+
+    fclose(fileToWrite);
+
+    return 0;
+}
+
+Como se puede observar en el ejemplo anterior, la escritura de valores en pseudocódigo siempre se realiza uno a uno, también en el caso de que estén en la misma línea. En el lenguaje C, en cambio, se pueden escribir múltiples valores a la vez en una misma línea:
+
+Pseudocódigo
+	
+C
+
+ writeIntegerToFile(fileToWrite, in1);
+
+ writeIntegerToFile(fileToWrite, in2);
+
+ writeIntegerToFile(fileToWrite, in1 + in2);
+
+	
+fprintf(fileToWrite, "%d %d %d", in1, in2, in1 + in2);
+
+ 
+
+Ejemplo 03
+
+En el programa del ejemplo 02, se nos olvidó añadir en el fichero el resultado de la resta de los números in1 e in2.
+
+Abriremos el fichero, leeremos los valores in1 e in2, y añadiremos una línea con la resta de los números. 
+
+Pseudocódigo
+	
+C
+
+algorithm sumStdout
+
+    var 
+        ch: char;
+        bo: boolean;
+        in1, in2, sum: integer;
+        re: real;
+        fileToReadWrite: file;
+    end var
+
+    {Initialize variables}
+    fileToReadWrite := openFile("file_name.txt");
+
+    re := 2.0;
+
+    {Read file content}
+    ch := readCharFromFile(fileToReadWrite);
+    bo := readBooleanFromFile(fileToReadWrite);
+    in1 := readIntegerFromFile(fileToReadWrite);
+    in2 := readIntegerFromFile(fileToReadWrite);
+    sum := readIntegerFromFile(fileToReadWrite);   
+
+    {Write content to file}
+    writeIntegerToFile(fileToReadWrite, in1 - in2);
+    writeRealToFile(fileToReadWrite, re);
+
+    closeFile(fileToReadWrite);
+
+end algorithm
+
+	
+#include <stdbool.h>
+#include <stdio.h>
+
+int main() {
+    char ch;
+    bool bo;
+    int in1, in2, sum;
+    float re;
+    FILE* fileToReadWrite;
+    int intToBool;
+
+    fileToReadWrite = fopen("file_name.txt", "r+");
+    re = 2.0;
+
+    fscanf(fileToReadWrite, "%c \n", &ch);
+    fscanf(fileToReadWrite, "%d \n", &intToBool);
+    bo = (bool)intToBool;
+
+    fscanf(fileToReadWrite, "%d \t %d \t %d", &in1, &in2, &sum);    
+    fprintf(fileToReadWrite, "\t %d\n", in1-in2);
+    fprintf(fileToReadWrite, "%f \n", re);
+
+    fclose(fileToReadWrite);
+
+    return 0;
+}
+¡Atención!
+
+Para leer y escribir, hemos abierto el fichero usando el parámetro "r+". 
+
+En esta opción, para añadir datos al final, primero tenemos que leer todo el contenido del fichero y, una vez leído, ya podremos escribir.
+
+ 
+
+ 
+
+ 
+
+Resumen
+
+ 
+
+En un programa, se pueden leer y escribir datos en ficheros. 
+El procedimiento es muy similar a la entrada y salida de datos por canales estándar. 
+En los programas C, para utilizar las funciones de entrada y salida de un fichero y a fichero, es necesario añadir la siguiente línea:
+
+# include <stdio.h>
+Hay que usar las funciones de lectura y escritura adecuadas según el tipo de dato.

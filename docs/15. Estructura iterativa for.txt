@@ -1,0 +1,557 @@
+15. Estructura iterativa for
+
+1. Estructura iterativa for
+
+2. Modificadores de la composición for
+
+3. Ejemplos de estructuras iterativas
+
+Resumen
+
+ 
+
+1. Estructura iterativa for
+
+La estructura iterativa for se utiliza cuando hay que repetir un bloque de instrucciones un número de veces que conocemos a priori.
+
+Para utilizar un bucle for, se tienen que especificar tres valores relacionados con el contador que controla las veces que se repite el bucle:
+
+El valor inicial del contador.
+La condición de salida.
+El valor con el que se incrementa o decrementa el contador en cada iteración del bucle. Este valor se llama actualización del contador.
+
+Todos estos parámetros se introducen en una única línea, lo que hace que la estructura sea muy eficiente y clara a la hora de escribirla.
+
+ 
+
+Ejemplo 01. Cálculo del factorial de n
+
+Calculamos el factorial de un número entero n utilizando la estructura for. 
+
+Pseudocódigo
+	
+C
+
+algorithm factorial2
+
+    var 
+        n : integer;
+        i : integer;
+        fact : integer;
+    end var
+
+    writeString("Introduce n");
+    n := readInteger();
+    fact := 1;
+
+    if n ≥ 0 then
+        for i := 1 to n do
+             fact := fact * i;
+        end for
+        writeInteger(fact);
+    else
+        writeString("The number must be positive");
+    end if
+
+end algorithm
+
+	
+#include <stdio.h>
+
+int main() {
+    int n, i, fact;
+
+    printf("Introduce n");
+    scanf("%d", &n);
+    fact = 1;
+
+    if (n>=0) {
+        for (i = 1; i <= n; i++) {
+            fact = fact*i;
+        }
+        printf("%d", fact);
+    } else {
+        printf("The number must be positive");
+    }
+
+    return 0;
+}
+
+Fijaos en que, en el caso de la estructura iterativa for, hay menos líneas de código dentro del bucle que en el ejemplo de estructura iterativa while, de 14. Estructura iterativa while. En este caso, con solo una línea (fact := fact * i) tenemos el bucle listo. Esto es así porque el valor inicial (1), el valor final (n) y el incremento entre iteraciones se indica claramente en la definición de la estructura.
+
+En C, la sintaxis de la composición iterativa for tiene tres partes dentro del paréntesis, separadas por «;»: inicialización, condición y actualización.
+
+Observad también que no hay que inicializar la variable i antes de la estructura iterativa, porque se hace en la propia estructura. Por lo tanto, con la estructura for nos hemos ahorrado otra línea de código en comparación con la resolución del mismo problema con la estructura while.
+
+Analicemos las partes del bucle for:
+
+Partes
+	
+Descripción
+	
+Pseudocódigo
+	
+C
+
+Inicialización	Se asigna al contador el valor inicial.	 l := 1;	
+i = 1;
+
+Condición	
+
+Expresión que se evaluará antes de iniciar cada iteración del bucle. Si es cierta, se ejecutará el cuerpo del bucle. Si es falsa, se continuará la ejecución con la instrucción posterior al for.
+
+	
+
+n
+
+En este caso, la condición es implícita. Se introduce el primer y el último valor que tomará el contador.
+
+	
+i <= n;
+
+Incremento o decremento	
+
+Esta expresión se ejecutará después de ejecutar la última línea del cuerpo del bucle y antes de pasar a evaluar de nuevo la condición.
+La instrucción indica el valor que modifica la variable contador.
+
+	(Si el incremento es 1, no hace falta indicarlo. Este es el caso aquí. 
+Más adelante veremos cómo implementar otros valores).	
+i++
+
+Instrucciones	
+
+Conjunto de instrucciones que se ejecutan si se cumple la condición.
+
+	fact := fact * i;
+	
+fact = fact*i;
+
+Fin	Fin de la estructura iterativa.	end for	
+}
+
+ 
+
+Ejemplo 02. Cuenta el número de días
+
+En el siguiente programa se registran las temperaturas medias diarias durante una semana y se cuenta el número de días en los que la temperatura fue igual o inferior a cero grados Celsius. 
+
+Pseudocódigo
+	
+C
+
+algorithm howManyDaysFreeze
+
+    const
+        NUM_DAYS: integer = 7;
+    end const
+
+    var 
+        dailyTemp: vector[NUM_DAYS] of real;
+        numDays: integer;
+        i: integer;
+    end var
+
+    numDays := 0;
+
+    for i := 1 to NUM_DAYS do
+        writeString("Introduce temperature");
+        dailyTemp[i] := readReal();
+
+        if dailyTemp[i] ≤ 0.0 then
+            numDays := numDays + 1;
+        end if
+
+    end for
+
+    writeInteger(numDays);
+
+end algorithm
+
+	
+#include <stdio.h>
+
+#define NUM_DAYS 7
+
+int main() {
+ float dailyTemp[NUM_DAYS];
+ int i, numDays;
+
+numDays = 0;
+
+ for (i = 0; i < NUM_DAYS; i++) {
+ printf("\nIntroduce temperature:");
+ scanf("%f", &dailyTemp[i]);
+
+ if (dailyTemp[i] <= 0) {
+numDays ++;
+}
+}
+
+ printf("%d", numDays);
+ return 0;   
+}
+
+ 
+
+2. Modificadores de la composición for
+
+En los ejemplos anteriores, en cada iteración, el contador se incrementaba en una unidad. Pero puede haber situaciones en las que sea más conveniente aplicar otras opciones.
+
+Imaginemos que queremos hacer una cuenta atrás desde un valor positivo determinado hasta 0. En este caso, en lugar de incrementar en una unidad el contador cada vez que finaliza una iteración, sería más conveniente sustraerla.
+
+A continuación, veremos cómo se implementa este caso.
+
+ 
+
+Ejemplo 03. Cuenta atrás
+Pseudocódigo
+	
+C
+
+algorithm countDown
+
+    var 
+        n: integer;
+        k: integer;
+    end var
+
+    writeString("Introduce start number for count down:");
+    n := readInteger();
+
+    if n > 0 then
+        for k := n to 0 step -1 do
+            writeInteger(k);
+        end for
+    end if
+
+end algorithm
+
+	
+#include <stdio.h>
+
+int main() {
+    int n, k;
+
+    printf("Introduce start number:");
+    scanf("%d", &n);
+
+    if (n > 0){
+        for (k = n; k > 0; k--) {
+            printf("%d\n", k);
+        }
+    }
+
+    return 0;
+}
+
+Fijaos en que, en pseudocódigo, hemos introducido el modificador step en la estructura for, que nos indica el incremento del contador en cada iteración. En este caso, disminuimos el valor del contador en una unidad en cada iteración. 
+
+En el caso del programa C, en lugar de incrementar el valor de i usando i++, lo disminuimos, usando i--.
+
+Ahora, imaginemos que queremos que, en cada iteración, el contador se aumente un valor diferente a 1.
+
+ 
+
+Ejemplo 04. Suma de números pares
+
+Queremos sumar los números pares comprendidos entre dos números, n y m, donde n <= m. 
+
+Pseudocódigo
+	
+C
+
+algorithm addEven
+
+    var 
+        n: integer;
+        m: integer;
+        k: integer;
+        sum: integer;
+    end var
+
+    writeString("Introduce first number:");
+    n := readInteger();
+    writeString("Introduce second number:");
+    m := readInteger();
+    sum := 0;
+
+    if n mod 2 ≠ 0 then
+        n := n + 1; 
+    end if
+
+    for k := n to m step 2 do
+        sum := sum + k;
+    end for
+
+    writeInteger(sum);
+end algorithm
+
+	
+#include <stdio.h>
+
+int main() {
+    int n, m, k, sum;
+
+    printf("Introduce first number:");
+    scanf("%d", &n);
+    printf("\nIntroduce second number:");
+    scanf("%d", &m);
+    sum = 0;
+
+    // Check whether n is even.
+    if (n % 2 > 0) { 
+        n++; // If n is odd increase its value to become even 
+    }
+
+    for (k = n; k <= m; k += 2) {
+        sum = sum+k;
+    }
+
+    printf("\n%d", sum);
+    return 0;
+}
+
+ 
+
+3. Ejemplos de estructuras iterativas
+Ejemplo 05. Peso promedio
+
+Queremos hacer un programa que nos ayude a calcular nuestro peso semanal promedio. Añadiremos por teclado las lecturas diarias de nuestro peso.
+
+Pseudocódigo
+	
+C
+
+algorithm averageWeight
+
+    const
+        NUM_DAYS: integer = 7;
+        MIN_WEIGHT: real = 50.0;
+        MAX_WEIGHT: real = 110.0;
+    end const
+
+    var 
+        i: integer;
+        weight: real;
+        weights: vector[NUM_DAYS] of real;
+        sumWeights: real;
+    end var
+
+    i := 1;
+    sumWeights := 0.0;
+
+    while i ≤ NUM_DAYS do
+        writeString("Enter weight (kg.): ");
+        weight := readReal();
+        if MIN_WEIGHT ≤ weight and weight ≤ MAX_WEIGHT then
+            weights[i] := weight ;
+            i := i + 1;
+       else                     
+            writeString("Incorrect value.");
+       end if
+    end while
+   
+    for i := 1 to NUM_DAYS do
+        sumWeights := sumWeights + weights[i];
+    end for
+   
+    writeString("The weekly average weight is ");   
+    writeReal(sumWeights / integerToReal(NUM_DAYS));
+
+end algorithm
+
+	
+#include <stdio.h>
+
+#define NUM_DAYS 7
+#define MIN_WEIGHT 50.0
+#define MAX_WEIGHT 110.0
+
+int main() {
+    int i; 
+    float weight;
+    float weights[NUM_DAYS];
+    float sumWeights;
+
+    i = 0;
+    sumWeights = 0;
+
+  while (i < NUM_DAYS) {
+        printf("Enter weight (kg.)");
+        scanf("%f", &weight);
+
+        if (MIN_WEIGHT <= weight && weight <= MAX_WEIGHT) { 
+            weights[i] = weight ;
+            i = i + 1;
+        } else {
+            printf("Incorrect value.");
+        }
+    }
+
+    for (i = 0; i < NUM_DAYS; i ++) {
+        sumWeights = sumWeights + weights[i];
+    }
+
+    printf("The weekly average weight is ");
+    printf("%f", sumWeights / NUM_DAYS);
+
+    return 0;
+}
+
+ 
+
+Ejemplo 06. Anidamiento de estructuras iterativas
+
+El anidamiento de estructuras se refiere a la práctica de colocar una estructura de control dentro de otra. 
+
+Queremos imprimir la tabla de multiplicar del 1 al 5.
+
+Pseudocódigo
+	
+C
+
+algorithm multiplicationTable
+    const
+        MIN: integer = 1;
+        MAX: integer = 5;
+    end cons
+
+    var 
+        i: integer;
+        j: integer;
+     end var
+
+    for i := MIN to MAX do
+        writeIString("Multiplication table for number");
+        writeInteger(i);
+
+        for j := 1 to 10  do
+            writeInteger(i);
+            writeString¡(" x ");
+            writeInteger(j);
+            writeString(" = ");
+            writeInteger(i * j);
+        end for
+
+    end for
+end algorithm
+
+	
+#include <stdio.h>
+
+#define MIN 1
+#define MAX 5
+
+int main() {
+    int i, j;
+    
+    for (i = MIN; i <= MAX; i ++) {
+        printf("Multiplication table for number %d",i);
+        for (j = 1; j <= 10; j++) {
+            printf("%d x %d = %d \n", i, j, i * j);
+        }
+        printf("\n");
+    }
+    return 0;
+}
+
+ 
+
+Ejemplo 07. Introducción de notas de alumnos
+
+Queremos hacer un programa que almacene las notas de veinte alumnos en un array. Las notas deben estar comprendidas entre 0 y 10. Al final, se mostrarán todas las notas introducidas.
+
+Pseudocódigo
+	
+C
+
+algorithm studentsGrades
+    const
+        STUDENTS: integer = 20;
+    end const
+
+     var 
+        grades: vector[STUDENTS] of real;
+        grade: real;
+        i: integer;
+    end var
+
+    writeString("Enter the grade (between 0 and 10) of the students:";
+
+    for i := 1 to STUDENTS do
+        writeString("Grade for student);
+        writeInteger(i);
+        grade := readReal();
+ 
+        while grade < 0.0 or grade > 10.0 do
+            writeString ("Error: The grade must be between 0 and 10. Please try again");
+             writeString("Grade for student);
+             writeInteger(i);
+             grade := readReal();
+        end while
+
+        grades[i] := grade;
+
+    end for
+      writeString("Grades for students:);
+
+    for j := 1 to 10 do       
+        writeReal(grades[i]);   
+    end for
+
+end algorithm
+
+	
+#include <stdio.h>
+
+#define STUDENTS 20
+
+int main() {
+    float grades[STUDENTS];
+    float grade;
+    int i;
+
+    printf("Enter the grades (between 0 and 10) of the students:\n");
+
+    for (i = 0; i < STUDENTS ; i++) {
+        printf("Grade for student %d", i + 1)
+        scanf("%f", &grade);
+      
+        while (grade < 0 || grade > 10) {
+            printf("Error: The grade must be between 0 and 10. Please try again");
+            printf ("Grade for the student %d", i + 1);
+            scanf("%f", &grade);
+        }
+        grades[i]= grade;
+    }
+
+    printf("Grades of the students: \n");
+
+    for (i = 0; i < STUDENTS; i++){
+        printf("Grades for student %d: %f", i+1, grades[i]);
+    }
+    return 0;
+}
+
+Observad que en este ejemplo hemos utilizado dos estructuras iterativas for, y, dentro del cuerpo de una de estas, otra estructura iterativa while.
+
+ 
+
+Resumen
+
+ 
+
+La estructura iterativa for se utiliza cuando hay que repetir un bloque de instrucciones un número de veces que conocemos a priori.
+Se implementa del siguiente modo:
+
+    for i := startValue to endValue step increaseValue do
+        {Code block}
+    end for
+
+	
+for (i = startValue; i < endValue; i + increaseValue) {
+    // Code block
+}
+El incremento entre iteraciones puede ser 1 o cualquier otro valor (incluso, negativo).
+Las estructuras iterativas se pueden anidar.
+Es habitual utilizar estructuras iterativas conjuntamente con vectores o matrices.
