@@ -4,8 +4,8 @@ import numpy as np
 from sentence_transformers import SentenceTransformer
 
 # Rutas
-DOCS_DIR = Path("docs")
-DB_DIR = Path("db")
+DOCS_DIR = Path(__file__).parent.parent / "docs"
+DB_DIR = Path(__file__).parent.parent / "db"
 
 # Modelo de embeddings
 EMBEDDING_MODEL = "paraphrase-multilingual-MiniLM-L12-v2"
@@ -36,7 +36,7 @@ def ingest_documents():
         embeddings = model.encode(chunks, convert_to_numpy=True, show_progress_bar=False)
 
         for i, (chunk, embedding) in enumerate(zip(chunks, embeddings)):
-            collection.add(
+            collection.upsert(
                 documents=[chunk],
                 embeddings=[np.asarray(embedding, dtype=np.float32).tolist()],
                 ids=[f"{filepath.stem}_{i}"],
